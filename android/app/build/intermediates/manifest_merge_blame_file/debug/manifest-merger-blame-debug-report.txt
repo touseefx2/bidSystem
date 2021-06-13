@@ -9,146 +9,146 @@
 9        android:targetSdkVersion="29" />
 10
 11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-11-->/Users/x2/Desktop/Bid_System/android/app/src/debug/AndroidManifest.xml:5:5-77
-11-->/Users/x2/Desktop/Bid_System/android/app/src/debug/AndroidManifest.xml:5:22-75
+11-->/Users/x2/Desktop/bidSystem/android/app/src/debug/AndroidManifest.xml:5:5-77
+11-->/Users/x2/Desktop/bidSystem/android/app/src/debug/AndroidManifest.xml:5:22-75
 12    <uses-permission android:name="android.permission.INTERNET" />
-12-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:4:5-67
-12-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:4:22-64
+12-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:4:5-67
+12-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:4:22-64
 13    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-13-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:6:5-76
-13-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:6:22-73
+13-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:6:5-76
+13-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:6:22-73
 14    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-14-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:7:5-81
-14-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:7:22-78
+14-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:7:5-81
+14-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:7:22-78
 15    <uses-permission android:name="android.permission.CAMERA" />
-15-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:8:5-65
-15-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:8:22-62
+15-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:8:5-65
+15-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:8:22-62
 16    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-16-->[:react-native-community_netinfo] /Users/x2/Desktop/Bid_System/node_modules/@react-native-community/netinfo/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:9:5-79
-16-->[:react-native-community_netinfo] /Users/x2/Desktop/Bid_System/node_modules/@react-native-community/netinfo/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:9:22-76
+16-->[:react-native-community_netinfo] /Users/x2/Desktop/bidSystem/node_modules/@react-native-community/netinfo/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:9:5-79
+16-->[:react-native-community_netinfo] /Users/x2/Desktop/bidSystem/node_modules/@react-native-community/netinfo/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:9:22-76
 17    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Required by older versions of Google Play services to create IID tokens -->
-17-->[:react-native-firebase_auth] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/auth/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:5-68
-17-->[:react-native-firebase_auth] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/auth/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:22-65
+17-->[:react-native-firebase_auth] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/auth/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:5-68
+17-->[:react-native-firebase_auth] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/auth/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:22-65
 18    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 18-->[com.google.firebase:firebase-messaging:22.0.0] /Users/x2/.gradle/caches/transforms-2/files-2.1/607124079ab9844ddb8838657292535d/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:25:5-82
 18-->[com.google.firebase:firebase-messaging:22.0.0] /Users/x2/.gradle/caches/transforms-2/files-2.1/607124079ab9844ddb8838657292535d/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:25:22-79
 19
 20    <application
-20-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:9:5-29:19
+20-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:9:5-29:19
 21        android:name="com.bid_system.MainApplication"
-21-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:11:7-38
+21-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:11:7-38
 22        android:allowBackup="false"
-22-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:15:7-34
+22-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:15:7-34
 23        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 23-->[androidx.core:core:1.3.2] /Users/x2/.gradle/caches/transforms-2/files-2.1/8445b0d8fba0a44d4f63d2a5763abab9/core-1.3.2/AndroidManifest.xml:24:18-86
 24        android:debuggable="true"
 25        android:icon="@mipmap/ic_launcher"
-25-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:13:7-41
+25-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:13:7-41
 26        android:label="@string/app_name"
-26-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:12:7-39
+26-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:12:7-39
 27        android:requestLegacyExternalStorage="true"
-27-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:16:7-50
+27-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:16:7-50
 28        android:roundIcon="@mipmap/ic_launcher_round"
-28-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:14:7-52
+28-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:14:7-52
 29        android:theme="@style/AppTheme"
-29-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:17:7-38
+29-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:17:7-38
 30        android:usesCleartextTraffic="true" >
-30-->/Users/x2/Desktop/Bid_System/android/app/src/debug/AndroidManifest.xml:8:9-44
+30-->/Users/x2/Desktop/bidSystem/android/app/src/debug/AndroidManifest.xml:8:9-44
 31        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-31-->/Users/x2/Desktop/Bid_System/android/app/src/debug/AndroidManifest.xml:11:9-86
-31-->/Users/x2/Desktop/Bid_System/android/app/src/debug/AndroidManifest.xml:11:19-83
+31-->/Users/x2/Desktop/bidSystem/android/app/src/debug/AndroidManifest.xml:11:9-86
+31-->/Users/x2/Desktop/bidSystem/android/app/src/debug/AndroidManifest.xml:11:19-83
 32        <activity
-32-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:18:7-28:18
+32-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:18:7-28:18
 33            android:name="com.bid_system.MainActivity"
-33-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:19:9-37
+33-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:19:9-37
 34            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
-34-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:21:9-86
+34-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:21:9-86
 35            android:label="@string/app_name"
-35-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:20:9-41
+35-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:20:9-41
 36            android:launchMode="singleTask"
-36-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:22:9-40
+36-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:22:9-40
 37            android:windowSoftInputMode="adjustResize" >
-37-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:23:9-51
+37-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:23:9-51
 38            <intent-filter>
-38-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:24:9-27:25
+38-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:24:9-27:25
 39                <action android:name="android.intent.action.MAIN" />
-39-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:25:13-65
-39-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:25:21-62
+39-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:25:13-65
+39-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:25:21-62
 40
 41                <category android:name="android.intent.category.LAUNCHER" />
-41-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:26:13-73
-41-->/Users/x2/Desktop/Bid_System/android/app/src/main/AndroidManifest.xml:26:23-70
+41-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:26:13-73
+41-->/Users/x2/Desktop/bidSystem/android/app/src/main/AndroidManifest.xml:26:23-70
 42            </intent-filter>
 43        </activity>
 44
 45        <service android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingHeadlessService" />
-45-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:9-111
-45-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:18-108
+45-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:9-111
+45-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:18-108
 46        <service
-46-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:9-23:19
+46-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:9-23:19
 47            android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingService"
-47-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:13-95
+47-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:13-95
 48            android:exported="false" >
-48-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:13-37
+48-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:13-37
 49            <intent-filter>
-49-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:13-22:29
+49-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:13-22:29
 50                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-50-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:17-78
-50-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:25-75
+50-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:17-78
+50-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:25-75
 51            </intent-filter>
 52        </service>
 53
 54        <receiver
-54-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:9-32:20
+54-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:9-32:20
 55            android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingReceiver"
-55-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:13-96
+55-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:13-96
 56            android:exported="true"
-56-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:27:13-36
+56-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:27:13-36
 57            android:permission="com.google.android.c2dm.permission.SEND" >
-57-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:28:13-73
+57-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:28:13-73
 58            <intent-filter>
-58-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:29:13-31:29
+58-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:29:13-31:29
 59                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-59-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:17-81
-59-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:25-78
+59-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:17-81
+59-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:25-78
 60            </intent-filter>
 61        </receiver>
 62
 63        <meta-data
-63-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:34:9-36:36
+63-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:34:9-36:36
 64            android:name="firebase_messaging_auto_init_enabled"
-64-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:35:13-64
+64-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:35:13-64
 65            android:value="true" />
-65-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:36:13-33
+65-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:36:13-33
 66        <meta-data
-66-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:37:9-39:32
+66-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:37:9-39:32
 67            android:name="com.google.firebase.messaging.default_notification_channel_id"
-67-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:38:13-89
+67-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:38:13-89
 68            android:value="" />
-68-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:39:13-29
+68-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:39:13-29
 69        <meta-data
-69-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:40:9-42:47
+69-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:40:9-42:47
 70            android:name="com.google.firebase.messaging.default_notification_color"
-70-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:41:13-84
+70-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:41:13-84
 71            android:resource="@color/white" />
-71-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:42:13-44
+71-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:42:13-44
 72
 73        <provider
-73-->[:react-native-image-picker] /Users/x2/Desktop/Bid_System/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:10:9-18:20
+73-->[:react-native-image-picker] /Users/x2/Desktop/bidSystem/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:10:9-18:20
 74            android:name="com.imagepicker.FileProvider"
-74-->[:react-native-image-picker] /Users/x2/Desktop/Bid_System/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-56
+74-->[:react-native-image-picker] /Users/x2/Desktop/bidSystem/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-56
 75            android:authorities="com.bid_system.provider"
-75-->[:react-native-image-picker] /Users/x2/Desktop/Bid_System/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-60
+75-->[:react-native-image-picker] /Users/x2/Desktop/bidSystem/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-60
 76            android:exported="false"
-76-->[:react-native-image-picker] /Users/x2/Desktop/Bid_System/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-37
+76-->[:react-native-image-picker] /Users/x2/Desktop/bidSystem/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-37
 77            android:grantUriPermissions="true" >
-77-->[:react-native-image-picker] /Users/x2/Desktop/Bid_System/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-47
+77-->[:react-native-image-picker] /Users/x2/Desktop/bidSystem/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-47
 78            <meta-data
-78-->[:react-native-image-picker] /Users/x2/Desktop/Bid_System/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:15:13-17:58
+78-->[:react-native-image-picker] /Users/x2/Desktop/bidSystem/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:15:13-17:58
 79                android:name="android.support.FILE_PROVIDER_PATHS"
-79-->[:react-native-image-picker] /Users/x2/Desktop/Bid_System/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:17-67
+79-->[:react-native-image-picker] /Users/x2/Desktop/bidSystem/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:17-67
 80                android:resource="@xml/provider_paths" />
-80-->[:react-native-image-picker] /Users/x2/Desktop/Bid_System/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:17-55
+80-->[:react-native-image-picker] /Users/x2/Desktop/bidSystem/node_modules/react-native-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:17-55
 81        </provider>
 82
 83        <activity
@@ -314,10 +314,10 @@
 166            android:permission="com.google.android.c2dm.permission.SEND" >
 166-->[com.google.firebase:firebase-messaging:22.0.0] /Users/x2/.gradle/caches/transforms-2/files-2.1/607124079ab9844ddb8838657292535d/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:31:13-73
 167            <intent-filter>
-167-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:29:13-31:29
+167-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:29:13-31:29
 168                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-168-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:17-81
-168-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:25-78
+168-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:17-81
+168-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:25-78
 169            </intent-filter>
 170        </receiver>
 171        <!--
@@ -333,10 +333,10 @@
 178            android:exported="false" >
 178-->[com.google.firebase:firebase-messaging:22.0.0] /Users/x2/.gradle/caches/transforms-2/files-2.1/607124079ab9844ddb8838657292535d/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:44:13-37
 179            <intent-filter android:priority="-500" >
-179-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:13-22:29
+179-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:13-22:29
 180                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-180-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:17-78
-180-->[:react-native-firebase_messaging] /Users/x2/Desktop/Bid_System/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:25-75
+180-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:17-78
+180-->[:react-native-firebase_messaging] /Users/x2/Desktop/bidSystem/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:25-75
 181            </intent-filter>
 182        </service>
 183        <service

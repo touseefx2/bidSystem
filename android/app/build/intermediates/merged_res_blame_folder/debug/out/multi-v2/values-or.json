@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/x2/Desktop/Bid_System/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-or/values-or.xml",
+            "outputFile": "/Users/x2/Desktop/bidSystem/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-or/values-or.xml",
             "map": [
                 {
                     "source": "/Users/x2/.gradle/caches/transforms-2/files-2.1/607124079ab9844ddb8838657292535d/jetified-firebase-messaging-22.0.0/res/values-or/values.xml",

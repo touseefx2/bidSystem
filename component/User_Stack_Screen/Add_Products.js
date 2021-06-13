@@ -12,7 +12,6 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import { Container,Content} from 'native-base'
 import DropDownPicker from 'react-native-dropdown-picker';
 import permissions from "../permissions/permissions"
-import { localeData } from "moment";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -33,6 +32,7 @@ const windowHeight = Dimensions.get('window').height;
             name:"",
             description:"",
             staringAmount:"",
+            status:"pending"
             }
             this.items=null;
      
@@ -111,7 +111,7 @@ checkEmptyFields ()
 async onClickAdd(){
  this.setState({loader:true});
  const {userData}= this.props;  
- const {name,photo,photoName,category,staringAmount,description}= this.state;
+ const {name,photo,photoName,category,staringAmount,description,status}= this.state;
 
  const obj={
 name,
@@ -120,7 +120,8 @@ photoName,
 category,
 staringAmount,
 description,
-uid:userData.user.uid
+uid:userData.user.uid,
+status
  }
 
  try {
@@ -139,7 +140,6 @@ uid:userData.user.uid
  }
 
  
- console.log("add product resp ",resp)
 }
                
 
@@ -237,11 +237,11 @@ uid:userData.user.uid
       </TouchableOpacity>
     ) 
     :(
-    <View  style={{marginTop:30,flexDirection:"row",alignSelf:"center"}} >
-     <Image source={{uri:photo}}  style={{width:150,height:150}} />
-     <TouchableOpacity onPress={()=>this.setState({photo:"",photoName:""})}>
+    <View  style={{marginTop:30,alignSelf:"center"}} >
+      <TouchableOpacity style={{marginLeft:"50%"}} onPress={()=>this.setState({photo:"",photoName:""})}>
      <Entypo size={33} color="red" name="cross" />
      </TouchableOpacity>
+     <Image source={{uri:photo}} resizeMode={"contain"} style={{width:200,height:150}} />
     </View> 
     ) 
     }
@@ -277,8 +277,11 @@ uid:userData.user.uid
     
 render(){
  const {dialogClick}= this.state;
+ const {productsData}= this.props;  
 
  
+ console.log("productsData : ",productsData)
+
 return(
       <Container style={{backgroundColor:"white"}}>   
       {this.renderTopBar()}
@@ -294,7 +297,8 @@ return(
   }
  
   const mapStateToProps = state => ({
-      userData: state.userReducer
+      userData: state.userReducer,
+      productsData: state.productReducer,
     });
   
     export default connect(

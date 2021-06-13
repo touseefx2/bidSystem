@@ -95,7 +95,7 @@ async __logIn(email,password){
   this.setState({loader:true}) 
    try {
     let resp =  await  allOther.firebase.__doSingIn(email,password)
-     console.log("user resp --> ",resp)  
+     
        if(resp){
     this.setState({uid:resp.user.uid,setUserData:true,}) //for pass value in userdata function
   }else{
@@ -405,7 +405,8 @@ renderLogin()
       const{userData}=this.props;
       return (
         <View style={{ flex: 1,backgroundColor:!darkMode ? containerBackgroundColor:dmcontainerBackgroundColor}}>
-          {setUserData         && <allOther.firebase.FireBaseFunction type={"set-user-data"} uid={uid} /> }     
+          {setUserData         && <allOther.firebase.FireBaseFunction type={"set-user-data"} uid={uid} /> } 
+          {setUserData         && <allOther.firebase.FireBaseFunction type={"set-products-data"} uid={uid} /> }     
           {(userData.length<=0 || userData.user.length<=0   ) && <allOther.Loader loader={loader} /> }
           {this.renderLogin()}
           {!isInternetConnected && this.renderShowInternetErrorAlert("No internet connection","Please connect internet.")}

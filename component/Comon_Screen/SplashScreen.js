@@ -43,8 +43,6 @@ const dmcontainerBackgroundColor=   "#1f1f1f"
   chkusr()
     {
         this.unsuscribeAuth =   auth().onAuthStateChanged( async (user)=> {
-
-          console.log("auth user : ",user)
           if (user) { 
             this.setState({setUserData:true,uid:user.uid})
         }  
@@ -71,6 +69,8 @@ componentDidMount(){
       <View style={{flex:1,backgroundColor:!darkMode?containerBackgroundColor:dmcontainerBackgroundColor}}>
  
  {setUserData   && <allOther.firebase.FireBaseFunction type={"set-user-data"} uid={uid} /> } 
+ {setUserData   && <allOther.firebase.FireBaseFunction type={"set-products-data"} uid={uid} /> } 
+ 
 <View style={{alignSelf:"center",marginTop:"8%"} }>
 
 <View style={{flexDirection:"row",alignSelf:"center",alignItems:"center",marginLeft:5} }>

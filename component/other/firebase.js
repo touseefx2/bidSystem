@@ -58,6 +58,8 @@ import allActions from "../redux/allActions"
           if (response) {
            // AlertMessage.alert("Success ✅", "Authenticated successfully")
             return response;
+          }else{
+            return false;
           }
           
         } catch (error) {
@@ -75,7 +77,7 @@ import allActions from "../redux/allActions"
   export    function FireBaseFunction (props) {
 
     const dispatch = useDispatch()
-    const userData = useSelector(state => state.userReducer)
+  //  const userData = useSelector(state => state.userReducer)
   
     useEffect(() => {
       let type=props.type || ""
@@ -88,15 +90,16 @@ import allActions from "../redux/allActions"
       if(type=="logout-user"){
         LogOut()
       }
+
+      if(type=="set-products-data"){
+        SetProductsData(uid)
+      }
       
    
 
     }, [])
   
-    useEffect(()=>{
-       // console.log("set User Data result  : ",userData);
-    },[userData])
-    
+  
   function SetUserData  (uid)  {
    
   try {
@@ -121,6 +124,38 @@ import allActions from "../redux/allActions"
    
   }
 
+  function SetProductsData  (uid)  {
+   
+    
+    try {
+ 
+      const unsubscribe = firestore().collection("products").onSnapshot(async  (d )=>{
+       let arr=[]
+
+       if(d.docs){
+
+        d.docs.map((data)=>{
+          const u=data.data();
+          if(uid=u.uid)
+          {arr.push(u)}
+        })
+       
+      }
+      
+       dispatch(allActions.p_acton.setProducts(arr))
+       //unsubscribe()
+    })
+   
+  } catch (error) {
+          var errorMessage = error.message;
+          var si  = errorMessage.indexOf("]")+1
+          var  ei  = errorMessage.length -1
+          const msg = errorMessage.substr(si,ei)
+           allOther.AlertMessage("",msg)
+    }
+     
+     
+    }
 
   function LogOut()  {
     console.log("logout functn call")

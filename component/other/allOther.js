@@ -5,6 +5,8 @@ import {AlertMessage} from "./AlertMessage"
 import {PhoneModalComponent} from "./PhoneModel"
 import Validation from "./Validation"
 import ToastAndroid from "./ToastAndroid"
+import strLength from "./strLength"
+
 
 const allOther =
 {
@@ -14,7 +16,8 @@ Loader,
 AlertMessage,
 PhoneModalComponent,
 Validation,
-ToastAndroid
+ToastAndroid,
+strLength
 }
 
 export  default allOther;
