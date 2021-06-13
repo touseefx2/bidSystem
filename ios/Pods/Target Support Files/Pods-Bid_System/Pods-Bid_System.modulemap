@@ -1,0 +1,6 @@
+module Pods_Bid_System {
+  umbrella header "Pods-Bid_System-umbrella.h"
+
+  export *
+  module * { export * }
+}

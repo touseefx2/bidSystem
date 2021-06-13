@@ -1,0 +1,6 @@
+module Pods_Bid_System_Bid_SystemTests {
+  umbrella header "Pods-Bid_System-Bid_SystemTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
