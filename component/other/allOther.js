@@ -5,7 +5,7 @@ import {AlertMessage} from "./AlertMessage"
 import {PhoneModalComponent} from "./PhoneModel"
 import Validation from "./Validation"
 import ToastAndroid from "./ToastAndroid"
-import strLength from "./strLength"
+import {strLength} from "./strLength"
 
 
 const allOther =

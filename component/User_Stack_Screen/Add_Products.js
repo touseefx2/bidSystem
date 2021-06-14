@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View,TouchableOpacity,Text,Dimensions,TextInput,Image} from "react-native";
+import { View,TouchableOpacity,Text,Dimensions,TextInput,Image,FlatList} from "react-native";
 import { connect} from 'react-redux'
 import allOther from "../other/allOther"
 import ImagePicker from 'react-native-image-picker';
@@ -9,7 +9,9 @@ import {productCategory} from "./Category"
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Entypo from 'react-native-vector-icons/Entypo'
-import { Container,Content} from 'native-base'
+import EvilIcons from 'react-native-vector-icons/EvilIcons'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import { Container,Content,Item, Input, Label,Textarea } from 'native-base'
 import DropDownPicker from 'react-native-dropdown-picker';
 import permissions from "../permissions/permissions"
 
@@ -31,8 +33,9 @@ const windowHeight = Dimensions.get('window').height;
             category:"",
             name:"",
             description:"",
-            staringAmount:"",
-            status:"pending"
+            startingAmount:"",
+            status:"pending",
+            flastlistR:false,
             }
             this.items=null;
      
@@ -111,14 +114,14 @@ checkEmptyFields ()
 async onClickAdd(){
  this.setState({loader:true});
  const {userData}= this.props;  
- const {name,photo,photoName,category,staringAmount,description,status}= this.state;
+ const {name,photo,photoName,category,startingAmount,description,status}= this.state;
 
  const obj={
 name,
 photo,
 photoName,
 category,
-staringAmount,
+startingAmount,
 description,
 uid:userData.user.uid,
 status
@@ -211,7 +214,7 @@ status
 
 <TextInput  style={{ backgroundColor:"white",width:230,height:45,fontSize:16,marginTop:17,borderColor:"black",borderWidth:0.4 }}  
          keyboardType={"numeric"}
-         onChangeText={text=> this.setState({staringAmount :text })}
+         onChangeText={text=> this.setState({startingAmount :text })}
           placeholder={"Start Bidding Amount"} 
     />
     
@@ -241,7 +244,7 @@ status
       <TouchableOpacity style={{marginLeft:"50%"}} onPress={()=>this.setState({photo:"",photoName:""})}>
      <Entypo size={33} color="red" name="cross" />
      </TouchableOpacity>
-     <Image source={{uri:photo}} resizeMode={"contain"} style={{width:200,height:150}} />
+     <Image source={{uri:photo}} resizeMode={"contain"} style={{width:200,height:170}} />
     </View> 
     ) 
     }
@@ -273,21 +276,107 @@ status
     
         )
       }
+
+      RenderProducts  =   ({ item, index })  => {
+         
+        let name = item.name
+        let category = item.category
+        let starting_Amount = item.startingAmount
+        let photo ={uri:item.photo}
+        let description=item.description
+        let status = item.status
+    
+       name  =   allOther.strLength(name,"product_name")
+       category  =   allOther.strLength(category,"category")
+         starting_Amount =   allOther.strLength(starting_Amount,"starting_amount")
+       
+ 
+        return (
+
+          <View style={{marginTop:20}}>
+
+<TouchableOpacity 
+style={{position:"absolute",right:0,marginRight:5}}
+onPress={()=>{this.removeProducts(index)}}>
+<EvilIcons size={30} color="red" name="trash" />
+</TouchableOpacity>
+
+            <TouchableOpacity
+          //  onPress={()=>{this.props.navigation.navigate("Edit Details",{index:index,rf:()=>this.rf()})}}
+            style={{width:windowWidth-50, backgroundColor:"white",height:130, borderRadius:7,marginTop:30,elevation:10,margin:10,padding:10 }}>
+ 
+       
+
+<View style={{flexDirection:"row",alignItems:"center"}}>
+<AntDesign size={20} color="#307ecc" name="rightcircle" />
+<View style={{flexShrink:1}}>
+<Text style={{color:"#307ecc",fontWeight:"bold",textTransform:"capitalize",fontSize:15,marginLeft:10}}>{name}</Text>    
+</View>
+ </View>
+
+          {/* <Image source={photo}    resizeMode={'contain'}
+          style={{ height: 200 , width: 300}}/>
+            */}
+          <View style={{marginLeft:30,marginTop:10}}> 
+          <Text style={{color:"black",textTransform:"capitalize",fontSize:14}}>{starting_Amount}</Text> 
+          <Text style={{color:"black",textTransform:"capitalize",fontSize:14,marginTop:10}}>{category}</Text> 
+          
+          
+ <View style={{flexDirection:"row",alignItems:"center",marginTop:10}}>
+<Text style={{color:"#307ecc",textTransform:"capitalize",fontSize:15}}>status</Text>  
+<Text style={{color:"orange",textTransform:"capitalize",fontSize:15,position:"absolute",right:0}}>{status}</Text>   
+ </View>
+          
+          </View>
+
+
+
+    
+           
+            </TouchableOpacity>
+          
+        
+      
+
+          </View>
+)
+       
+        
+      }
  
     
 render(){
- const {dialogClick}= this.state;
+ const {dialogClick,flastlistR}= this.state;
  const {productsData}= this.props;  
 
  
  console.log("productsData : ",productsData)
 
 return(
-      <Container style={{backgroundColor:"white"}}>   
+      <Container  style={{backgroundColor:"#f2f2f2"}}>   
       {this.renderTopBar()}
-      <Content style={{backgroundColor:"white"}}>
+      <Content  style={{backgroundColor:"#f2f2f2"}}>
               <ScrollView>
-              {dialogClick && this.render_Add_Product()}            
+              {dialogClick && this.render_Add_Product()}   
+           
+              {productsData.products.length<=0    
+              ?(
+              <Text style={{fontSize:38,color:"silver",marginTop:"60%",alignSelf:"center"}} >Empty</Text>
+              )
+             :(
+              <FlatList
+        numColumns={1}
+        data={productsData.products}
+        extraData={flastlistR} //true/fasle
+        renderItem={this.RenderProducts}
+        ListFooterComponent={<View style={{ height:10}} />}
+        keyExtractor={(item, index) => { return index.toString() }}
+        showsVerticalScrollIndicator={false}
+        style={{marginTop:"10%",alignSelf:"center"}}
+      />
+              ) 
+            }       
+              
               </ScrollView>
       </Content>
            </Container>
