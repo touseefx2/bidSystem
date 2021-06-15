@@ -166,14 +166,15 @@ async __signUp(email,password,name){
   if(this.Phone!=null){
     
   let resp =  await allOther.firebase.__doSingUp(email,password) 
-  console.log("res --> ",resp)
+ 
 
  if(resp){
   let user=resp.user;  
 
   try {
+    let phone=this.Phone;
 
-        let obj={name,email:user.email,phoneNum,type,photo,emailVerified:user.emailVerified,
+        let obj={name,email:user.email,phone,type,photo,emailVerified:user.emailVerified,
          uid:user.uid,createdAt:new Date(),token:null,updatedAt:new Date()}
 
 firestore().collection('users').doc(user.uid).set(obj).
@@ -189,14 +190,14 @@ then(
   var si  = errorMessage.indexOf("]")+1
   var  ei  = errorMessage.length -1
   const msg = errorMessage.substr(si,ei)
-  this.setState({loader:false})
+  this.setState({loader:false,setUserData:false})
   allOther.AlertMessage("",msg);
 
 })
  
   
   } catch (error) {
-     this.setState({loader:false})
+     this.setState({loader:false,setUserData:false})
       user.delete().then(()=> {
       console.log("beacuse no user add inn data base so user is delete in firebase auth try again")
       })
@@ -206,12 +207,12 @@ then(
  
   }else
   {
-    this.setState({loader:false})
+    this.setState({loader:false,setUserData:false})
   }
 
 }else
 {
-  this.setState({loader:false})
+  this.setState({loader:false,setUserData:false})
   allOther.AlertMessage("","Please Enter Phone Number")
 }
 
@@ -753,7 +754,8 @@ renderSignup()
       const  {isInternetConnected,darkMode,loader,uid,setUserData} = this.state;
       return (
         <View style={{ flex: 1,backgroundColor:!darkMode ? containerBackgroundColor:dmcontainerBackgroundColor}}>
-          {setUserData   && <allOther.firebase.FireBaseFunction type={"set-user-data"} uid={uid} /> }   
+          {setUserData   && <allOther.firebase.FireBaseFunction type={"set-user-data"} uid={uid} /> } 
+          {setUserData   && <allOther.firebase.FireBaseFunction type={"set-products-data"} uid={uid} /> }   
           <allOther.Loader loader={loader} />
           {this.renderSignup()}
           {!isInternetConnected && this.renderShowInternetErrorAlert("No internet connection","Please connect internet.")}

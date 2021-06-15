@@ -131,12 +131,10 @@ import allActions from "../redux/allActions"
  
       const unsubscribe = firestore().collection("products").onSnapshot(async  (d )=>{
        let arr=[]
-
        if(d.docs){
-
         d.docs.map((data)=>{
           const u=data.data();
-          if(uid=u.uid)
+          if(u.uid==uid)
           {arr.push(u)}
         })
        

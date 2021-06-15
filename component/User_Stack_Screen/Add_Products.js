@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View,TouchableOpacity,Text,Dimensions,TextInput,Image,FlatList} from "react-native";
+import { View,TouchableOpacity,Text,Dimensions,TextInput,Image,FlatList,Alert} from "react-native";
 import { connect} from 'react-redux'
 import allOther from "../other/allOther"
 import ImagePicker from 'react-native-image-picker';
@@ -36,6 +36,7 @@ const windowHeight = Dimensions.get('window').height;
             startingAmount:"",
             status:"pending",
             flastlistR:false,
+            setProductData:false
             }
             this.items=null;
      
@@ -109,7 +110,26 @@ checkEmptyFields ()
       return true;
     }
 }
+  
+  removeProducts=(index)=>{
  
+  
+  Alert.alert(
+    "",
+    "Are you sure ?  you want to Cancel ?",
+    [
+      {
+        text: "No",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      { text: "Yes", onPress: () => {alert("cancel")}
+      }
+    ]
+  );
+  
+  
+  }
 
 async onClickAdd(){
  this.setState({loader:true});
@@ -132,7 +152,7 @@ status
  
  if(resp){
    allOther.ToastAndroid.ToastAndroid_SB("Product Add Successful")
-   this.setState({loader:false,dialogVisible:false})
+   this.setState({setProductData:true,loader:false,dialogVisible:false})
   }else{
     this.setState({loader:false})
   }
@@ -261,11 +281,11 @@ status
 
         return(
        
-      <TouchableOpacity onPress={()=>{this.setState({dialogVisible:true,dialogClick:true})}}
-      style={{backgroundColor:"#307ecc",borderBottomEndRadius:40,borderBottomLeftRadius:40,height:65, marginTop:10,width:"90%",alignSelf:"center",alignItems:"center",justifyContent:"center"}}
+      <TouchableOpacity onPress={()=>{this.setState({setProductData:false,dialogVisible:true,dialogClick:true})}}
+      style={{backgroundColor:"#307ecc" ,height:50, marginTop:10,width:"90%",alignSelf:"center",alignItems:"center",justifyContent:"center"}}
       >
 
-   <View   style={{backgroundColor:"#307ecc",borderBottomEndRadius:40,borderBottomLeftRadius:40,alignItems:"center",flexDirection:"row",height:50,justifyContent:"center",width:"90%",alignSelf:"center",borderColor:"white",borderWidth:2.5}}>  
+   <View   style={{backgroundColor:"#307ecc",alignItems:"center",flexDirection:"row",height:40,justifyContent:"center",width:"90%",alignSelf:"center",borderColor:"white",borderWidth:1.5}}>  
 <Text style={{color:"white",fontSize:18,fontWeight:"bold"}}>Add New Product</Text>
 <MaterialIcons style={{marginLeft:10}}  size={30} color="white" name="add-circle-outline" />
     </View>
@@ -286,24 +306,32 @@ status
         let description=item.description
         let status = item.status
     
-       name  =   allOther.strLength(name,"product_name")
-       category  =   allOther.strLength(category,"category")
-         starting_Amount =   allOther.strLength(starting_Amount,"starting_amount")
+          name  =   allOther.strLength(name,"product_name")
+          category  =   allOther.strLength(category,"category")
+          starting_Amount =   allOther.strLength(starting_Amount,"starting_amount")
        
  
         return (
 
           <View style={{marginTop:20}}>
 
+
+
+<View style={{width:windowWidth-50, backgroundColor:"white",height:140, borderRadius:7,marginTop:30,elevation:10,margin:10,padding:10 }}>
+
+
+
 <TouchableOpacity 
 style={{position:"absolute",right:0,marginRight:5}}
 onPress={()=>{this.removeProducts(index)}}>
-<EvilIcons size={30} color="red" name="trash" />
+<Entypo size={26} color="#db5a5a" name="cross" />
 </TouchableOpacity>
 
-            <TouchableOpacity
+
+
+<TouchableOpacity
           //  onPress={()=>{this.props.navigation.navigate("Edit Details",{index:index,rf:()=>this.rf()})}}
-            style={{width:windowWidth-50, backgroundColor:"white",height:130, borderRadius:7,marginTop:30,elevation:10,margin:10,padding:10 }}>
+            style={{marginTop:7}}>
  
        
 
@@ -335,6 +363,11 @@ onPress={()=>{this.removeProducts(index)}}>
            
             </TouchableOpacity>
           
+
+
+</View>
+
+       
         
       
 
@@ -346,20 +379,21 @@ onPress={()=>{this.removeProducts(index)}}>
  
     
 render(){
- const {dialogClick,flastlistR}= this.state;
- const {productsData}= this.props;  
+ const {dialogClick,flastlistR,setProductData}= this.state;
+ const {productsData,userData}= this.props;  
 
  
  console.log("productsData : ",productsData)
 
 return(
       <Container  style={{backgroundColor:"#f2f2f2"}}>   
+      {setProductData  && <allOther.firebase.FireBaseFunction type={"set-products-data"} uid={userData.user.uid} /> } 
       {this.renderTopBar()}
       <Content  style={{backgroundColor:"#f2f2f2"}}>
               <ScrollView>
               {dialogClick && this.render_Add_Product()}   
            
-              {productsData.products.length<=0    
+              {productsData.products.length<=0     
               ?(
               <Text style={{fontSize:38,color:"silver",marginTop:"60%",alignSelf:"center"}} >Empty</Text>
               )

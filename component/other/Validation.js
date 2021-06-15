@@ -1,7 +1,7 @@
 
 
    function  NameValidate (name){
-    var reg = /^[a-zA-Z0-9_]{2,}[a-zA-Z]+[0-9]*$/;
+    var reg = /^[a-zA-Z ]{3,30}$/;
     if (reg.test(name) === false)
       return false;
      else
