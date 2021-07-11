@@ -64,7 +64,7 @@ const blockVendor=  (id)=>{
         let resp =  await allOther.firebase.__Update(id,"block")
          
          if(resp){
-           allOther.ToastAndroid.ToastAndroid_SB("Vendor Cancel Successful")
+           allOther.ToastAndroid.ToastAndroid_SB("Vendor Block Successful")
           } 
            setloader(false)
      
@@ -127,12 +127,9 @@ const blockVendor=  (id)=>{
         let Phone = item.phone|| ""
         let createdAt = item.createAt || ""
         let id = item.uid || ""
-       
+        let emailVerified= item.emailVerified|| ""
  
-        name  =   allOther.strLength(name,"name")
-       Phone =   allOther.strLength(Phone,"phone")
-       email  =   allOther.strLength(email,"email")
-        
+     
          
        const scale = scrollY.interpolate({
         inputRange :[

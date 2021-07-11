@@ -265,15 +265,17 @@ setloader(false);
        status,
        pid,
        createdAt:new Date(),
-       updatedAt:new Date()
+       updatedAt:new Date(),
+       block:false
         }
 
 
      let resp =  await allOther.firebase.__Add_Product(obj)
     
     if(resp){
+      clearfields()
       allOther.ToastAndroid.ToastAndroid_SB("Product Add Successful")
-      setsetProductData(true);setdialogVisible(false)
+      setsetProductData(true)
      }
       
      setloader(false)

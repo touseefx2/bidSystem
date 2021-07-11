@@ -88,6 +88,9 @@ import allActions from "../redux/allActions"
           }
           
 
+
+
+
         }else{
 
           const obj=
@@ -97,7 +100,22 @@ import allActions from "../redux/allActions"
 
           let response =   firestore().collection("users").doc(id).update(obj);
           if (response) {
-    
+
+            let bid=id;
+            firestore().collection("products").get().then(async  (d)=>{ 
+              if(d.docs){
+               d.docs.map((data)=>{
+                 const pid=data.id; //pid rndn
+                 const uid=data.data().uid; //all prdcts data                
+                 if(bid==uid)
+                 {
+                  firestore().collection("products").doc(pid).update(obj);
+                 }                
+               })
+              }
+            })
+       
+
             return true;
           }else{
             return false;
@@ -140,7 +158,7 @@ import allActions from "../redux/allActions"
   export    function FireBaseFunction (props) {
 
     const dispatch = useDispatch()
-  //  const userData = useSelector(state => state.userReducer)
+   // const userData = useSelector(state => state.userReducer)
   
     useEffect(() => {
       let type=props.type || ""
@@ -155,7 +173,11 @@ import allActions from "../redux/allActions"
       }
 
       if(type=="set-products-data"){
-        SetProductsData(uid)
+        SetProductsData(uid,"specific")
+      }
+
+      if(type=="set-all-products-data"){
+        SetProductsData(uid,"all")
       }
       
 
@@ -202,12 +224,13 @@ import allActions from "../redux/allActions"
    
   }
 
-  function SetProductsData  (uid)  {
-   
+  function SetProductsData  (uid,c)  {
     
     try {
- 
-      const unsubscribe = firestore().collection("products").onSnapshot(async  (d)=>{
+
+      if(c=="specific")
+      {
+       const unsubscribe = firestore().collection("products").onSnapshot(async  (d)=>{
        let arr=[]
        if(d){
         d.docs.map((data)=>{
@@ -226,6 +249,34 @@ import allActions from "../redux/allActions"
        dispatch(allActions.p_acton.setProducts(arr))
        //unsubscribe()
     })
+
+      }else 
+      if(c=="all")
+      {
+
+        const unsubscribe = firestore().collection("products").onSnapshot(async  (d)=>{
+          let arr=[]
+          if(d){
+           d.docs.map((data)=>{
+             
+             const id=data.id; //pid rndn
+             const u=data.data(); //all prdcts data
+             
+               const obj={id,data:u}
+               arr.push(obj)
+             
+           })
+          
+         } 
+    
+          dispatch(allActions.p_acton.setProducts(arr))
+          //unsubscribe()
+       })
+
+
+      }
+ 
+    
    
   } catch (error) {
           var errorMessage = error.message;

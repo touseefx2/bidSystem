@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useRef} from 'react';
-import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Animated,Platform,Alert,Image} from "react-native";
+import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Modal,Image} from "react-native";
 import  allOther from "../other/allOther"
 import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTitle} from 'react-native-popup-dialog';
 import ImagePicker from 'react-native-image-picker';
@@ -22,8 +22,6 @@ let  items=null;
 
     const [name, setname] = useState("")
     const [photo, setphoto] = useState("")
-    const [ imgWidth, setimgWidth] = useState(0)
-    const [ imgHeight, setimgHeight] = useState(0)
     const [category, setcategory] = useState("")
     const [description, setdescription] = useState("")
     const [startingAmount, setstartingAmount] = useState("")
@@ -32,7 +30,7 @@ let  items=null;
     const [Pid, setPid] = useState("")
 
     const [dialogVisible, setdialogVisible] = useState(false)
-    const [dialogClick, setdialogClick] = useState(false)
+
 
     const productsData = useSelector(state => state.productReducer)
 
@@ -148,7 +146,7 @@ useEffect(()=>{
       <Image style={{height: 270,width:270,borderRadius:5}} source={{uri:photo}}  />  
       <TouchableOpacity style={{
          position:"absolute",right:10,top:10, backgroundColor:"black",borderRadius:12.5,padding:2}}
-         onPress={()=>{setdialogClick(true);setdialogVisible(true)}}>
+         onPress={()=>{setdialogVisible(true)}}>
        <allOther.vectorIcon.Entypo name="resize-full-screen" color="#53ff1f" size={25} />
        </TouchableOpacity>
   </View> 
@@ -244,64 +242,48 @@ style={{backgroundColor: "black",width:100,height:40,borderRadius:20,alignItems:
       )
     }
 
+    const render_FullImage=( )=>{
 
-    const  render_FullImage = ()=>
-    {
-     
-      const check =   checkEmptyFields();
-      let ButtonEnable=false
-      if(check) 
-      ButtonEnable=true 
-      
       return(
-      <Dialog
+        <Modal
+        animationType='fade'
         visible={dialogVisible}
-        hasOverlay={true}
-        overlayOpacity={0.8}
-        footer={
-          <DialogFooter>
-            <DialogButton
-              text="Close"
-              onPress={() => {setdialogVisible(false)}}
-            />
-          </DialogFooter>
-        }
-        onHardwareBackPress={() => true}
-        dialogAnimation={new SlideAnimation({
-          slideFrom: 'bottom',
-        })}
-        dialogStyle={{backgroundColor:"white",borderRadius:10}}
-      >
- 
- 
-        <DialogContent>
- 
- <View style={{flex:1}}>
-
+        >
+    
   
-        
-        <Image style={{width: imgWidth, height: imgHeight}}  source={{uri:photo}}  /> 
-
-<TouchableOpacity  
+    <View style={{flex: 1,backgroundColor:"black"}}>
+       
+       <Image style={{position: 'absolute',
+  top: 0,
+  left: 0,
+  bottom: 0,
+  right: 0,}} resizeMode="contain"   source={{uri:photo}}  />   
+    
+    
+    <TouchableOpacity  
 onPress={()=>setdialogVisible(!dialogVisible)}
-style={{position:"absolute",top:40,backgroundColor:"black",borderRadius:25,right:20}}>
-        <allOther.vectorIcon.AntDesign  name="close" color="red" size={50} />
-</TouchableOpacity>
+style={{backgroundColor:"black",borderRadius:25,padding:5,position:"absolute",top:15,left:15}}>
+      <allOther.vectorIcon.Ionicons  name="arrow-back" color="white" size={25} />
+</TouchableOpacity> 
 
-   </View>
-        </DialogContent>
-      </Dialog>
+
+
+        </View>
     
-      )
     
+      </Modal>
+    )
+
+
     }
 
+ 
 
 return(
   <View style={{flex:1}}>
  <allOther.Header  title="" nav={props.navigation}/>
   <allOther.Loader loader={loader}/>
-  {dialogClick &&  render_FullImage()}  
+  {dialogVisible &&  render_FullImage()}  
  <ScrollView>      
           {renderProduct()}
 </ScrollView>    

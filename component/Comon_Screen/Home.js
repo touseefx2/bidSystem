@@ -16,6 +16,7 @@ import RNFetchBlob from 'rn-fetch-blob'
  
   const [setProductData, setsetProductData]         = useState(false)
   const [setAllVendorstData, setsetAllVendorstData] = useState(false)
+  const [setAllProductstData, setsetAllProductstData] = useState(false)
 
   const userData = useSelector(state => state.userReducer)
   
@@ -26,6 +27,7 @@ import RNFetchBlob from 'rn-fetch-blob'
 
    if(userData.user.type=="admin"){
       setsetAllVendorstData(true)
+      setsetAllProductstData(true)
 }
 
   },[])
@@ -35,8 +37,8 @@ return(
   <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
  
  {setProductData  && <allOther.firebase.FireBaseFunction type={"set-products-data"} uid={userData.user.uid} /> }   
- {setAllVendorstData && <allOther.firebase.FireBaseFunction type={"set-all-vendors-data"} uid={userData.user.uid} /> }   
-  
+ {setAllVendorstData && <allOther.firebase.FireBaseFunction type={"set-all-vendors-data"}  /> }   
+ {setAllProductstData && <allOther.firebase.FireBaseFunction type={"set-all-products-data"}   /> } 
 
 </View>   
 )
