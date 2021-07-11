@@ -1,39 +1,49 @@
-import React, { Component } from "react";
-import { View,TouchableOpacity,Text} from "react-native";
- import { connect} from 'react-redux'
+import React, { useEffect, useState,useRef} from 'react';
+import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Animated,TextInput,Platform,Alert,Image} from "react-native";
+import  allOther from "../other/allOther"
+import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTitle} from 'react-native-popup-dialog';
+import ImagePicker from 'react-native-image-picker';
+import DropDownPicker from 'react-native-dropdown-picker';
+import permissions from "../permissions/permissions"
+import {productCategory} from "./Category"
+import {useSelector  } from 'react-redux'
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
+import RNFetchBlob from 'rn-fetch-blob'
  
+  export default  function  Home(props)  {
+
  
- class  Home extends Component  {
+  const [setProductData, setsetProductData]         = useState(false)
+  const [setAllVendorstData, setsetAllVendorstData] = useState(false)
+
+  const userData = useSelector(state => state.userReducer)
   
-  
-render(){
- const {userData}= this.props;
+  useEffect(()=>{
+   if(userData.user.type=="vendor"){
+        setsetProductData(true)
+   }
+
+   if(userData.user.type=="admin"){
+      setsetAllVendorstData(true)
+}
+
+  },[])
+ 
+     
 return(
-      <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"white"}}>  
+  <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
  
-<TouchableOpacity >
+ {setProductData  && <allOther.firebase.FireBaseFunction type={"set-products-data"} uid={userData.user.uid} /> }   
+ {setAllVendorstData && <allOther.firebase.FireBaseFunction type={"set-all-vendors-data"} uid={userData.user.uid} /> }   
+  
 
-
-<View style={{alignSelf:"center",alignItems:"center"}}>
-<Text style={{fontSize:45,textTransform:"capitalize"}}>welcome</Text>
-<Text style={{fontSize:45,textTransform:"capitalize"}}>{userData.user.name}</Text>
-</View>
-
-
-</TouchableOpacity>
-
-      </View>
+</View>   
 )
      }
-
-  }
  
-  const mapStateToProps = state => ({
-      userData: state.userReducer
-    });
+      
+  const styles = StyleSheet.create({  
+ 
   
-    export default connect(
-      mapStateToProps,
-   null
-    )(Home);
- 
+  });  

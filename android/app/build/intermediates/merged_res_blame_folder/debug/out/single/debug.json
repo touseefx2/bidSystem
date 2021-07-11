@@ -1,42 +1,254 @@
 [
     {
-        "merged": "/Users/x2/Desktop/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "/Users/x2/Desktop/bidSystem/android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-hdpi_node_modules_reactnavigation_stack_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-hdpi/node_modules_reactnavigation_stack_node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
-        "merged": "/Users/x2/Desktop/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher_round.png.flat",
-        "source": "/Users/x2/Desktop/bidSystem/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_antdesign.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_antdesign.json"
     },
     {
-        "merged": "/Users/x2/Desktop/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "/Users/x2/Desktop/bidSystem/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-mdpi_assets_flag_ind.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-mdpi/assets_flag_ind.png"
     },
     {
-        "merged": "/Users/x2/Desktop/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher_round.png.flat",
-        "source": "/Users/x2/Desktop/bidSystem/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png"
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-xxhdpi_node_modules_reactnavigation_stack_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-xxhdpi/node_modules_reactnavigation_stack_node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
-        "merged": "/Users/x2/Desktop/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "/Users/x2/Desktop/bidSystem/android/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_reactnativevectoricons_glyphmaps_materialcommunityicons.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_reactnativevectoricons_glyphmaps_materialcommunityicons.json"
     },
     {
-        "merged": "/Users/x2/Desktop/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher_round.png.flat",
-        "source": "/Users/x2/Desktop/bidSystem/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png"
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "/Users/x2/Desktop/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "/Users/x2/Desktop/bidSystem/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-mdpi_node_modules_reactnavigation_drawer_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-mdpi/node_modules_reactnavigation_drawer_node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
-        "merged": "/Users/x2/Desktop/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "/Users/x2/Desktop/bidSystem/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_fontawesome5free.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_fontawesome5free.json"
     },
     {
-        "merged": "/Users/x2/Desktop/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher_round.png.flat",
-        "source": "/Users/x2/Desktop/bidSystem/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png"
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_evilicons.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_evilicons.json"
     },
     {
-        "merged": "/Users/x2/Desktop/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "/Users/x2/Desktop/bidSystem/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-xxxhdpi_node_modules_reactnavigation_stack_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-xxxhdpi/node_modules_reactnavigation_stack_node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_assets_bid_lottie.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/assets_bid_lottie.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_reactnativevectoricons_glyphmaps_materialicons.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_reactnativevectoricons_glyphmaps_materialicons.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_reactnativevectoricons_glyphmaps_antdesign.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_reactnativevectoricons_glyphmaps_antdesign.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-mdpi_node_modules_reactnativepaper_src_assets_backchevron.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-mdpi/node_modules_reactnativepaper_src_assets_backchevron.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-xhdpi_node_modules_reactnavigation_drawer_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-xhdpi/node_modules_reactnavigation_drawer_node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_reactnativevectoricons_glyphmaps_entypo.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_reactnativevectoricons_glyphmaps_entypo.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_foundation.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_foundation.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_reactnativevectoricons_glyphmaps_evilicons.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_reactnativevectoricons_glyphmaps_evilicons.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-xxhdpi_node_modules_reactnavigation_drawer_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-xxhdpi/node_modules_reactnavigation_drawer_node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-mdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-mdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_fontawesome5free_meta.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_fontawesome5free_meta.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_fontisto.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_fontisto.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_ionicons.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_ionicons.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_reactnativedropdownpicker_node_modules_reactnativevectoricons_glyphmaps_feather.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_reactnativedropdownpicker_node_modules_reactnativevectoricons_glyphmaps_feather.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-xxxhdpi_node_modules_reactnavigation_drawer_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-xxxhdpi/node_modules_reactnavigation_drawer_node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_fontawesome.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_fontawesome.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_reactnativevectoricons_glyphmaps_feather.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_reactnativevectoricons_glyphmaps_feather.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-mdpi_node_modules_reactnavigation_stack_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-mdpi/node_modules_reactnavigation_stack_node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-mdpi_assets_signuplogo.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-mdpi/assets_signuplogo.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-xhdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-xhdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_feather.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_feather.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-mdpi_assets_flag_pk.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-mdpi/assets_flag_pk.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_materialicons.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_materialicons.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_dist_src_basic_icon_nbicons.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_dist_src_basic_icon_nbicons.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_app.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/app.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_zocial.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_zocial.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-hdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-hdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-xhdpi_node_modules_reactnavigation_stack_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-xhdpi/node_modules_reactnavigation_stack_node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_dist_src_basic_icon_selection.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_dist_src_basic_icon_selection.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-hdpi_node_modules_reactnavigation_drawer_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-hdpi/node_modules_reactnavigation_drawer_node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-mdpi_assets_flag_armn.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-mdpi/assets_flag_armn.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_reactnativevectoricons_glyphmaps_simplelineicons.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_reactnativevectoricons_glyphmaps_simplelineicons.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-mdpi_node_modules_reactnavigation_stack_node_modules_reactnavigation_elements_src_assets_backiconmask.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-mdpi/node_modules_reactnavigation_stack_node_modules_reactnavigation_elements_src_assets_backiconmask.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-xxhdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-xxhdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-xxxhdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-xxxhdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_simplelineicons.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_simplelineicons.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_octicons.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_octicons.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_entypo.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_entypo.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_reactnativevectoricons_glyphmaps_fontisto.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_reactnativevectoricons_glyphmaps_fontisto.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_materialcommunityicons.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_nativebase_node_modules_reactnativevectoricons_glyphmaps_materialcommunityicons.json"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-mdpi_assets_flag_vtn.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-mdpi/assets_flag_vtn.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-mdpi_assets_dp.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-mdpi/assets_dp.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/drawable-mdpi_node_modules_reactnavigation_drawer_node_modules_reactnavigation_elements_src_assets_backiconmask.png.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/drawable-mdpi/node_modules_reactnavigation_drawer_node_modules_reactnavigation_elements_src_assets_backiconmask.png"
+    },
+    {
+        "merged": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/res/merged/debug/raw_node_modules_reactnativevectoricons_glyphmaps_ionicons.json.flat",
+        "source": "/Users/x2/Desktop/React Native/bidSystem/android/app/src/main/res/raw/node_modules_reactnativevectoricons_glyphmaps_ionicons.json"
     }
 ]

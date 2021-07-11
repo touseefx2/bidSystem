@@ -1564,6 +1564,15 @@
   "resolved" "https://registry.npmjs.org/@react-native/polyfills/-/polyfills-1.0.0.tgz"
   "version" "1.0.0"
 
+"@react-navigation/bottom-tabs@^6.0.0-next.20":
+  "integrity" "sha512-f8vptgo/jyka0SBrLvaoAO1g45sFSsN7ur8H3CHYmQ7r+Cmmkt32Ms2+FZblQBI0GFPW0KDn7A4PrE4515AHTg=="
+  "resolved" "https://registry.npmjs.org/@react-navigation/bottom-tabs/-/bottom-tabs-6.0.0-next.20.tgz"
+  "version" "6.0.0-next.20"
+  dependencies:
+    "@react-navigation/elements" "^1.0.0-next.19"
+    "color" "^3.1.3"
+    "warn-once" "^0.1.0"
+
 "@react-navigation/core@^6.0.0-next.13":
   "integrity" "sha512-4UrxUfpvV5cZOEuuLhJiU5CRlyUUV5/v5ed4GsBHB/SCSu6QpINyI2zFn2FKcHfbVayzry0FEUIcvIduhYSTgg=="
   "resolved" "https://registry.npmjs.org/@react-navigation/core/-/core-6.0.0-next.13.tgz"
@@ -1588,6 +1597,19 @@
   "integrity" "sha512-7Uc99uMfECTH/giKWQjKq/J3kHnML6fniOoD4LTkoqgCxpWJ9WPWNDmft/a7Kijz6uTkYiFnAgH+yXIfm7gAgg=="
   "resolved" "https://registry.npmjs.org/@react-navigation/elements/-/elements-1.0.0-next.17.tgz"
   "version" "1.0.0-next.17"
+
+"@react-navigation/elements@^1.0.0-next.19":
+  "integrity" "sha512-g3ie/FxRBR6sJKok+OR7ULXbi63H4t6j4KCi612/1+FurjByrDkw3v+zuv069XQmEDQo+TvMr7dxqBxtu0xPPg=="
+  "resolved" "https://registry.npmjs.org/@react-navigation/elements/-/elements-1.0.0-next.19.tgz"
+  "version" "1.0.0-next.19"
+
+"@react-navigation/material-top-tabs@^6.0.0-next.16":
+  "integrity" "sha512-KsTSYlN6iGWdaG/CTLQnnjZ7pya55WQkrDMklsTPmx2ULqjiNCa9NW9DshP6ozYNt3deKoFqM5Dy0LakgYazHw=="
+  "resolved" "https://registry.npmjs.org/@react-navigation/material-top-tabs/-/material-top-tabs-6.0.0-next.16.tgz"
+  "version" "6.0.0-next.16"
+  dependencies:
+    "color" "^3.1.3"
+    "warn-once" "^0.1.0"
 
 "@react-navigation/native@^6.0.0", "@react-navigation/native@^6.0.0-next.13":
   "integrity" "sha512-NCGw4ZuD7gK0cAHcBr+VwBEs/EKDk3dmK+CHGJ+BJ4f2NR9uZZPZ38I6A3JlDVXPmx1woXdDb+MgZevJkIjWng=="
@@ -2507,6 +2529,11 @@
   "integrity" "sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw=="
   "resolved" "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
   "version" "1.0.2"
+
+"base-64@0.1.0":
+  "integrity" "sha1-eAqZyE59YAJgNhURxId2E78k9rs="
+  "resolved" "https://registry.npmjs.org/base-64/-/base-64-0.1.0.tgz"
+  "version" "0.1.0"
 
 "base@^0.11.1":
   "integrity" "sha512-5T6P4xPgpp0YDFvSWwEZ4NoE3aM4QBQXDzmVbraCkFj8zHM+mba8SyqB5DbZWyR7mYHo6Y7BdQo3MoA4m0TeQg=="
@@ -4064,6 +4091,18 @@
     "inflight" "^1.0.4"
     "inherits" "2"
     "minimatch" "^3.0.4"
+    "once" "^1.3.0"
+    "path-is-absolute" "^1.0.0"
+
+"glob@7.0.6":
+  "integrity" "sha1-IRuvr0nlJbjNkyYNFKsTYVKz9Xo="
+  "resolved" "https://registry.npmjs.org/glob/-/glob-7.0.6.tgz"
+  "version" "7.0.6"
+  dependencies:
+    "fs.realpath" "^1.0.0"
+    "inflight" "^1.0.4"
+    "inherits" "2"
+    "minimatch" "^3.0.2"
     "once" "^1.3.0"
     "path-is-absolute" "^1.0.0"
 
@@ -6789,6 +6828,11 @@
   dependencies:
     "prop-types" "^15.5.10"
 
+"react-native-pager-view@*", "react-native-pager-view@^5.2.1", "react-native-pager-view@>= 4.0.0":
+  "integrity" "sha512-6aqsVr6Z4MjYP57lMwNEurlOPah0Lw34L6x+/nI6SxY+wyqZI+uaEB7sWS5EIcgQ9cGKMo925LnVWd6Xilu33A=="
+  "resolved" "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-5.2.1.tgz"
+  "version" "5.2.1"
+
 "react-native-paper@^4.9.1":
   "integrity" "sha512-vGgNvQE/GlNSjwJw+1LW0yoULTh7enxln16bYfOoI9Xiz1NOKxhfyQN0/LlZn7JFhRdbXW+3+6yMBJ50Emt+ng=="
   "resolved" "https://registry.npmjs.org/react-native-paper/-/react-native-paper-4.9.1.tgz"
@@ -6854,6 +6898,11 @@
   "integrity" "sha512-QOZNmJUn0ViBGU+at7wAG/uGzd5PfXi0kMHr9lfTCLXknW/f9f2fOVjxjdHvOCdf/zA/eMJBjGjtusSDzQf1+w=="
   "resolved" "https://registry.npmjs.org/react-native-simple-radio-button/-/react-native-simple-radio-button-2.7.4.tgz"
   "version" "2.7.4"
+
+"react-native-tab-view@^3.0.1", "react-native-tab-view@>= 3.0.0":
+  "integrity" "sha512-L7qXtYz5Z+NdWyu38zaJrlHA/8H6rNFRZXe3ydym12UEEPPoefbVZ71b9YK2O6QP0u4pUlzMpMVM/Lsz2DJ4jg=="
+  "resolved" "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-3.0.1.tgz"
+  "version" "3.0.1"
 
 "react-native-vector-icons@*", "react-native-vector-icons@^6.6.0":
   "integrity" "sha512-LKdwqDIGVxV1+4HnmFIPaok9hba3WyTQ7H2Wj5RFv54zIdIjixrAiV9VD/Ej9Mc5/rUhTpmMiIVF3LVmVYD7dg=="
@@ -7295,6 +7344,14 @@
   "integrity" "sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI="
   "resolved" "https://registry.npmjs.org/rimraf/-/rimraf-2.2.8.tgz"
   "version" "2.2.8"
+
+"rn-fetch-blob@^0.12.0":
+  "integrity" "sha512-+QnR7AsJ14zqpVVUbzbtAjq0iI8c9tCg49tIoKO2ezjzRunN7YL6zFSFSWZm6d+mE/l9r+OeDM3jmb2tBb2WbA=="
+  "resolved" "https://registry.npmjs.org/rn-fetch-blob/-/rn-fetch-blob-0.12.0.tgz"
+  "version" "0.12.0"
+  dependencies:
+    "base-64" "0.1.0"
+    "glob" "7.0.6"
 
 "rsvp@^4.8.4":
   "integrity" "sha512-nfMOlASu9OnRJo1mbEk2cz0D56a1MBNrJ7orjRZQG10XDyuvwksKbuXNp6qa+kbn839HwjwhBzhFmdsaEAfauA=="

@@ -7,12 +7,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { connect} from 'react-redux'
 import allStack from "./component/Stack/allStack"
 import allOther from "./component/other/allOther";
-// import auth from '@react-native-firebase/auth';
-// import database from '@react-native-firebase/database';
-// import firestore from '@react-native-firebase/firestore';
+import CheckVerification from "./component/Comon_Screen/CheckVerification";
  
- 
-
  
 const RootStack = createStackNavigator();
 
@@ -63,17 +59,39 @@ render()
     headerShown: false
   }}>
 
-     {(userData.length<=0 || userData.user.length<=0 ) && (
+     {(userData.length<=0 || userData.user.length<=0 || userData.user==[] ) && (
       <RootStack.Screen name='Login_Stack' component={allStack.Login_Stack}/> 
       )} 
 
-    {(userData.user && userData.user.type=="user") && (
-    <RootStack.Screen name='User_Stack' component={allStack.User_Stack}/>
+    {/* {(userData.user  &&  userData.user.emailVerified==false) && (
+    <RootStack.Screen name='CheckVerification' component={CheckVerification}/>
+     )} */}
+
+    {/* {(userData.user && userData.user.type=="vendor" && userData.user.emailVerified) && (
+    <RootStack.Screen name='Vendor_Stack' component={allStack.Vendor_Stack}/>
      )}   
+
+{(userData.user && userData.user.type=="vendor" && userData.user.emailVerified) && (
+    <RootStack.Screen name='Bidder_Stack' component={allStack.Bidder_Stack}/>
+     )} 
  
-    {(userData.user && userData.user.type=="admin") && (
+    {(userData.user && userData.user.type=="admin" && userData.user.emailVerified) && (
         <RootStack.Screen name='Admin_Stack' component={allStack.Admin_Stack}/>
         )}
+  */}
+
+     {(userData.user && userData.user.type=="vendor" ) && (
+    <RootStack.Screen name='Vendor_Stack' component={allStack.Vendor_Stack}/>
+     )}   
+
+{(userData.user && userData.user.type=="bidder"  ) && (
+    <RootStack.Screen name='Bidder_Stack' component={allStack.Bidder_Stack}/>
+     )} 
+ 
+    {(userData.user && userData.user.type=="admin" ) && (
+        <RootStack.Screen name='Admin_Stack' component={allStack.Admin_Stack}/>
+        )}
+ 
 
 
 </RootStack.Navigator>

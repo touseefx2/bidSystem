@@ -6,7 +6,8 @@ import {PhoneModalComponent} from "./PhoneModel"
 import Validation from "./Validation"
 import ToastAndroid from "./ToastAndroid"
 import {strLength} from "./strLength"
-
+import vectorIcon from "./vectorIcon"
+import { Header } from "./header"
 
 const allOther =
 {
@@ -17,7 +18,9 @@ AlertMessage,
 PhoneModalComponent,
 Validation,
 ToastAndroid,
-strLength
+strLength,
+vectorIcon,
+Header
 }
 
 export  default allOther;

@@ -1,6 +1,6 @@
 import React   from "react";
 import { View,Image,Text} from "react-native";
-import {phoneModelOptionTextColor} from "../Login_Stack_Screen/SignupScreen"
+import {phoneModelOptionTextColor} from "../Login_Stack_Screen/SignupScreen_V"
  
 export function  PhoneModalComponent(props){
     return(

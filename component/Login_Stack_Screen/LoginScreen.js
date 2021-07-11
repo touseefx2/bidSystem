@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import allOther from "../other/allOther"
 import { connect} from 'react-redux'
- 
+import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTitle} from 'react-native-popup-dialog';
 
 //text
 const title= "Bidding System"
@@ -85,7 +85,10 @@ uid:null,
 //out focus color of input field
 emailInputFieldborderColor:null,
 passwordInputFieldborderColor:null,
-loader:false
+loader:false,
+//SIGNUP MODAL
+clkD:false,
+loadD:false,
 };
  
 }
@@ -233,6 +236,65 @@ if(checkEmptyFields)
 
 }
  
+renderSignupModal()
+{
+  return(
+  <Dialog
+  footer={
+    <DialogFooter>
+      <DialogButton
+        text="Cancel"
+        textStyle={{color:"#307ecc"}}
+        onPress={() => {
+          this.setState({loadD: false })
+        }}
+      />
+    </DialogFooter>
+  }
+  dialogAnimation={new SlideAnimation({
+    slideFrom: 'bottom',
+    initialValue: 600, // optional
+    useNativeDriver: true, // optional
+  })}
+   dialogTitle={<DialogTitle title="Sign Up"/>}
+    visible={this.state.loadD}
+    style={{padding:10}}
+    onHardwareBackPress={() => true}
+  >
+    <DialogContent style={{width:Dimensions.get('window').width - 50,borderRadius:10}}>
+
+ <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+
+ <TouchableOpacity 
+ onPress={()=>{
+  this.setState({loadD:false})
+  setTimeout( () => {
+ this.goToNextScreen("SignupScreen_V")
+  }, 200)}}
+ style={{elevation:3,width:130,height:130,padding:0,margin:5,borderRadius:10,justifyContent:"center",alignItems:"center"}}>
+ <Image   source={require("../../assets/vendor.png")} style={{width:80, height:80}}   /> 
+ <Text style={{fontWeight:"bold"}}>Vendor</Text>
+ </TouchableOpacity>
+
+ <TouchableOpacity 
+ onPress={()=>{
+  this.setState({loadD:false})
+  setTimeout( () => {
+    this.goToNextScreen("SignupScreen_B")
+  }, 200)}}
+ style={{elevation:3,width:130,height:130,padding:5,margin:5,borderRadius:10,justifyContent:"center",alignItems:"center"}}>
+ <Image  source={require("../../assets/bidder.png")} style={{width:80, height:80}}   /> 
+ <Text style={{fontWeight:"bold"}}>Bidder</Text>
+ </TouchableOpacity>
+ 
+ </View>
+ 
+    </DialogContent> 
+  </Dialog>
+
+  )
+
+}
    
 ForgottenPaswwordClick(){
 this.goToNextScreen("ForgotPassword")
@@ -315,13 +377,15 @@ return(
 renderLogin()
 {
   const { email,password,isHidePassword,emailF,passwordF,emailV,passwordV,emailInputFieldborderColor,
-  passwordInputFieldborderColor,darkMode,isInternetConnected} = this.state;
+  passwordInputFieldborderColor,darkMode,isInternetConnected,clkD,loadD} = this.state;
  
 
   return(
     <Container style={{backgroundColor:!darkMode ? containerBackgroundColor:dmcontainerBackgroundColor}}>
    
         <Content>
+
+          {clkD && this.renderSignupModal()}
 
 <View style={{position:"absolute",marginTop:"2%",right:0,marginRight:10,flexDirection:"row",alignItems:"center"}}>
  
@@ -389,7 +453,7 @@ renderLogin()
  
 <View style={{flexDirection:"row",alignItems:"center",marginTop:"7%",alignSelf:"center",marginBottom:10}}>
 <Text style={{fontSize:button2FontSize,color:!darkMode?button2LeftTextColor:dmbutton2LeftTextColor}}>Don't have an account? </Text>
-<TouchableOpacity     onPress={()=>this.goToNextScreen("SignupScreen")}>
+<TouchableOpacity     onPress={()=>this.setState({clkD:true,loadD:true}) }>
 <Text style={{fontSize:button2FontSize,color:darkMode?button2TextColor:dmbutton2TextColor,fontWeight:"bold"}}>{button2Title}</Text>
 </TouchableOpacity>
 </View>
@@ -406,7 +470,6 @@ renderLogin()
       return (
         <View style={{ flex: 1,backgroundColor:!darkMode ? containerBackgroundColor:dmcontainerBackgroundColor}}>
           {setUserData         && <allOther.firebase.FireBaseFunction type={"set-user-data"} uid={uid} /> } 
-          {setUserData         && <allOther.firebase.FireBaseFunction type={"set-products-data"} uid={uid} /> }     
           {(userData.length<=0 || userData.user.length<=0   ) && <allOther.Loader loader={loader} /> }
           {this.renderLogin()}
           {!isInternetConnected && this.renderShowInternetErrorAlert("No internet connection","Please connect internet.")}

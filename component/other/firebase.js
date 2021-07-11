@@ -56,6 +56,7 @@ import allActions from "../redux/allActions"
         try {    
        let response =   firestore().collection("products").add(product)
           if (response) {
+    
            // AlertMessage.alert("Success ✅", "Authenticated successfully")
             return response;
           }else{
@@ -72,7 +73,69 @@ import allActions from "../redux/allActions"
          
         }
       }
+
+      const __Update= async (id,obj) => {
+        try {    
+
+          if(obj!="block"){
+ 
+       let response =   firestore().collection("products").doc(id).update(obj);
+          if (response) {
+    
+            return true;
+          }else{
+            return false;
+          }
+          
+
+        }else{
+
+          const obj=
+          {
+            block:true
+          }
+
+          let response =   firestore().collection("users").doc(id).update(obj);
+          if (response) {
+    
+            return true;
+          }else{
+            return false;
+          }
+
+        }
+
+        } catch (error) {
+              var errorMessage = error.message;
+              var si  = errorMessage.indexOf("]")+1
+              var  ei  = errorMessage.length -1
+              const msg = errorMessage.substr(si,ei)
+              allOther.AlertMessage("",msg)
+              return false;
+         
+        }
+      }
       
+      const __Remove_Item = async (id) => {
+        try {    
+       let response =   firestore().collection("products").doc(id).delete();
+          if (response) {
+           // AlertMessage.alert("Success ✅", "Authenticated successfully")
+            return true;
+          }else{
+            return false;
+          }
+          
+        } catch (error) {
+              var errorMessage = error.message;
+              var si  = errorMessage.indexOf("]")+1
+              var  ei  = errorMessage.length -1
+              const msg = errorMessage.substr(si,ei)
+              allOther.AlertMessage("",msg)
+              return false;
+         
+        }
+      }
  
   export    function FireBaseFunction (props) {
 
@@ -95,6 +158,10 @@ import allActions from "../redux/allActions"
         SetProductsData(uid)
       }
       
+
+      if(type=="set-all-vendors-data"){
+       SetAllVendorsData()
+      }
    
 
     }, [])
@@ -103,14 +170,25 @@ import allActions from "../redux/allActions"
   function SetUserData  (uid)  {
    
   try {
-    const unsubscribe = firestore().collection("users").doc(uid).onSnapshot(async  (doc)=>{
+    const db=firestore().collection("users").doc(uid)
+    const unsubscribe = db.onSnapshot(async  (doc)=>{
     let  data= []
     if(doc.exists){
      data = doc.data()
      }  
-     
+
+     const unsub =   auth().onAuthStateChanged( async (user)=> {
+      if (user) {
+       db.update({
+          emailVerified:user.emailVerified
+        })
+                }  
+ });
+
+  
      dispatch(allActions.u_action.setUser(data))
      //unsubscribe()
+     unsub();
   })
  
 } catch (error) {
@@ -129,17 +207,22 @@ import allActions from "../redux/allActions"
     
     try {
  
-      const unsubscribe = firestore().collection("products").onSnapshot(async  (d )=>{
+      const unsubscribe = firestore().collection("products").onSnapshot(async  (d)=>{
        let arr=[]
-       if(d.docs){
+       if(d){
         d.docs.map((data)=>{
+          
+          const id=data.id;
           const u=data.data();
-          if(u.uid==uid)
-          {arr.push(u)}
+          if(u.uid == uid)
+          {
+            const obj={id,data:u}
+            arr.push(obj)
+          }
         })
        
-      }
-      
+      } 
+ 
        dispatch(allActions.p_acton.setProducts(arr))
        //unsubscribe()
     })
@@ -154,6 +237,37 @@ import allActions from "../redux/allActions"
      
      
     }
+
+    function SetAllVendorsData  ()  {
+  
+      try {
+   
+        const unsubscribe = firestore().collection("users").where("type", '==', "vendor").onSnapshot(async  (d)=>{
+         let arr=[]
+         if(d){
+          d.docs.map((dd)=>{
+            
+             const data=dd.data();
+              arr.push(data)
+             
+          })
+         
+        } 
+   
+         dispatch(allActions.v_action.setVendors(arr))
+         //unsubscribe()
+      })
+     
+    } catch (error) {
+            var errorMessage = error.message;
+            var si  = errorMessage.indexOf("]")+1
+            var  ei  = errorMessage.length -1
+            const msg = errorMessage.substr(si,ei)
+             allOther.AlertMessage("",msg)
+      }
+       
+       
+      }
 
   function LogOut()  {
     console.log("logout functn call")
@@ -188,7 +302,10 @@ import allActions from "../redux/allActions"
     __doSingIn,
     __doSingUp,
     FireBaseFunction,
-    __Add_Product 
+    __Add_Product ,
+    __Remove_Item,
+    __Update,
+ 
   }
 
   export default firebase;

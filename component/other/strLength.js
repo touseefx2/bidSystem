@@ -5,7 +5,10 @@ if(type=="name"){
     return 18 
 }
 else if(type=="phone"){   
-    return 20
+    return 22
+}
+else if(type=="email"){   
+    return 32
 }
 else if(type=="city"){
     return 22

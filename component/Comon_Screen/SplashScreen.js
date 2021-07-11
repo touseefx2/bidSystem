@@ -69,7 +69,6 @@ componentDidMount(){
       <View style={{flex:1,backgroundColor:!darkMode?containerBackgroundColor:dmcontainerBackgroundColor}}>
  
  {setUserData   && <allOther.firebase.FireBaseFunction type={"set-user-data"} uid={uid} /> } 
- {setUserData   && <allOther.firebase.FireBaseFunction type={"set-products-data"} uid={uid} /> } 
  
 <View style={{alignSelf:"center",marginTop:"8%"} }>
 

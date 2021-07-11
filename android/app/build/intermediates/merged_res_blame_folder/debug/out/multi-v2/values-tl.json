@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/x2/Desktop/bidSystem/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-tl/values-tl.xml",
+            "outputFile": "/Users/x2/Desktop/React Native/bidSystem/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-tl/values-tl.xml",
             "map": [
                 {
                     "source": "/Users/x2/.gradle/caches/transforms-2/files-2.1/9417d41dde92678ab8488ec0684ca850/jetified-play-services-base-17.1.0/res/values-tl/values.xml",
