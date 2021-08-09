@@ -11,7 +11,8 @@ import Active_Product from "../Vendor_Stack_Screen/Active_Product";
 import History_Product from "../Vendor_Stack_Screen/History_Product";
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
+import View_Product from "../Vendor_Stack_Screen/View_Product"
+import Profile from "../Comon_Screen/Profile"
 
 const headerColor="#307ecc"
 const headerTextColor="white"
@@ -33,6 +34,7 @@ const Drawer  = createDrawerNavigator();
     >
     
         <Drawer.Screen  name="Home" component={Home} options={homeIcon} />
+         <Drawer.Screen name="Profile" component={Profile}  options={profileIcon}  />
          <Drawer.Screen name="Products" component={AddProducts_Stack}  options={add_product_icon} />
          <Drawer.Screen name="Status" component={ProducStatus_Stack}  options={productStatus_icon} />
         <Drawer.Screen name="Logout" component={logout}  options={logoutIcon}  />
@@ -64,6 +66,46 @@ const Drawer  = createDrawerNavigator();
 }
 
 
+
+const ActiveProducts_Stack = ()=> 
+{
+    return(
+   <Stack.Navigator 
+       initialRouteName="Active_Products"
+       screenOptions={{
+         animationEnabled: true
+       }}
+       headerMode='none'
+   >
+
+       <Stack.Screen name="Active_Products" component={Active_Product} />
+       <Stack.Screen name="View_Products"   component={View_Product}  />
+        
+  
+   </Stack.Navigator>
+    )
+}
+
+
+const HistoryProducts_Stack = ()=> 
+{
+    return(
+   <Stack.Navigator 
+       initialRouteName="History_Products"
+       screenOptions={{
+         animationEnabled: true
+       }}
+       headerMode='none'
+   >
+
+       <Stack.Screen name="History_Products" component={History_Product} />
+       <Stack.Screen name="View_Products"   component={View_Product}  />
+        
+  
+   </Stack.Navigator>
+    )
+}
+
 const Tab =  createMaterialTopTabNavigator();
 
 const ProducStatus_Stack = ()=> 
@@ -71,8 +113,8 @@ const ProducStatus_Stack = ()=>
   
     return (
       <Tab.Navigator initialRouteName="Active_Product">
-        <Tab.Screen name="Active" component={Active_Product} />
-        <Tab.Screen name="History" component={History_Product} />
+        <Tab.Screen name="Active" component={ActiveProducts_Stack} />
+        <Tab.Screen name="History" component={HistoryProducts_Stack} />
       </Tab.Navigator>
     )
   
@@ -103,6 +145,17 @@ const logoutIcon = {
   drawerIcon: ({ focused, size}) => (
     <allOther.vectorIcon.SimpleLineIcons
       name="logout"
+      size={iconSize}
+      color={focused ? iconfocuscolor : iconunfocuscolor}  
+    />
+  )
+}
+
+const profileIcon = {
+  headerShown: false,
+  drawerIcon: ({ focused, size}) => (
+    <allOther.vectorIcon.Fontisto
+      name="person"   
       size={iconSize}
       color={focused ? iconfocuscolor : iconunfocuscolor}  
     />

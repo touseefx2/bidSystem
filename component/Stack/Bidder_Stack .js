@@ -4,11 +4,15 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Home from "../Comon_Screen/Home"
 import logout from "../Comon_Screen/logout";
 import Products  from "../Bidder_Stack_Screen/Products"
+import History from "../Bidder_Stack_Screen/History";
+import allOther from "../other/allOther";
 import CustomDrawerContent from "../Comon_Screen/CustomDrawerContent";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import Profile from "../Comon_Screen/Profile"
+import View_Product from "../Bidder_Stack_Screen/View_Product";
+import { createStackNavigator } from '@react-navigation/stack';
 
 const headerColor="#307ecc"
 const headerTextColor="white"
@@ -30,7 +34,9 @@ const Drawer  = createDrawerNavigator();
     >
     
         <Drawer.Screen  name="Home" component={Home} options={homeIcon} />
-         <Drawer.Screen name="Add_Products" component={Products}  options={add_product_icon} />
+        <Drawer.Screen name="Profile" component={Profile}  options={profileIcon}  />
+         <Drawer.Screen name="Products" component={Products_Stack}  options={product_icon} />
+         {/* <Drawer.Screen name="History" component={History_Stack}  options={history_icon} /> */}
         <Drawer.Screen name="Logout" component={logout}  options={logoutIcon}  />
     </Drawer.Navigator>
  )
@@ -38,10 +44,47 @@ const Drawer  = createDrawerNavigator();
  
 
 
+ const Stack = createStackNavigator();
 
+  const Products_Stack = ()=> 
+{
+    return(
+   <Stack.Navigator 
+       initialRouteName="Product"
+       screenOptions={{
+         animationEnabled: true
+       }}
+       headerMode='none'
+   >
 
+       <Stack.Screen name="Product" component={Products} />
+       <Stack.Screen name="View_Product" component={View_Product}  />
+        
+  
+   </Stack.Navigator>
+    )
+}
 
+const History_Stack = ()=> 
+{
+    return(
+   <Stack.Navigator 
+       initialRouteName="Histor"
+       screenOptions={{
+         animationEnabled: true
+       }}
+       headerMode='none'
+   >
 
+       <Stack.Screen name="History" component={History} />
+       <Stack.Screen name="View_Product" component={View_Product}  />
+        
+  
+   </Stack.Navigator>
+    )
+}
+
+ 
  
  const homeIcon = {
   headerStyle: {
@@ -73,7 +116,7 @@ const logoutIcon = {
   )
 }
 
-const add_product_icon = {
+const  product_icon = {
   headerStyle: {
     backgroundColor: headerColor, //Set Header color
 },
@@ -88,6 +131,36 @@ headerTitleStyle: {
       size={iconSize}
       color={focused ? iconfocuscolor : iconunfocuscolor}
      
+    />
+  )
+}
+
+const  history_icon = {
+  headerStyle: {
+    backgroundColor: headerColor, //Set Header color
+},
+headerTintColor: headerTextColor, //Set Header text color
+headerTitleStyle: {
+    fontWeight: 'bold', //Set Header text style
+},
+ 
+  drawerIcon: ({ focused, size }) => (
+    <Ionicons
+      name="add-circle-outline"
+      size={iconSize}
+      color={focused ? iconfocuscolor : iconunfocuscolor}
+     
+    />
+  )
+}
+
+const profileIcon = {
+  headerShown: false,
+  drawerIcon: ({ focused, size}) => (
+    <allOther.vectorIcon.Fontisto
+      name="person"   
+      size={iconSize}
+      color={focused ? iconfocuscolor : iconunfocuscolor}  
     />
   )
 }

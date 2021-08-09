@@ -2,7 +2,6 @@ import React, { useEffect, useState,useRef} from 'react';
 import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Animated,TextInput,Platform,Alert,Image} from "react-native";
 import  allOther from "../other/allOther"
 import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTitle} from 'react-native-popup-dialog';
-import ImagePicker from 'react-native-image-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import permissions from "../permissions/permissions"
 import {productCategory} from "./Category"
@@ -10,6 +9,8 @@ import {useSelector  } from 'react-redux'
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import RNFetchBlob from 'rn-fetch-blob'
+import DeviceInfo from 'react-native-device-info';
+import ImagePicker from "react-native-customized-image-picker"; 
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -27,8 +28,7 @@ const cardHeight=110;
   const [pids, setpids] = useState([]) //for check random id not match other product
   const listViewRef = useRef(); 
   const [name, setname] = useState("")
-  const [photo, setphoto] = useState("")
-  const [photoName, setphotoName] = useState("")
+  const [photo, setphoto] = useState([])
   const [category, setcategory] = useState("")
   const [description, setdescription] = useState("")
   const [startingAmount, setstartingAmount] = useState("")
@@ -37,26 +37,31 @@ const cardHeight=110;
   const [dialogVisible, setdialogVisible] = useState(false)
   const [dialogClick, setdialogClick] = useState(false)
   const [loader, setloader] = useState(true)
-  const [setProductData, setsetProductData] = useState(false)
  
-  
+ 
   const scrollY= useRef(new Animated.Value(0)).current;
   const productsData = useSelector(state => state.productReducer)
   const userData = useSelector(state => state.userReducer)
  
+
+  const [apiLevel,setapiLevel]=useState("");
+  const getDeviceInfo=()=>{
+    DeviceInfo.getApiLevel().then((apiLevel) => {
+       setapiLevel(apiLevel)
+    });
+  }
+
   useEffect(()=>{
-  
-  addItemCategory() ;
+  getDeviceInfo();
+  addItemCategory();
   getProductsId();
 setTimeout(() => {
   setloader(false)
 }, 800);
 
- 
   },[])
 
  
-
   const random=()=>{
     const min = 1;
     const max = 1000000000;
@@ -85,37 +90,67 @@ setTimeout(() => {
  const  uploadImage_android = async () =>
   {
    
-     permissions.requestWriteInternalStorage()
+     permissions.requestReadExternalStorage()
   
-    let options = {
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-  
-    try {
-      
 
-      ImagePicker.launchImageLibrary(options ,async (response) => {
-       // console.log("response : => ",response)
-        if (response.didCancel) {
-          allOther.ToastAndroid.ToastAndroid_SB("Cancel")
-        } else if (response.error) {
-          allOther.ToastAndroid.ToastAndroid_SB(response.error.toString())
-          console.log('ImagePicker Error: ', response.error);
-        } else{
-          const URI =   response.uri ;
-          const s   =  response.fileName ;   
-          setphoto(URI);setphotoName(s)
+     try {
+        
+      ImagePicker.openPicker({
+        multiple: true,
+        maxSize:4,
+        imageLoader:"UNIVERSAL"
+      }).then(res => {
+        
+        console.log("res : ",res)
+        if(res){
+    
+          let arr=[]
+          res.map((e,i,a)=>{
+          let obj={path:e.path};
+          arr.push(obj)
+          })
+
+          setphoto(arr);
+       
+     
         }
+    
+
       });
+    
 
     } catch (error) {
+      console.log("photo picker imgepckr error : ",error)
+    }
+
+
+    // let options = {
+    //   storageOptions: {
+    //     skipBackup: true,
+    //     path: 'images',
+    //   },
+    // };
+  
+//     try {
       
 
-console.log("select image catch error : ",error)
-    }
+//       ImagePicker.launchImageLibrary(options ,async (response) => {
+//        // console.log("response : => ",response)
+//         if (response.didCancel) {
+//           allOther.ToastAndroid.ToastAndroid_SB("Cancel")
+//         } else if (response.error) {
+//           allOther.ToastAndroid.ToastAndroid_SB(response.error.toString())
+//           console.log('ImagePicker Error: ', response.error);
+//         } else{
+//           const URI =   response.uri ;
+//           const s   =  response.fileName ;   
+//           setphoto(URI);setphotoName(s)
+//         }
+//       });
+
+//     } catch (error) {
+// console.log("select image catch error : ",error)
+//     }
    
   }
   
@@ -132,12 +167,12 @@ console.log("select image catch error : ",error)
 }
 
   const clearfields =()=>{
+    setloader(false)
     setdialogVisible(false);
     setname("");
     setcategory("");
-    setstatus("");
     setdescription("");
-    setphoto("");setphotoName("");
+    setphoto([]) ;
     setstartingAmount("");setauction("");
 
 }
@@ -169,7 +204,7 @@ const removeProducts=  (id)=>{
          
         try {
           setloader(true);
-          let resp =  await allOther.firebase.__Remove_Item(id)
+          let resp =  await allOther.firebase.__Remove_Item(id,"products")
          
          if(resp){
            allOther.ToastAndroid.ToastAndroid_SB("Product Cancel Successful")
@@ -237,6 +272,7 @@ setloader(false);
 
  const  onClickAdd = async (url)=>{
       
+  
     try {
       let photo=url;
       let pid="";
@@ -266,19 +302,21 @@ setloader(false);
        pid,
        createdAt:new Date(),
        updatedAt:new Date(),
-       block:false
+       block:false,
+
         }
 
-
+        setdialogVisible(false);
      let resp =  await allOther.firebase.__Add_Product(obj)
-    
+      
     if(resp){
-      clearfields()
       allOther.ToastAndroid.ToastAndroid_SB("Product Add Successful")
+      clearfields()
       setsetProductData(true)
      }
       
      setloader(false)
+     setdialogVisible(false);
     } catch (error) {
       setloader(false)
      console.log("addprdct error try cath ==> ",error)
@@ -287,6 +325,22 @@ setloader(false);
     
    }
   
+   const renderPhotos=()=>{
+
+     let p=  photo.map((e,i,a)=>{
+      console.log(e.path)
+      return(
+        <View style={{marginLeft:10,marginRight:10}}>
+       <TouchableOpacity style={{marginLeft:"50%"}} onPress={()=>{ photo.splice(i,1)}}>
+      <allOther.vectorIcon.Entypo size={33} color="red" name="cross" />
+      </TouchableOpacity>
+      <Image source={{uri:e.path}} resizeMode={"contain"} style={{width:200,height:170}} />
+     </View> 
+      )
+    })
+
+    return p;
+   }
    
   const  render_Add_Product = ()=>
    {
@@ -329,8 +383,8 @@ setloader(false);
 
        <allOther.Loader loader={loader} /> 
 
-       <DialogContent style={{width:windowWidth-50,alignItems:"center",justifyContent:"center"}}>
-
+       <DialogContent style={{width:windowWidth-50,height:windowHeight/1.3 ,alignItems:"center",justifyContent:"center"}}>
+       <ScrollView>
      <View style={{padding:5,marginTop:15,alignSelf:"center"}}>
   
   
@@ -373,10 +427,12 @@ setloader(false);
        scrollEnabled={true}
  />
 
+ 
 
+ 
     </View>
 
- {photo=="" 
+ {photo.length<=0 
  ? (
    <TouchableOpacity 
    onPress={()=>{ uploadImage_android()}}
@@ -386,16 +442,18 @@ setloader(false);
    </TouchableOpacity>
  ) 
  :(
- <View  style={{marginTop:30,alignSelf:"center"}} >
-   <TouchableOpacity style={{marginLeft:"50%"}} onPress={()=>{setphoto("");setphotoName("")}}>
-  <allOther.vectorIcon.Entypo size={33} color="red" name="cross" />
-  </TouchableOpacity>
-  <Image source={{uri:photo}} resizeMode={"contain"} style={{width:200,height:170}} />
- </View> 
+   <ScrollView horizontal={true}>
+{
+ renderPhotos()
+}
+
+   </ScrollView>
+
  ) 
  }
-
+ </ScrollView>
        </DialogContent>
+ 
      </Dialog>
    
      )
@@ -451,13 +509,17 @@ setloader(false);
        
       const    RenderProducts  = () => { 
     
+         let c= false;
          let product  =   productsData.products.map((item,index)=>{
         
+          if(item.data.status=="pending"){
+
+        c=true;    
         let name = item.data.name || ""
         let status = item.data.status || ""
         let id=item.id || ""
         let Pid=item.data.pid
-         name  =   allOther.strLength(name,"name")
+        name  =   allOther.strLength(name,"name")
         
        const scale = scrollY.interpolate({
         inputRange :[
@@ -539,10 +601,16 @@ style={{position:"absolute",right:0,marginRight:5}}
       
  
              )
-
+          }
+ 
        })
     
-  return  product;
+   if(c){
+    return  product;
+   }  else{
+     return    <Text style={{fontSize:38,color:"silver",marginTop:"60%",alignSelf:"center"}} >Empty</Text>
+   }  
+  
 
       }
        
@@ -550,7 +618,7 @@ style={{position:"absolute",right:0,marginRight:5}}
 return(
   <View style={{flex:1}}>
  
- {setProductData  && <allOther.firebase.FireBaseFunction type={"set-products-data"} uid={userData.user.uid} /> }   
+    
  {renderUp()} 
   <allOther.Loader loader={loader}/>
 

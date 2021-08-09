@@ -115,7 +115,7 @@ useEffect(()=>{
           category
            }
 
-        let resp =  await allOther.firebase.__Update(pid,obj)
+        let resp =  await allOther.firebase.__Update(pid,obj,"products")
  
         if(resp){
           allOther.ToastAndroid.ToastAndroid_SB("Update Successful")

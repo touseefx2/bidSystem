@@ -4,6 +4,9 @@ const assignL = (type)=>{
 if(type=="name"){  
     return 18 
 }
+if(type=="bname"){  
+    return 24
+}
 else if(type=="phone"){   
     return 22
 }

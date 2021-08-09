@@ -9,7 +9,7 @@ return(
     visible={props.loader}
     >
 
-    <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.7)', justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', justifyContent: 'center', alignItems: 'center' }}>
   
     <ActivityIndicator
      size='large'

@@ -1,7 +1,8 @@
 import React, { useEffect, useState,useRef} from 'react';
 import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Animated,TextInput ,Alert,Image,StatusBar} from "react-native";
 import  allOther from "../other/allOther"
-import {useSelector  } from 'react-redux'
+import {useSelector ,useDispatch } from 'react-redux'
+import allActions  from "../redux/allActions"
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
   
@@ -10,12 +11,74 @@ import auth from '@react-native-firebase/auth';
   const [loader, setloader] = useState(true)
   const [logout, setlogout] = useState(false)
   const userData = useSelector(state => state.userReducer)
- 
+  const dispatch = useDispatch()
+  
+
+
   useEffect(()=>{
-setTimeout(() => {
-  setloader(false)
-}, 1000);
+     
+    const db=firestore().collection("users").doc(userData.user.uid)
+   
+     const unsub= db.onSnapshot(async  (doc)=>{
+      
+        try {
+           db.get().then(async  (doc)=>{
+         
+           
+            let  data= []
+          if(doc.exists){
+            id=doc.id;
+           data = doc.data()
+           }  
+
+         
+      
+          if(data.block==false){
+
+      const unsubb =   auth().onAuthStateChanged( async (user)=> {
+            if (user) {
+             db.update({
+                emailVerified:user.emailVerified
+              })
+                      }  
+       });
+
+   dispatch(allActions.u_action.setUser(data))
+            
+       unsubb();
+
+          }
+
+       
+        })
+       
+      } catch (error) {
+              var errorMessage = error.message;
+              var si  = errorMessage.indexOf("]")+1
+              var  ei  = errorMessage.length -1
+              const msg = errorMessage.substr(si,ei)
+               allOther.AlertMessage("",msg)
+        }
+         
+         
+    
+
+    })
+
+    setTimeout(() => {
+      setloader(false)
+    }, 1500);
+ 
+return () => {
+  // Anything in here is fired on component unmount.
+   
+   unsub();
+   
+}
+
   },[])
+ 
+ 
 
  const  sendEmailVerificationLink=()=>
 {

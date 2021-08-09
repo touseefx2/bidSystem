@@ -9,11 +9,13 @@ import { TextInput } from 'react-native-paper';
 
   export default  function  ViewVendors(props)  {
 
-    const  {vid} = props.route.params;
+    const  {vid,typ} = props.route.params;
+    
     const allVendorsData = useSelector(state => state.vendorReducer)
+    const allBiddersData = useSelector(state => state.bidderReducer)
  
  
-   const  renderProfile  =   ()  => {
+   const  renderVProfile  =   ()  => {
 
     let vendor  =   allVendorsData.vendor.map((item,index)=>{
 
@@ -21,7 +23,6 @@ import { TextInput } from 'react-native-paper';
 
       let name = item.name || ""
       let email = item.email || ""
-      let photo = item.photo|| ""
       let Phone = item.phone|| ""
       // let createdAt =  item.createdAt || ""
       let id = item.uid || ""
@@ -32,7 +33,7 @@ import { TextInput } from 'react-native-paper';
       
         
  
-      <Image style={{width:250,height:250,alignSelf:"center"}} source={ {uri:photo}}/>
+      <Image style={{width:250,height:250,alignSelf:"center"}}  source={require("../../assets/vendor.png")} />
     
      
       
@@ -121,8 +122,117 @@ import { TextInput } from 'react-native-paper';
 
     }
 
+    const  renderBProfile  =   ()  => {
+
+      let bidder  =   allBiddersData.bidders.map((item,index)=>{
+  
+      if(item.uid==vid){
+  
+        let name = item.name || ""
+        let email = item.email || ""
+        let Phone = item.phone|| ""
+        // let createdAt =  item.createdAt || ""
+        let id = item.uid || ""
+        let emailVerified=  JSON.stringify(item.emailVerified) || ""
+    
+        return(
+          <View style={{marginBottom:20,margin:10,padding:10}}>
+        
+          
+   
+        <Image style={{width:250,height:250,alignSelf:"center"}}  source={require("../../assets/vendor.png")} />
+      
+       
+        
+         
+        
+          <View style={{ marginTop:"5%"}}>
+         
+         
+        <TextInput
+              style={styles.textInput}
+              disabled={true}
+              mode="outlined"
+              multiline
+              label="Name"
+              value={name}
+              placeholder="Name"
+              // right={<TextInput.Affix text="/100" />}
+            />
+  
+            <TextInput
+              style={styles.textInput}
+              disabled={true}
+              mode="outlined"
+              label="Email"
+              multiline={true}
+              scrollEnabled={true}
+              value={email}
+              placeholder="Email"
+            />
+        
+        <TextInput
+              style={styles.textInput}
+              disabled={true}
+              mode="outlined"
+              label="email Verified"
+              value={emailVerified}
+              placeholder="email Verified"
+            />
+        
+        <TextInput
+              style={styles.textInput}
+              disabled={true}
+              mode="outlined"
+              label="Phone"
+              value={Phone}
+              placeholder="Phone"
+            />
+        
+        
+        <TextInput
+              style={styles.textInput}
+              disabled={true}
+              mode="outlined"
+              label="id"
+              multiline={true}
+              scrollEnabled={true}
+              value={id}
+              placeholder="id"
+            />
+       
+         
+       {/* <TextInput
+              style={styles.textInput}
+              disabled={true}
+              mode="outlined"
+              label="createdAt"
+              value={createdAt}
+              placeholder="createdAt"
+            /> */}
+                    
+          </View> 
+        
+        
+        
+        </View>
+        
+        ) 
+  
+  
+  
+      }
+   
+      })
+  
+      return bidder;
+  
+      }
  
-return(
+
+
+if(typ=="vendor"){
+  return(
   <View style={{flex:1}}>
  <allOther.Header  title="" nav={props.navigation}/>
  <ScrollView>      
@@ -132,17 +242,39 @@ return(
               )
              :(
         
-            renderProfile()
+            renderVProfile()
               ) 
 
             }
 </ScrollView>    
 
- 
   
- 
 </View>   
 )
+}else{
+  
+  return(
+    <View style={{flex:1}}>
+   <allOther.Header  title="" nav={props.navigation}/>
+   <ScrollView>      
+   {allBiddersData.bidders.length<=0      
+                ?(
+                <Text style={{fontSize:38,color:"silver",marginTop:"60%",alignSelf:"center"}} >Empty</Text>
+                )
+               :(
+          
+              renderBProfile()
+                ) 
+  
+              }
+  </ScrollView>    
+  
+    
+  </View>   
+  )
+
+}
+
      }
  
       

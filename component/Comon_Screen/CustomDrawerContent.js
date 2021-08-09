@@ -21,17 +21,12 @@ import {Spinner} from 'native-base';
             {is == "loading" ?( <Spinner style={{position:"absolute",marginTop:10}} size="large" color="#307ecc"/>) : null}
 <View style={{margin:5,flexShrink:1}}>
 
-{name.length > 38
-              ? ( <Text style={styles.name}>{`${name.substring(0,38)}..`}</Text>   ) 
+{name.length > 30
+              ? ( <Text style={styles.name}>{`${name.substring(0,30)}..`}</Text>   ) 
               : <Text style={styles.name}>{name}</Text>}
 </View>
 </View>
-
-<TouchableOpacity onPress={()=>props.navigation.navigate("UserProfile")} style={{margin:7,marginLeft:18,flexDirection:"row",alignItems:"center"}}>
-<Fontisto name="person" size={20} color="white" />
-<Text style={{ color:"white",fontSize:14,marginLeft:10}}>Profile</Text>
-</TouchableOpacity>
-
+ 
             </View>
 
             <View style={{marginTop:50,backgroundColor:"white"}}>

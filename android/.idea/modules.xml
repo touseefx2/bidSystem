@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Bid_System.iml" filepath="$PROJECT_DIR$/.idea/modules/Bid_System.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1176664074/Bid_System.@react-native-picker_picker.iml" filepath="$PROJECT_DIR$/.idea/modules/1176664074/Bid_System.@react-native-picker_picker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Bid_System.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Bid_System.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-498157525/Bid_System.lottie-react-native.iml" filepath="$PROJECT_DIR$/.idea/modules/-498157525/Bid_System.lottie-react-native.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/2035713183/Bid_System.react-native-community_async-storage.iml" filepath="$PROJECT_DIR$/.idea/modules/2035713183/Bid_System.react-native-community_async-storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-803239500/Bid_System.react-native-community_datetimepicker.iml" filepath="$PROJECT_DIR$/.idea/modules/-803239500/Bid_System.react-native-community_datetimepicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/494703360/Bid_System.react-native-community_netinfo.iml" filepath="$PROJECT_DIR$/.idea/modules/494703360/Bid_System.react-native-community_netinfo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/191540019/Bid_System.react-native-community_viewpager.iml" filepath="$PROJECT_DIR$/.idea/modules/191540019/Bid_System.react-native-community_viewpager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1961245109/Bid_System.react-native-document-picker.iml" filepath="$PROJECT_DIR$/.idea/modules/1961245109/Bid_System.react-native-document-picker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/398761630/Bid_System.react-native-firebase_app.iml" filepath="$PROJECT_DIR$/.idea/modules/398761630/Bid_System.react-native-firebase_app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1270216053/Bid_System.react-native-firebase_auth.iml" filepath="$PROJECT_DIR$/.idea/modules/-1270216053/Bid_System.react-native-firebase_auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/69681630/Bid_System.react-native-firebase_database.iml" filepath="$PROJECT_DIR$/.idea/modules/69681630/Bid_System.react-native-firebase_database.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-595663576/Bid_System.react-native-firebase_firestore.iml" filepath="$PROJECT_DIR$/.idea/modules/-595663576/Bid_System.react-native-firebase_firestore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/681920600/Bid_System.react-native-firebase_functions.iml" filepath="$PROJECT_DIR$/.idea/modules/681920600/Bid_System.react-native-firebase_functions.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-274465087/Bid_System.react-native-firebase_messaging.iml" filepath="$PROJECT_DIR$/.idea/modules/-274465087/Bid_System.react-native-firebase_messaging.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/424810104/Bid_System.react-native-firebase_storage.iml" filepath="$PROJECT_DIR$/.idea/modules/424810104/Bid_System.react-native-firebase_storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1238002437/Bid_System.react-native-gesture-handler.iml" filepath="$PROJECT_DIR$/.idea/modules/-1238002437/Bid_System.react-native-gesture-handler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-884757/Bid_System.react-native-image-picker.iml" filepath="$PROJECT_DIR$/.idea/modules/-884757/Bid_System.react-native-image-picker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-927824806/Bid_System.react-native-masked-view_masked-view.iml" filepath="$PROJECT_DIR$/.idea/modules/-927824806/Bid_System.react-native-masked-view_masked-view.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1889179430/Bid_System.react-native-pager-view.iml" filepath="$PROJECT_DIR$/.idea/modules/-1889179430/Bid_System.react-native-pager-view.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1382115263/Bid_System.react-native-reanimated.iml" filepath="$PROJECT_DIR$/.idea/modules/-1382115263/Bid_System.react-native-reanimated.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/636967588/Bid_System.react-native-safe-area-context.iml" filepath="$PROJECT_DIR$/.idea/modules/636967588/Bid_System.react-native-safe-area-context.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/226555836/Bid_System.react-native-screens.iml" filepath="$PROJECT_DIR$/.idea/modules/226555836/Bid_System.react-native-screens.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1624382651/Bid_System.react-native-vector-icons.iml" filepath="$PROJECT_DIR$/.idea/modules/1624382651/Bid_System.react-native-vector-icons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1359503492/Bid_System.rn-fetch-blob.iml" filepath="$PROJECT_DIR$/.idea/modules/1359503492/Bid_System.rn-fetch-blob.iml" />
+    </modules>
+  </component>
+</project>

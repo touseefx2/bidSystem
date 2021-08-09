@@ -61,7 +61,7 @@ const blockVendor=  (id)=>{
         try {
           setloader(true);
       
-        let resp =  await allOther.firebase.__Update(id,"block")
+        let resp =  await allOther.firebase.__Update(id,"block","vendor")
          
          if(resp){
            allOther.ToastAndroid.ToastAndroid_SB("Vendor Block Successful")
@@ -123,12 +123,8 @@ const blockVendor=  (id)=>{
          c=true;
         let name = item.name || ""
         let email = item.email || ""
-        let photo = item.photo|| ""
         let Phone = item.phone|| ""
-        let createdAt = item.createAt || ""
         let id = item.uid || ""
-        let emailVerified= item.emailVerified|| ""
- 
      
          
        const scale = scrollY.interpolate({
@@ -174,12 +170,12 @@ style={{position:"absolute",right:0,marginRight:5}}
 
 
 <TouchableOpacity style={{marginTop:10}}
- onPress={()=>{props.navigation.navigate("ViewVendors",{vid:id})}}>
+ onPress={()=>{props.navigation.navigate("ViewVendors",{vid:id,typ:"vendor"})}}>
 
  
       
  <View style={{flexDirection:"row",alignItems:"center",flexShrink:1,marginTop:5}}>
-  <Image  style={{width:60,height:60,borderRadius:30}}  source={{uri:photo}} />  
+  <Image  style={{width:60,height:60,borderRadius:30}}  source={require("../../assets/vendor.png")} />  
 <View style={{flexShrink:1}}>
 <Text style={{color:"#307ecc",fontWeight:"bold",textTransform:"capitalize",fontSize:15,marginLeft:10}}>{name}</Text>    
 </View>

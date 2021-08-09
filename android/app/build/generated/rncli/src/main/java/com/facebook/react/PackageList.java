@@ -37,6 +37,10 @@ import io.invertase.firebase.storage.ReactNativeFirebaseStoragePackage;
 import org.reactnative.maskedview.RNCMaskedViewPackage;
 // lottie-react-native
 import com.airbnb.android.react.lottie.LottiePackage;
+// react-native-customized-image-picker
+import com.mg.app.PickerPackage;
+// react-native-device-info
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 // react-native-document-picker
 import io.github.elyx0.reactnativedocumentpicker.DocumentPickerPackage;
 // react-native-gesture-handler
@@ -113,6 +117,8 @@ public class PackageList {
       new ReactNativeFirebaseStoragePackage(),
       new RNCMaskedViewPackage(),
       new LottiePackage(),
+      new PickerPackage(),
+      new RNDeviceInfo(),
       new DocumentPickerPackage(),
       new RNGestureHandlerPackage(),
       new ImagePickerPackage(),

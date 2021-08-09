@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useRef} from 'react';
-import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Animated,Platform,Alert,Image} from "react-native";
+import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Modal,Image} from "react-native";
 import  allOther from "../other/allOther"
 import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTitle} from 'react-native-popup-dialog';
 import ImagePicker from 'react-native-image-picker';
@@ -12,38 +12,39 @@ import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import RNFetchBlob from 'rn-fetch-blob'
 import { TextInput } from 'react-native-paper';
-
-let  items=null;
-
-  export default  function  UpdateProduct(props)  {
+import moment from "moment";
+ 
+  export default  function View_Request(props)  {
 
     const [loader, setloader] = useState(true)
     const  {pid} = props.route.params;
 
     const [name, setname] = useState("")
     const [photo, setphoto] = useState("")
-    const [ imgWidth, setimgWidth] = useState(0)
-    const [ imgHeight, setimgHeight] = useState(0)
     const [category, setcategory] = useState("")
     const [description, setdescription] = useState("")
     const [startingAmount, setstartingAmount] = useState("")
     const [auction, setauction] = useState("")
     const [status, setstatus] = useState("")
     const [Pid, setPid] = useState("")
+    const [vn, setvn] = useState("")
+    const [ve, setve] = useState("")
+    const [vid, setvid] = useState("")
+
+    const [ca, setca] = useState("")
 
     const [dialogVisible, setdialogVisible] = useState(false)
     const [dialogClick, setdialogClick] = useState(false)
 
     const productsData = useSelector(state => state.productReducer)
 
-useEffect(()=>{
-  addItemCategory() ;
-},[])
-
+ 
     useEffect(()=>{
       productsData.products.map((item,index)=>{
 
         if(item.id==pid){
+
+          console.log("item : " , item)
 
           let name = item.data.name || ""
           let category = item.data.category || ""
@@ -53,90 +54,68 @@ useEffect(()=>{
           let auction = item.data.auction || ""
           let description =  item.data.description || ""
           let Pid =  item.data.pid || ""
-  
+          let vid= item.data.uid || ""
+          
+          let c =  item.data.createdAt.toDate()//bcs firbase cnvrt into obj so again parse date
+         
+          var time =  moment(c).format('hh:mm a')     //10:12 am 
+          var date =  moment(c).format("D MMMM Y");   //9 july 2021
 
-          Image.getSize(photo, (width, height) => {
-            // calculate image width and height 
-            const screenWidth = Dimensions.get('window').width
-            const scaleFactor = width / screenWidth
-            const imageHeight = height / scaleFactor
-            setimgWidth(screenWidth); setimgHeight(imageHeight)
-          })
+          c= date + " at  "+time
 
-          setname(name);setphoto(photo);setcategory(category);setdescription(description);setstartingAmount(starting_Amount);
-          setauction(auction);setstatus(status);setPid(Pid);
+          
+           
+        
+          
+          setvid(vid);  setname(name);setphoto(photo);setcategory(category);setdescription(description);setstartingAmount(starting_Amount);
+          setauction(auction);setstatus(status);setPid(Pid);setvn(vn);setve(ve);setca(c)
           setTimeout(() => {
           setloader(false)
           }, 1000);
- 
-        
-        
-        
+    
         }
 
  
       })
      },[productsData])
+ 
+     useEffect(()=>{
+     
+      if(vid!=""){
+        setloader(true)
+        }
 
+      const unsubb = firestore().collection("users").doc(vid).onSnapshot((doc)=>{
+       
 
-     const addItemCategory=()=>{
-      if(productCategory){
-           items=productCategory.map((e,i,a)=>{
-        return {label: e.c.toUpperCase(), value: e.c.toLowerCase()};
-      });  
-      }else{
-            items=null
-      }
+      if(vid!=""){
+       
+      if(doc.exists){
+         let d= doc.data();
+
+ 
+         setvn(d.name);setve(d.email)
+         setTimeout(() => {
+          setloader(false) 
+        }, 500);
+        
+      } 
+             }
+ 
+   
+  })
+
   
+
+
+   return () => {
+    // Anything in here is fired on component unmount.
+     unsubb();
   }
   
 
-     const checkEmptyFields=()=>{
-      if(name!="" && photo!="" && category!="" && description!="" && startingAmount!="" && auction!="" &&status!="")
-    {
-      return false
-    }else{
-      return true
-    }
-    }
+    },[vid])
 
-
-    const onClickUpdate=async ()=>{
-      setloader(true);
-      if(!checkEmptyFields())
-      {
-
-        try {
-          
-  const obj={
-          name,
-          startingAmount,
-          auction,
-          description,
-          updatedAt:new Date(),
-          category
-           }
-
-        let resp =  await allOther.firebase.__Update(pid,obj)
- 
-        if(resp){
-          allOther.ToastAndroid.ToastAndroid_SB("Update Successful")
-         }
-         setloader(false)
-
-        } catch (error) {
-          console.log("Update Product error  try cath :  ",error);
-          setloader(false)
-        }
-
-      
-
-      }else{
-        setloader(false);
-        allOther.AlertMessage("","Please fill empty field")
- 
-      }
-    }
 
    const  renderProduct  =   ()  => {
  
@@ -158,6 +137,24 @@ useEffect(()=>{
       style={[styles.textInput,{marginTop:70}]}
       disabled={true}
       mode="outlined"
+      label="Vendor Name"
+      value={vn}
+      placeholder="Vendor Name"
+    />
+
+<TextInput
+      style={styles.textInput}
+      disabled={true}
+      mode="outlined"
+      label="Vendor Email"
+      value={ve}
+      placeholder="Vendor Email"
+    />
+
+  <TextInput
+    style={styles.textInput}
+      disabled={true}
+      mode="outlined"
       label="Product Id"
       value={Pid}
       placeholder="Product Id"
@@ -172,18 +169,26 @@ useEffect(()=>{
       placeholder="Status"
     />
 
+<TextInput
+     style={styles.textInput}
+      disabled={true}
+      mode="outlined"
+      label="Created At"
+      value={ca}
+      placeholder="Created At"
+    />
+
+
+<TextInput
+     style={styles.textInput}
+      disabled={true}
+      mode="outlined"
+      label="Category"
+      value={category}
+      placeholder="Category"
+    />
+
  
-<DropDownPicker
-      items={items !=null ? items : []} 
-      placeholder={category.toUpperCase()}
-      placeholderStyle={{ textAlign: 'center'}}
-      containerStyle={{marginTop:20}}
-      style={{backgroundColor: '#fafafa',paddingVertical:10,borderColor:"black",borderWidth:1,flexShrink:1,flexWrap:"wrap"}}
-      dropDownStyle={{backgroundColor: '#fafafa'}}
-      onChangeItem={i => 
-        setcategory(i.value)
-     }  
- />
 
 
   <TextInput
@@ -191,6 +196,7 @@ useEffect(()=>{
       mode="outlined"
       label="Product Name"
       value={name}
+      disabled={true}
       placeholder="Product name"
       onChangeText={(txt)=>setname(txt)}
     />
@@ -200,6 +206,7 @@ useEffect(()=>{
 <TextInput
       style={styles.textInput}
       mode="outlined"
+      disabled={true}
       label="Starting Amount"
       value={startingAmount} 
       keyboardType="number-pad"
@@ -213,6 +220,7 @@ useEffect(()=>{
       mode="outlined"
       label='Auction'
       value={auction} 
+      disabled={true}
       keyboardType="number-pad"
       onChangeText={(txt)=>setauction(txt)}
       placeholder='Auction'
@@ -222,6 +230,7 @@ useEffect(()=>{
       style={styles.textInput}
       mode="outlined"
       label='Descritption'
+      disabled={true}
       value={description}  
       onChangeText={(txt)=>setdescription(txt)}
       placeholder='Descritption'
@@ -230,13 +239,7 @@ useEffect(()=>{
     />
 
  
-<TouchableOpacity  
-style={{backgroundColor: "black",width:100,height:40,borderRadius:20,alignItems:"center",justifyContent:"center",alignSelf:"center",marginTop:40,elevation:5}} 
- onPress={()=>{onClickUpdate()}}
->
-<Text style={{color :"white"  ,fontSize:22}}>Update</Text>
-</TouchableOpacity>
-
+ 
 
           </View>
  
@@ -245,55 +248,39 @@ style={{backgroundColor: "black",width:100,height:40,borderRadius:20,alignItems:
     }
 
 
-    const  render_FullImage = ()=>
-    {
-     
-      const check =   checkEmptyFields();
-      let ButtonEnable=false
-      if(check) 
-      ButtonEnable=true 
-      
+    const render_FullImage=( )=>{
+
       return(
-      <Dialog
+        <Modal
+        animationType='fade'
         visible={dialogVisible}
-        hasOverlay={true}
-        overlayOpacity={0.8}
-        footer={
-          <DialogFooter>
-            <DialogButton
-              text="Close"
-              onPress={() => {setdialogVisible(false)}}
-            />
-          </DialogFooter>
-        }
-        onHardwareBackPress={() => true}
-        dialogAnimation={new SlideAnimation({
-          slideFrom: 'bottom',
-        })}
-        dialogStyle={{backgroundColor:"white",borderRadius:10}}
-      >
- 
- 
-        <DialogContent>
- 
- <View style={{flex:1}}>
-
+        >
+    
   
-        
-        <Image style={{width: imgWidth, height: imgHeight}}  source={{uri:photo}}  /> 
-
-<TouchableOpacity  
+    <View style={{flex: 1,backgroundColor:"black"}}>
+       
+       <Image style={{position: 'absolute',
+  top: 0,
+  left: 0,
+  bottom: 0,
+  right: 0,}} resizeMode="contain"   source={{uri:photo}}  />   
+    
+    
+    <TouchableOpacity  
 onPress={()=>setdialogVisible(!dialogVisible)}
-style={{position:"absolute",top:40,backgroundColor:"black",borderRadius:25,right:20}}>
-        <allOther.vectorIcon.AntDesign  name="close" color="red" size={50} />
-</TouchableOpacity>
+style={{backgroundColor:"black",borderRadius:25,padding:5,position:"absolute",top:15,left:15}}>
+      <allOther.vectorIcon.Ionicons  name="arrow-back" color="white" size={25} />
+</TouchableOpacity> 
 
-   </View>
-        </DialogContent>
-      </Dialog>
+
+
+        </View>
     
-      )
     
+      </Modal>
+    )
+
+
     }
 
 

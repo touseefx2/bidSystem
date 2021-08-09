@@ -8,7 +8,7 @@ import { connect} from 'react-redux'
 import allStack from "./component/Stack/allStack"
 import allOther from "./component/other/allOther";
 import CheckVerification from "./component/Comon_Screen/CheckVerification";
- 
+ import Block from "./component/Comon_Screen/Block"
  
 const RootStack = createStackNavigator();
 
@@ -63,34 +63,40 @@ render()
       <RootStack.Screen name='Login_Stack' component={allStack.Login_Stack}/> 
       )} 
 
-    {/* {(userData.user  &&  userData.user.emailVerified==false) && (
+{(userData.user  &&  userData.user.block== true ) && (
+    <RootStack.Screen name='Block' component={Block}/>
+     )}
+
+ 
+ {/* {(userData.user  && userData.user.type!="admin"   &&  userData.user.emailVerified==false ) && (
     <RootStack.Screen name='CheckVerification' component={CheckVerification}/>
-     )} */}
+     )}
 
-    {/* {(userData.user && userData.user.type=="vendor" && userData.user.emailVerified) && (
+  
+     {(userData.user && userData.user.type=="vendor" &&  userData.user.block==false && userData.user.emailVerified==true) && (
     <RootStack.Screen name='Vendor_Stack' component={allStack.Vendor_Stack}/>
      )}   
 
-{(userData.user && userData.user.type=="vendor" && userData.user.emailVerified) && (
+{(userData.user && userData.user.type=="bidder" &&  userData.user.block==false   && userData.user.emailVerified==true ) && (
     <RootStack.Screen name='Bidder_Stack' component={allStack.Bidder_Stack}/>
      )} 
  
-    {(userData.user && userData.user.type=="admin" && userData.user.emailVerified) && (
+    {(userData.user && userData.user.type=="admin"  ) && (
         <RootStack.Screen name='Admin_Stack' component={allStack.Admin_Stack}/>
-        )}
-  */}
+        )} */}
 
-     {(userData.user && userData.user.type=="vendor" ) && (
+
+     {(userData.user && userData.user.type=="vendor" &&  userData.user.block==false ) && (
     <RootStack.Screen name='Vendor_Stack' component={allStack.Vendor_Stack}/>
      )}   
 
-{(userData.user && userData.user.type=="bidder"  ) && (
+{(userData.user && userData.user.type=="bidder" &&  userData.user.block==false ) && (
     <RootStack.Screen name='Bidder_Stack' component={allStack.Bidder_Stack}/>
      )} 
  
-    {(userData.user && userData.user.type=="admin" ) && (
+    {(userData.user && userData.user.type=="admin") && (
         <RootStack.Screen name='Admin_Stack' component={allStack.Admin_Stack}/>
-        )}
+        )} 
  
 
 
