@@ -1,5 +1,5 @@
 
 
-export const productCategory = ['laptops', 'mobiles', 'bags' , "mac books" , "sports" , "cars" , "Bikes" ]
+export const productCategory = ['Laptops', 'Mobiles', 'Bags' , "Mac books" , "Sports" , "Cars" , "Bikes" ]
 
  

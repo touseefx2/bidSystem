@@ -200,7 +200,13 @@ const logoutIcon = {
 }
 
 const profileIcon = {
-  headerShown: false,
+  headerStyle: {
+    backgroundColor: headerColor, //Set Header color
+},
+headerTintColor: headerTextColor, //Set Header text color
+headerTitleStyle: {
+    fontWeight: 'bold', //Set Header text style
+},
   drawerIcon: ({ focused, size}) => (
     <allOther.vectorIcon.Fontisto
       name="person"   
@@ -211,7 +217,13 @@ const profileIcon = {
 }
 
 const auctionIcon = {
-  headerShown: false,
+  headerStyle: {
+    backgroundColor: headerColor, //Set Header color
+},
+headerTintColor: headerTextColor, //Set Header text color
+headerTitleStyle: {
+    fontWeight: 'bold', //Set Header text style
+},
   drawerIcon: ({ focused, size}) => (
     <allOther.vectorIcon.Fontisto
       name="user-secret"   

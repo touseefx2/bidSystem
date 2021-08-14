@@ -256,7 +256,7 @@ import allActions from "../redux/allActions"
 
        
      dispatch(allActions.u_action.setUser(data))
-      unsub()
+    //  unsub()
   
   })
  

@@ -1,11 +1,7 @@
 import React, { useEffect, useState,useRef} from 'react';
-import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Modal,Image} from "react-native";
+import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Modal,Image,FlatList} from "react-native";
 import  allOther from "../other/allOther"
-import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTitle} from 'react-native-popup-dialog';
-import ImagePicker from 'react-native-image-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { Container,Content, Item, Input} from 'native-base'
-import permissions from "../permissions/permissions"
 import {productCategory} from "./Category"
 import {useSelector} from 'react-redux'
 import firestore from '@react-native-firebase/firestore';
@@ -18,26 +14,29 @@ let  items=null;
   export default  function  UpdateProduct(props)  {
 
     const [loader, setloader] = useState(true)
-    const  {pid} = props.route.params;
+    const  {pid,ac} = props.route.params;
 
     const [name, setname] = useState("")
-    const [photo, setphoto] = useState("")
+    const [photo, setphoto] = useState([])
     const [category, setcategory] = useState("")
     const [description, setdescription] = useState("")
+    const [noi, setnoi] = useState("")
+    const [sba, setsba] = useState("")
+    const [inc, setinc] = useState("")
+    const [ab, setab] = useState("")
     const [startingAmount, setstartingAmount] = useState("")
-    const [auction, setauction] = useState("")
     const [status, setstatus] = useState("")
     const [Pid, setPid] = useState("")
 
-    const [dialogVisible, setdialogVisible] = useState(false)
-
-
+    const [mv,setmv]=useState(false);    //fulll image render modal vs
+    const [p,setp]=useState("");  //slectd photo uri
+    const [spi,setspi]=useState(null);  //slectd photo index
+    const [cc,setcc]=useState(false);
+  
+ 
     const productsData = useSelector(state => state.productReducer)
 
-useEffect(()=>{
-  addItemCategory() ;
-},[])
-
+ 
     useEffect(()=>{
       productsData.products.map((item,index)=>{
 
@@ -47,22 +46,17 @@ useEffect(()=>{
           let category = item.data.category || ""
           let starting_Amount = item.data.startingAmount || ""
           let status = item.data.status || ""
-          let photo = item.data.photo || ""
-          let auction = item.data.auction || ""
+          let photo = item.data.photo || []
+          let noi = item.data.noi || ""
+          let ab = item.data.autoBid || ""
+          let sba = item.data.sba || ""
+          let inc = item.data.inc || ""
           let description =  item.data.description || ""
           let Pid =  item.data.pid || ""
   
-
-          Image.getSize(photo, (width, height) => {
-            // calculate image width and height 
-            const screenWidth = Dimensions.get('window').width
-            const scaleFactor = width / screenWidth
-            const imageHeight = height / scaleFactor
-            setimgWidth(screenWidth); setimgHeight(imageHeight)
-          })
-
-          setname(name);setphoto(photo);setcategory(category);setdescription(description);setstartingAmount(starting_Amount);
-          setauction(auction);setstatus(status);setPid(Pid);
+ 
+        setname(name);setphoto(photo);setcategory(category);setdescription(description);setstartingAmount(starting_Amount);
+       setstatus(status);setPid(Pid);setsba(sba);setnoi(noi);setab(ab);setinc(inc)
           setTimeout(() => {
           setloader(false)
           }, 1000);
@@ -76,21 +70,11 @@ useEffect(()=>{
       })
      },[productsData])
 
-
-     const addItemCategory=()=>{
-      if(productCategory){
-           items=productCategory.map((e,i,a)=>{
-        return {label: e.c.toUpperCase(), value: e.c.toLowerCase()};
-      });  
-      }else{
-            items=null
-      }
-  
-  }
+ 
   
 
      const checkEmptyFields=()=>{
-      if(name!="" && photo!="" && category!="" && description!="" && startingAmount!="" && auction!="" &&status!="")
+      if(name!=""   && category!="" && description!="" && startingAmount!=""  && status!="" && sba!="" && inc!="" && noi!="" )
     {
       return false
     }else{
@@ -109,10 +93,13 @@ useEffect(()=>{
   const obj={
           name,
           startingAmount,
-          auction,
           description,
           updatedAt:new Date(),
-          category
+          category,
+          autoBid:ab,
+          sba,
+          inc,
+          noi,
            }
 
         let resp =  await allOther.firebase.__Update(pid,obj,"products")
@@ -136,20 +123,86 @@ useEffect(()=>{
       }
     }
 
+    const renderPhoto=({item,index})=>{
+      return(
+      <TouchableOpacity  onPress={()=>{setp(item.uri);setspi(index);setmv(true)}} style={{marginLeft:5,marginRight:5,marginTop:10}} >
+      
+      <Image source={{uri: item.uri}}   style={{
+         width: 150,
+         height:150,
+         shadowColor: "black",
+         elevation: 2,
+      } } />
+       
+      
+      </TouchableOpacity>
+       )
+           
+            }
+  
+            const  render_FullImage=( )=>{
+             
+              return(
+                <Modal
+                animationType='fade'
+                visible={mv}
+                >
+            
+          
+            <View style={{flex: 1,backgroundColor:"black"}}>
+               
+               <Image style={{position: 'absolute',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,}} resizeMode="contain"   source={{uri:p}}  />   
+            
+          
+       
+      <View style={{backgroundColor:null,width:"100%",flexDirection:"row",alignItems:"center",position:"absolute",top:5,padding:5,paddingLeft:20}}>
+    
+      <TouchableOpacity  
+      onPress={()=>{setmv(!mv);setp("");setspi(null)}}
+      style={{backgroundColor:"black",borderRadius:25,}}>
+      <allOther.vectorIcon.Ionicons  name="arrow-back" color="white" size={25} />
+      </TouchableOpacity> 
+      
+       
+   
+     
+    </View>
+       
+                </View>
+            
+            
+              </Modal>
+            )
+      
+      
+            }
+ 
    const  renderProduct  =   ()  => {
  
       return (
        
         <View style={{marginTop:"5%",margin:15,padding:15}}>
+ 
 
-   <View style={{flex:1,alignSelf:"center"}}>
-      <Image style={{height: 270,width:270,borderRadius:5}} source={{uri:photo}}  />  
-      <TouchableOpacity style={{
-         position:"absolute",right:10,top:10, backgroundColor:"black",borderRadius:12.5,padding:2}}
-         onPress={()=>{setdialogVisible(true)}}>
-       <allOther.vectorIcon.Entypo name="resize-full-screen" color="#53ff1f" size={25} />
-       </TouchableOpacity>
-  </View> 
+{(photo.length>0) && (
+  <FlatList
+  horizontal={true}
+  data={photo}
+ //  extraData={FlatListR} //true/fasle
+  renderItem={renderPhoto}
+  keyExtractor={(item, index) => { return index.toString() }}
+  showsVerticalScrollIndicator={true}
+/>
+
+)}  
+
+{photo.length>3 && (
+  <Text style={{marginTop:10,color:"red",fontSize:12}}>Max 3 photo upload</Text>
+)}
     
 
   <TextInput
@@ -161,18 +214,18 @@ useEffect(()=>{
       placeholder="Product Id"
     />
     
-  <TextInput
+  {/* <TextInput
      style={styles.textInput}
       disabled={true}
       mode="outlined"
       label="Status"
       value={status}
       placeholder="Status"
-    />
+    /> */}
 
  
 <DropDownPicker
-      items={items !=null ? items : []} 
+      items={ac||[]} 
       placeholder={category.toUpperCase()}
       placeholderStyle={{ textAlign: 'center'}}
       containerStyle={{marginTop:20}}
@@ -193,6 +246,15 @@ useEffect(()=>{
       onChangeText={(txt)=>setname(txt)}
     />
 
+<TextInput
+      style={styles.textInput}
+      mode="outlined"
+      label="Num Of Items"
+      value={noi}
+      placeholder="Num Of Items"
+      onChangeText={(txt)=>setnoi(txt)}
+    />
+
 
 
 <TextInput
@@ -201,19 +263,41 @@ useEffect(()=>{
       label="Starting Amount"
       value={startingAmount} 
       keyboardType="number-pad"
-      onChangeText={(txt)=>setstartingAmount(txt)}
+      onChangeText={(txt)=>{setstartingAmount(txt);setab(txt)}}
       placeholder='Starting Amount'
     />
 
 
+ 
 <TextInput
       style={styles.textInput}
       mode="outlined"
-      label='Auction'
-      value={auction} 
+      label='Increment'
+      value={inc} 
       keyboardType="number-pad"
-      onChangeText={(txt)=>setauction(txt)}
-      placeholder='Auction'
+      onChangeText={(txt)=>setunc(txt)}
+      placeholder='Increment'
+    />
+ 
+<TextInput
+      style={styles.textInput}
+      mode="outlined"
+      label='Start Bid Amount'
+      value={sba} 
+      keyboardType="number-pad"
+      onChangeText={(txt)=>setsba(txt)}
+      placeholder='Start Bid Amount'
+    />
+
+<TextInput
+      style={styles.textInput}
+      mode="outlined"
+      label='Auto Bid'
+      disabled={true}
+      value={ab} 
+      keyboardType="number-pad"
+      onChangeText={(txt)=>setab(txt)}
+      placeholder='AUto Bid'
     />
 
 <TextInput
@@ -241,49 +325,12 @@ style={{backgroundColor: "black",width:100,height:40,borderRadius:20,alignItems:
         
       )
     }
-
-    const render_FullImage=( )=>{
-
-      return(
-        <Modal
-        animationType='fade'
-        visible={dialogVisible}
-        >
-    
-  
-    <View style={{flex: 1,backgroundColor:"black"}}>
-       
-       <Image style={{position: 'absolute',
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0,}} resizeMode="contain"   source={{uri:photo}}  />   
-    
-    
-    <TouchableOpacity  
-onPress={()=>setdialogVisible(!dialogVisible)}
-style={{backgroundColor:"black",borderRadius:25,padding:5,position:"absolute",top:15,left:15}}>
-      <allOther.vectorIcon.Ionicons  name="arrow-back" color="white" size={25} />
-</TouchableOpacity> 
-
-
-
-        </View>
-    
-    
-      </Modal>
-    )
-
-
-    }
-
  
-
 return(
   <View style={{flex:1}}>
  <allOther.Header  title="" nav={props.navigation}/>
   <allOther.Loader loader={loader}/>
-  {dialogVisible &&  render_FullImage()}  
+  {mv && render_FullImage()} 
  <ScrollView>      
           {renderProduct()}
 </ScrollView>    

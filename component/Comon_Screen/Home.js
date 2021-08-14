@@ -152,6 +152,7 @@ import auth from '@react-native-firebase/auth';
     
    if(userData.user.type=="vendor"){
         setsetProductData(true)
+        setsetAuctionData(true)
    }
 
    if(userData.user.type=="admin"){

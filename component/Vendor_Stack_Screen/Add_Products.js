@@ -1,16 +1,19 @@
 import React, { useEffect, useState,useRef} from 'react';
-import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Animated,TextInput,Platform,Alert,Image} from "react-native";
+import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Animated,Platform,Alert,Image,FlatList,Modal} from "react-native";
 import  allOther from "../other/allOther"
+import {TextInput} from 'react-native-paper';
 import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTitle} from 'react-native-popup-dialog';
 import DropDownPicker from 'react-native-dropdown-picker';
 import permissions from "../permissions/permissions"
 import {productCategory} from "./Category"
 import {useSelector  } from 'react-redux'
 import firestore from '@react-native-firebase/firestore';
+import MultipleImagePicker from "@baronha/react-native-multiple-image-picker"; 
 import storage from '@react-native-firebase/storage';
 import RNFetchBlob from 'rn-fetch-blob'
 import DeviceInfo from 'react-native-device-info';
 import ImagePicker from "react-native-customized-image-picker"; 
+import Textarea from 'react-native-textarea';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -25,14 +28,18 @@ const cardHeight=110;
 
   export default  function  Products(props)  {
 
+    const {aid,an,ac}=props.route.params;
+    const auctionsData = useSelector(state => state.auctionReducer)
+
   const [pids, setpids] = useState([]) //for check random id not match other product
   const listViewRef = useRef(); 
   const [name, setname] = useState("")
-  const [photo, setphoto] = useState([])
   const [category, setcategory] = useState("")
+  const [noi, setnoi] = useState("")
+  const [sba, setsba] = useState("")
+  const [inc, setinc] = useState("")
   const [description, setdescription] = useState("")
   const [startingAmount, setstartingAmount] = useState("")
-  const [auction, setauction] = useState("")
   const [status, setstatus] = useState("pending")
   const [dialogVisible, setdialogVisible] = useState(false)
   const [dialogClick, setdialogClick] = useState(false)
@@ -44,6 +51,13 @@ const cardHeight=110;
   const userData = useSelector(state => state.userReducer)
  
 
+  const [photo,setphoto]=useState([]);
+  const [mv,setmv]=useState(false);    //fulll image render modal vs
+  const [p,setp]=useState("");  //slectd photo uri
+  const [spi,setspi]=useState(null);  //slectd photo index
+  const [cc,setcc]=useState(false);
+
+
   const [apiLevel,setapiLevel]=useState("");
   const getDeviceInfo=()=>{
     DeviceInfo.getApiLevel().then((apiLevel) => {
@@ -53,14 +67,19 @@ const cardHeight=110;
 
   useEffect(()=>{
   getDeviceInfo();
-  addItemCategory();
+ 
   getProductsId();
 setTimeout(() => {
   setloader(false)
 }, 800);
 
+
+
+
+
   },[])
 
+  
  
   const random=()=>{
     const min = 1;
@@ -91,38 +110,94 @@ setTimeout(() => {
   {
    
      permissions.requestReadExternalStorage()
-  
+   
 
-     try {
-        
-      ImagePicker.openPicker({
-        multiple: true,
-        maxSize:4,
-        imageLoader:"UNIVERSAL"
-      }).then(res => {
-        
-        console.log("res : ",res)
-        if(res){
-    
-          let arr=[]
-          res.map((e,i,a)=>{
-          let obj={path:e.path};
-          arr.push(obj)
-          })
+     if(apiLevel<29){ //29 is andrd 10
 
-          setphoto(arr);
+      try {
+      
+        ImagePicker.openPicker({
+          multiple: true,
+          maxSize:3,
+          imageLoader:"UNIVERSAL"
+        }).then(res => {
+           
+
+          if(photo!=""   )
+          {
+            let arr=photo 
+            res.map((e,i,a)=>{
+              const obj={name:e.fileName||"",uri:e.path}
+             arr.push(obj)
+           }) 
+
        
-     
-        }
-    
+            setphoto(arr)   
+            setcc(!cc)
+           
+                
+          }
+          else
+          {
+            let arr=[]
+            res.map((e,i,a)=>{
+              const obj={name:e.fileName||"",uri:e.path}
+              arr.push(obj)
+            }) 
+            setphoto(arr)
+          }
 
-      });
-    
 
-    } catch (error) {
-      console.log("photo picker imgepckr error : ",error)
+        });
+      
+
+      } catch (error) {
+        console.log("photo picker imgepckr error : ",error)
+      }
+
+    }else{
+
+       try {
+     let options = {
+      mediaType:"image",
+      isPreview:false,
+      maxSelectedAssets:3
+      
+                   };
+
+    const res = await MultipleImagePicker.openPicker(options);
+    if(res){
+      if(photo.length>0)
+      {
+        let arr=photo  
+        res.map((e,i,a)=>{
+         const obj={name:e.fileName,uri:e.path}
+         arr.push(obj)
+       }) 
+
+    
+         setphoto(arr) 
+          setcc(!cc)
+      
+             
+           
+      }
+      else
+      {
+        let arr=[]
+        res.map((e,i,a)=>{
+          const obj={name:e.fileName,uri:e.path}
+          arr.push(obj)
+        }) 
+        setphoto(arr)
+      }
+
     }
 
+    } catch (error) {
+      console.log("photo n picker error : ",error)
+    } 
+    }
 
     // let options = {
     //   storageOptions: {
@@ -153,34 +228,25 @@ setTimeout(() => {
 //     }
    
   }
-  
- 
-  const addItemCategory=()=>{
-    if(productCategory){
-         items=productCategory.map((e,i,a)=>{
-      return {label: e.c.toUpperCase(), value: e.c.toLowerCase()};
-    });  
-    }else{
-          items=null
-    }
-
-}
-
+   
   const clearfields =()=>{
-    setloader(false)
     setdialogVisible(false);
+    setloader(false)
     setname("");
+    setinc("");
+    setsba("");
+    setnoi("");
     setcategory("");
     setdescription("");
     setphoto([]) ;
-    setstartingAmount("");setauction("");
+    setstartingAmount("");
 
 }
 
 const checkEmptyFields= ()=> 
 {
   
-    if(name=="" || startingAmount=="" || description==""  || category=="" || photo=="" || photoName=="" || auction=="" ){
+    if(name=="" || startingAmount=="" || description==""  || category=="" || photo.length<=0 || photo.length>3  || sba=="" || inc=="" || noi=="" ){
       return false;
     } else{
       return true;
@@ -237,44 +303,57 @@ const removeProducts=  (id)=>{
 {
  
   try{  
+
     permissions.requestReadExternalStorage();
     setloader(true);
   
-      let uri = await getPathForFirebaseStorage(photo)
- 
-      storage().ref(`${docfolder}/${userData.user.uid}/${photoName}`)
-      .putFile(uri)
-      .then((snapshot) => {
-        console.log(`${photoName} has been successfully uploaded.`);
-        getdocfirebase();
-      
-      }).catch((e) => {console.log('uuploading dcmnt firebase error => ', e)});
-  }catch (e){
-setloader(false);
- console.log('uploading dcmnt firebase error => ',e)
-  }
-  
-  }
+    if(photo.length>0){
+
+      let arr=[]
+
+       
+
+      photo.map(async (e,i,a)=>{
+           
+        let uri = await getPathForFirebaseStorage(e.uri)
+
+        storage().ref(`${docfolder}/${userData.user.uid}/${e.name}`)
+        .putFile(uri)
+        .then( async (snapshot) => {
+          
+          await storage().ref(`${docfolder}/${userData.user.uid}/${e.name}`)
+          .getDownloadURL()
+          .then((url) => {
+            const obj={uri:url}
+            arr.push(obj)
+            if(i==a.length-1){
+              onClickAdd(arr)
+            }
+          })
+          .catch((e) => console.log('getting downloadURL of image error => ', e));
 
 
- const  getdocfirebase = async () =>
-  {
-     await storage().ref(`${docfolder}/${userData.user.uid}/${photoName}`)
-      .getDownloadURL()
-      .then((url) => {
-        //from url you can fetched the uploaded image easily
-        onClickAdd(url)
+        
+        }).catch((e) => {console.log('uuploading dcmnt firebase error => ', e)});
+
       })
-      .catch((e) => console.log('getting downloadURL of image error => ', e));
-      setloader(false);
+
+ 
+
     }
 
-
- const  onClickAdd = async (url)=>{
-      
+     
+  }catch (e){
+ console  .log('uploading dcmnt firebase error => ',e)
+  }
   
+  }
+
+  
+ const  onClickAdd = async (arr)=>{
+ 
     try {
-      let photo=url;
+      
       let pid="";
       if(pids.length==0){
         pid= random();
@@ -289,13 +368,16 @@ setloader(false);
     
         const obj={
        name,
-       photo,
+       photo:arr,
        startDate:"",
        endDate:"",
-       photoName,
        category,
        startingAmount,
-       auction,
+       sba,
+       noi,
+       inc,
+       aid:aid,
+       autoBid:startingAmount,
        description,
        uid:userData.user.uid,
        status,
@@ -303,45 +385,102 @@ setloader(false);
        createdAt:new Date(),
        updatedAt:new Date(),
        block:false,
-
         }
 
-        setdialogVisible(false);
+   
      let resp =  await allOther.firebase.__Add_Product(obj)
       
     if(resp){
-      allOther.ToastAndroid.ToastAndroid_SB("Product Add Successful")
       clearfields()
-      setsetProductData(true)
-     }
-      
-     setloader(false)
-     setdialogVisible(false);
+      allOther.ToastAndroid.ToastAndroid_SB("Product Add Successful")
+     } 
+     
+    
+     
     } catch (error) {
-      setloader(false)
+      setloader(false);
+      setdialogVisible(false);
      console.log("addprdct error try cath ==> ",error)
     }
    
     
    }
-  
-   const renderPhotos=()=>{
 
-     let p=  photo.map((e,i,a)=>{
-      console.log(e.path)
-      return(
-        <View style={{marginLeft:10,marginRight:10}}>
-       <TouchableOpacity style={{marginLeft:"50%"}} onPress={()=>{ photo.splice(i,1)}}>
-      <allOther.vectorIcon.Entypo size={33} color="red" name="cross" />
-      </TouchableOpacity>
-      <Image source={{uri:e.path}} resizeMode={"contain"} style={{width:200,height:170}} />
-     </View> 
-      )
-    })
-
-    return p;
-   }
+   const removePhoto=(i)=>{
    
+      if (i > -1) {
+      photo.splice(i, 1);
+        setmv(!mv);setspi(null);setp("");setcc(!cc)
+      }
+     
+  }
+  
+   const renderPhoto=({item,index})=>{
+    return(
+    <TouchableOpacity  onPress={()=>{setp(item.uri);setspi(index);setmv(true)}} style={{marginLeft:5,marginRight:5,marginTop:10}} >
+    
+    <Image source={{uri: item.uri}}   style={{
+       width: 75,
+       height:75,
+       shadowColor: "black",
+       elevation: 2,
+    } } />
+     
+    
+    </TouchableOpacity>
+     )
+         
+          }
+
+          const renderFullImage=( )=>{
+             
+            return(
+              <Modal
+              animationType='fade'
+              visible={mv}
+              >
+          
+        
+          <View style={{flex: 1,backgroundColor:"black"}}>
+             
+             <Image style={{position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,}} resizeMode="contain"   source={{uri:p}}  />   
+          
+        
+     
+    <View style={{backgroundColor:null,width:"100%",flexDirection:"row",alignItems:"center",position:"absolute",top:5,padding:5,paddingLeft:20}}>
+  
+    <TouchableOpacity  
+    onPress={()=>{setmv(!mv);setp("");setspi(null)}}
+    style={{backgroundColor:"black",borderRadius:25,}}>
+    <allOther.vectorIcon.Ionicons  name="arrow-back" color="white" size={25} />
+    </TouchableOpacity> 
+    
+     
+     <TouchableOpacity  
+  onPress={()=>{removePhoto(spi)}}
+  style={{backgroundColor:"black",borderRadius:25,marginLeft:35}}>
+    <allOther.vectorIcon.AntDesign  name="delete" color="white" size={25} />
+  </TouchableOpacity>
+  
+  
+  
+  
+  </View>
+     
+              </View>
+          
+          
+            </Modal>
+          )
+    
+    
+          }
+
+
   const  render_Add_Product = ()=>
    {
     
@@ -349,7 +488,6 @@ setloader(false);
      let ButtonEnable=false
      if(check) 
      ButtonEnable=true 
-     
      return(
      <Dialog
        visible={dialogVisible}
@@ -383,13 +521,38 @@ setloader(false);
 
        <allOther.Loader loader={loader} /> 
 
-       <DialogContent style={{width:windowWidth-50,height:windowHeight/1.3 ,alignItems:"center",justifyContent:"center"}}>
-       <ScrollView>
-     <View style={{padding:5,marginTop:15,alignSelf:"center"}}>
+       <DialogContent style={{width:windowWidth-50,height:windowHeight/1.3}}>
+       <ScrollView showsVerticalScrollIndicator={false}>
+
+       <TouchableOpacity 
+   onPress={()=>{ uploadImage_android()}}
+   style={{marginTop:20,alignItems:"center",flexDirection:"row",alignSelf:"center"}} >
+   <Text style={{fontSize:15}}>Add Photo</Text>
+   <allOther.vectorIcon.MaterialCommunityIcons style={{marginLeft:10}}  size={30} color="#307ecc" name="image-plus" />
+   </TouchableOpacity>
+ 
+   {(photo.length>0) && (
+  <FlatList
+  horizontal={true}
+  data={photo}
+ //  extraData={FlatListR} //true/fasle
+  renderItem={renderPhoto}
+  keyExtractor={(item, index) => { return index.toString() }}
+  showsVerticalScrollIndicator={true}
+/>
+
+)}  
+
+{photo.length>3 && (
+  <Text style={{marginTop:10,color:"red",fontSize:12}}>Max 3 photo upload</Text>
+)}
+
+
+     <View style={{padding:5,marginTop:30}}>
   
   
    <DropDownPicker
-      items={items !=null ? items : []} 
+      items={ac || []} 
       placeholder="Select Category"
       placeholderStyle={{ textAlign: 'center'}}
       containerStyle={{width: 200, height:50,alignSelf:"center"}}
@@ -400,57 +563,69 @@ setloader(false);
      }
  /> 
     
+
+    <TextInput
+      style={{ backgroundColor:"white",marginTop:17 }}  
+      mode="outlined"
+      label="Name"
+      onChangeText={text=> setname(text)}
+    />
  
- <TextInput  style={{ backgroundColor:"white",width:230,height:45,fontSize:16,marginTop:17,borderColor:"black",borderWidth:0.4}}  
-       onChangeText={text=> setname(text)}
-       placeholder={"Name"} 
+ 
+ 
+ 
+<TextInput  style={{backgroundColor:"white",marginTop:17 }}  
+      keyboardType={"numeric"}
+      label="Num Of Items"
+      mode="outlined"
+      onChangeText={text=> setnoi(text)} 
  />
 
-<TextInput  style={{ backgroundColor:"white",width:230,height:45,fontSize:16,marginTop:17,borderColor:"black",borderWidth:0.4 }}  
+<TextInput  style={{ backgroundColor:"white",marginTop:17 }}  
       keyboardType={"numeric"}
+      mode="outlined"
       onChangeText={text=> setstartingAmount(text)}
-       placeholder={"Start Bidding Amount"} 
+      label="Starting Amount"
  />
  
- <TextInput  style={{ backgroundColor:"white",width:230,height:45,fontSize:16,marginTop:17,borderColor:"black",borderWidth:0.4 }}  
+ <TextInput  style={{ backgroundColor:"white"  ,marginTop:17 }}  
       keyboardType={"numeric"}
-      onChangeText={text=> setauction(text)}
-       placeholder={"auction"} 
- />
- 
-
- <TextInput  style={{ backgroundColor:"white",width:230,height:70,fontSize:16,marginTop:17,borderColor:"black",borderWidth:0.4 }}  
-       onChangeText={text=>setdescription(text)}
-       placeholder={"Description"} 
-       multiline={true}
-       numberOfLines={2}
-       scrollEnabled={true}
+      mode="outlined"
+      onChangeText={text=> setsba(text)}
+      label={"Start Bid Amount"} 
  />
 
- 
+<TextInput  style={{ backgroundColor:"white" ,marginTop:17 }}  
+      keyboardType={"numeric"}
+      mode="outlined"
+      onChangeText={text=> setinc(text)}
+      label={"Increment"} 
+ />
 
  
+<Textarea
+   containerStyle={{ height: 160,marginTop:17,
+    padding: 5,
+    borderColor:"black",
+    borderWidth:1,
+    backgroundColor:'white',
+    borderBottomEndRadius:4}}
+
+   style={{
+    color: 'black',
+    borderRadius:10,
+   }}
+   onChangeText={text=>setdescription(text)}
+   defaultValue={description}
+   placeholder={"Description"}
+   placeholderTextColor={'silver'}
+   underlineColorAndroid={'transparent'}
+ />
+  
     </View>
 
- {photo.length<=0 
- ? (
-   <TouchableOpacity 
-   onPress={()=>{ uploadImage_android()}}
-   style={{marginTop:35,alignItems:"center",flexDirection:"row",alignSelf:"center"}} >
-   <Text style={{fontSize:15}}>Add Photo</Text>
-   <allOther.vectorIcon.MaterialCommunityIcons style={{marginLeft:10}}  size={30} color="#307ecc" name="image-plus" />
-   </TouchableOpacity>
- ) 
- :(
-   <ScrollView horizontal={true}>
-{
- renderPhotos()
-}
-
-   </ScrollView>
-
- ) 
- }
+  
+ 
  </ScrollView>
        </DialogContent>
  
@@ -507,12 +682,12 @@ setloader(false);
       }
 
        
-      const    RenderProducts  = () => { 
+      const    RenderProducts  = (active) => { 
     
          let c= false;
          let product  =   productsData.products.map((item,index)=>{
         
-          if(item.data.status=="pending"){
+          if(item.data.status=="pending" && item.data.aid==aid){
 
         c=true;    
         let name = item.data.name || ""
@@ -554,18 +729,19 @@ setloader(false);
 
       
 
-<TouchableOpacity 
+
+{active=="no" && (
+  <TouchableOpacity 
 style={{position:"absolute",right:0,marginRight:5}}
   onPress={()=>{removeProducts(id)}}
 >
 <allOther.vectorIcon.Entypo size={26} color="#de5050" style={{opacity:0.8}} name="cross" />
 </TouchableOpacity>
-
-
+)}
 
 
 <TouchableOpacity style={{marginTop:10}}
- onPress={()=>{props.navigation.navigate("Update_Product",{pid:id})}} >
+ onPress={()=>{props.navigation.navigate("Update_Product",{pid:id,ac:ac})}} >
 
      
       
@@ -614,12 +790,23 @@ style={{position:"absolute",right:0,marginRight:5}}
 
       }
        
+
+      let active="";
+
+      auctionsData.auctions.map((item,index)=>{    
+        if(item.id==aid){
+          active=item.data.active
+        }
+      })
+
      
 return(
   <View style={{flex:1}}>
  
-    
+ <allOther.Header  st={"View Your Products"} title={an} nav={props.navigation}/>
+
  {renderUp()} 
+ {mv && renderFullImage()}
   <allOther.Loader loader={loader}/>
 
  <ScrollView ref={listViewRef}
@@ -642,7 +829,7 @@ onScroll={Animated.event([
               )
              :(
         
-            RenderProducts()
+            RenderProducts(active)
               ) 
 
             }
@@ -652,7 +839,7 @@ onScroll={Animated.event([
 {renderDown()}    
  
 
-   {renderAddButton()}  
+   {active=="no" && renderAddButton()}  
  
 </View>   
 )

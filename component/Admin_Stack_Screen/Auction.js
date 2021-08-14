@@ -56,9 +56,7 @@ const cardWidth=windowWidth-35;
   const [cb, setcb] = useState([]) //checkbox
 
   const auctionsData = useSelector(state => state.auctionReducer)
-
  
-
   const clearfields =()=>{
     setloader(false)
     setdialogVisible(false);
@@ -106,7 +104,7 @@ const  onClickAdd = async (url)=>{
   } catch (error) {
     setloader(false)
     setdialogVisible(false);
-   console.log("addprdct error try cath ==> ",error)
+   console.log("addactn error try cath ==> ",error)
   }
  
   
@@ -471,7 +469,7 @@ const   renderDatePicker = ()=>
         
         minimumDate={new Date()}
         onConfirm={(d)=> {confirmDate(d)}}
-        onCancel={()=>{setdate(""),setdtp(false)}}
+        onCancel={()=>{setdtp(false)}}
         
       />
     </View>
@@ -492,7 +490,7 @@ const   renderTimePicker = ()=>
         
         // minimumDate={new Date()}
         onConfirm={(t)=> {confirmTime(t)}}
-        onCancel={()=>{setst(""),setet(""),settp(false);setc(null)}}
+        onCancel={()=>{settp(false);setc(null)}}
         
       />
     </View>

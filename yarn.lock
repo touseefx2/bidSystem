@@ -1022,6 +1022,11 @@
     "@babel/helper-validator-identifier" "^7.14.0"
     "to-fast-properties" "^2.0.0"
 
+"@baronha/react-native-multiple-image-picker@^0.4.1":
+  "integrity" "sha512-EoeMQ52kw4aYeMQaz2xkQK1YBbDKyT9MMw2t/Fqk7sj+5IXeGVWmYW3Cr7d2lM4ecC2FM+mpyKTKGV2gxWxLyQ=="
+  "resolved" "https://registry.npmjs.org/@baronha/react-native-multiple-image-picker/-/react-native-multiple-image-picker-0.4.1.tgz"
+  "version" "0.4.1"
+
 "@bcoe/v8-coverage@^0.2.3":
   "integrity" "sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw=="
   "resolved" "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
@@ -6920,6 +6925,13 @@
   "integrity" "sha512-L7qXtYz5Z+NdWyu38zaJrlHA/8H6rNFRZXe3ydym12UEEPPoefbVZ71b9YK2O6QP0u4pUlzMpMVM/Lsz2DJ4jg=="
   "resolved" "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-3.0.1.tgz"
   "version" "3.0.1"
+
+"react-native-textarea@^1.0.4":
+  "integrity" "sha512-XM78hqlpUom+YOtjZn69sPZn3ReRXsJfjV0t790k/qNPuc7NG8akfU7vSeKsuRSRH2zVaqk5FbxdkITkeh+3jw=="
+  "resolved" "https://registry.npmjs.org/react-native-textarea/-/react-native-textarea-1.0.4.tgz"
+  "version" "1.0.4"
+  dependencies:
+    "prop-types" "^15.5.10"
 
 "react-native-vector-icons@*", "react-native-vector-icons@^6.6.0":
   "integrity" "sha512-LKdwqDIGVxV1+4HnmFIPaok9hba3WyTQ7H2Wj5RFv54zIdIjixrAiV9VD/Ej9Mc5/rUhTpmMiIVF3LVmVYD7dg=="

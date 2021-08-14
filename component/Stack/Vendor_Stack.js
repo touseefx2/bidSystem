@@ -13,6 +13,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import View_Product from "../Vendor_Stack_Screen/View_Product"
 import Profile from "../Comon_Screen/Profile"
+import Auction from "../Vendor_Stack_Screen/Auction"
 
 const headerColor="#307ecc"
 const headerTextColor="white"
@@ -35,7 +36,7 @@ const Drawer  = createDrawerNavigator();
     
         <Drawer.Screen  name="Home" component={Home} options={homeIcon} />
          <Drawer.Screen name="Profile" component={Profile}  options={profileIcon}  />
-         <Drawer.Screen name="Products" component={AddProducts_Stack}  options={add_product_icon} />
+         <Drawer.Screen name="Auctions" component={Auction_Stack}  options={add_product_icon} />
          <Drawer.Screen name="Status" component={ProducStatus_Stack}  options={productStatus_icon} />
         <Drawer.Screen name="Logout" component={logout}  options={logoutIcon}  />
     </Drawer.Navigator>
@@ -46,17 +47,18 @@ const Drawer  = createDrawerNavigator();
 
  const Stack = createStackNavigator();
 
-  const AddProducts_Stack = ()=> 
+  const Auction_Stack = ()=> 
 {
     return(
    <Stack.Navigator 
-       initialRouteName="Add_Products"
+       initialRouteName="Auction"
        screenOptions={{
          animationEnabled: true
        }}
        headerMode='none'
    >
 
+      <Stack.Screen name="Auctiion" component={Auction} />
        <Stack.Screen name="Add_Products" component={Products} />
        <Stack.Screen name="Update_Product" component={UpdateProduct}  />
         
@@ -172,8 +174,8 @@ headerTitleStyle: {
 },
  
   drawerIcon: ({ focused, size }) => (
-    <allOther.vectorIcon.Ionicons
-      name="add-circle-outline"
+    <allOther.vectorIcon.MaterialCommunityIcons
+      name="sale"
       size={iconSize}
       color={focused ? iconfocuscolor : iconunfocuscolor}
      

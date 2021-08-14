@@ -113,6 +113,10 @@
     <attr format="dimension" name="gallery_ucrop_vector_ic_crop"/>
     <attr format="dimension" name="height"/>
     <attr format="reference" name="hideMotionSpec"/>
+    <attr format="enum" name="implementationMode">
+        <enum name="performance" value="0"/>
+        <enum name="compatible" value="1"/>
+    </attr>
     <attr format="boolean" name="isLightTheme"/>
     <attr format="boolean" name="isMaterialTheme"/>
     <attr format="reference" name="itemShapeAppearance"/>
@@ -135,9 +139,47 @@
     <attr format="reference" name="materialThemeOverlay"/>
     <attr format="dimension" name="minTouchTargetSize"/>
     <attr format="reference" name="navigationViewStyle"/>
+    <attr format="reference|color" name="picture.ac_preview.bottom.bg"/>
+    <attr format="reference|color" name="picture.ac_preview.complete.textColor"/>
+    <attr format="reference|color" name="picture.ac_preview.title.bg"/>
+    <attr format="reference|color" name="picture.ac_preview.title.textColor"/>
+    <attr format="reference" name="picture.arrow_down.icon"/>
+    <attr format="reference" name="picture.arrow_up.icon"/>
+    <attr format="reference|color" name="picture.bottom.bg"/>
+    <attr format="reference" name="picture.checked.style"/>
+    <attr format="reference|color" name="picture.complete.textColor"/>
+    <attr format="color" name="picture.container.backgroundColor"/>
+    <attr format="reference|color" name="picture.crop.status.color"/>
+    <attr format="reference|color" name="picture.crop.title.color"/>
+    <attr format="reference|color" name="picture.crop.toolbar.bg"/>
+    <attr format="color" name="picture.folder.textColor"/>
+    <attr format="dimension" name="picture.folder.textSize"/>
+    <attr format="reference" name="picture.folder_checked_dot"/>
+    <attr format="reference" name="picture.leftBack.icon"/>
+    <attr format="reference" name="picture.num.style"/>
+    <attr format="reference" name="picture.original.check.style"/>
+    <attr format="reference|color" name="picture.original.text.color"/>
+    <attr format="reference" name="picture.preview.leftBack.icon"/>
+    <attr format="reference|color" name="picture.preview.textColor"/>
+    <attr format="reference|color" name="picture.right.textColor"/>
+    <attr format="reference|color" name="picture.status.color"/>
+    <attr format="boolean" name="picture.statusFontColor"/>
+    <attr format="boolean" name="picture.style.checkNumMode"/>
+    <attr format="boolean" name="picture.style.numComplete"/>
+    <attr format="reference|color" name="picture.title.textColor"/>
+    <attr format="dimension" name="picture.titleBar.height"/>
+    <attr format="dimension" name="picture.titleRightArrow.LeftPadding"/>
     <attr format="reference" name="popupMenuBackground"/>
     <attr format="reference" name="recyclerViewStyle"/>
     <attr format="color" name="rippleColor"/>
+    <attr format="enum" name="scaleType">
+        <enum name="fillStart" value="0"/>
+        <enum name="fillCenter" value="1"/>
+        <enum name="fillEnd" value="2"/>
+        <enum name="fitStart" value="3"/>
+        <enum name="fitCenter" value="4"/>
+        <enum name="fitEnd" value="5"/>
+    </attr>
     <attr format="color|reference" name="scrimBackground"/>
     <attr format="reference" name="shapeAppearanceLargeComponent"/>
     <attr format="reference" name="shapeAppearanceMediumComponent"/>
@@ -171,7 +213,8 @@
     <bool name="gallery_default_ucrop_show_crop_frame">true</bool>
     <bool name="gallery_default_ucrop_show_crop_grid">true</bool>
     <bool name="mtrl_btn_textappearance_all_caps">true</bool>
-    <color name="abc_input_method_navigation_guard">@android:color/black</color>
+    <color name="abc_decor_view_status_guard">#ff000000</color>
+    <color name="abc_decor_view_status_guard_light">#ffffffff</color>
     <color name="abc_search_url_text_normal">#7fa87f</color>
     <color name="abc_search_url_text_pressed">@android:color/black</color>
     <color name="abc_search_url_text_selected">@android:color/black</color>
@@ -181,6 +224,22 @@
     <color name="androidx_core_ripple_material_light">#1f000000</color>
     <color name="androidx_core_secondary_text_default_material_light">#8a000000</color>
     <color name="antiquewhite">#FAEBD7</color>
+    <color name="app_color_53575e">#53575e</color>
+    <color name="app_color_9b">#9b9b9b</color>
+    <color name="app_color_black">#000000</color>
+    <color name="app_color_blue">#7D7DFF</color>
+    <color name="app_color_c51">#f94c51</color>
+    <color name="app_color_divider">#B6B6B6</color>
+    <color name="app_color_e0ff6100">#E0FF6100</color>
+    <color name="app_color_f6">#f6f6f6</color>
+    <color name="app_color_fa">#fafafa</color>
+    <color name="app_color_green">#43c117</color>
+    <color name="app_color_grey">#393a3e</color>
+    <color name="app_color_pri">#FB9300</color>
+    <color name="app_color_red">#FF0000</color>
+    <color name="app_color_transparent">#00000000</color>
+    <color name="app_color_white">#FFFFFF</color>
+    <color name="app_color_white_transparent">#E0DBDBDB</color>
     <color name="aqua">#00FFFF</color>
     <color name="aquamarine">#7FFFD4</color>
     <color name="azure">#F0FFFF</color>
@@ -415,6 +474,42 @@
     <color name="papayawhip">#FFEFD5</color>
     <color name="peachpuff">#FFDAB9</color>
     <color name="peru">#CD853F</color>
+    <color name="picture_color_20">#20000000</color>
+    <color name="picture_color_20c064">#20c064</color>
+    <color name="picture_color_394a3e">#394a3e</color>
+    <color name="picture_color_4d">#4d4d4d</color>
+    <color name="picture_color_4e4d4e">#4e4d4e</color>
+    <color name="picture_color_529BeA">#529BeA</color>
+    <color name="picture_color_53575e">#53575e</color>
+    <color name="picture_color_70">#70000000</color>
+    <color name="picture_color_80">#80000000</color>
+    <color name="picture_color_9b">#9b9b9b</color>
+    <color name="picture_color_a83">#a8333333</color>
+    <color name="picture_color_aab2bd">#AAB2BD</color>
+    <color name="picture_color_ba3">#b0567ba3</color>
+    <color name="picture_color_bfe85d">#BF96E85D</color>
+    <color name="picture_color_black">#000000</color>
+    <color name="picture_color_blue">#7D7DFF</color>
+    <color name="picture_color_e">#EEEEEE</color>
+    <color name="picture_color_e0ff6100">#E0FF6100</color>
+    <color name="picture_color_eb">#ebebeb</color>
+    <color name="picture_color_ec">#ececec</color>
+    <color name="picture_color_f0">#F0F0F0</color>
+    <color name="picture_color_f2">#F2F2F2</color>
+    <color name="picture_color_fa">#FAFAFA</color>
+    <color name="picture_color_fa632d">#FA632D</color>
+    <color name="picture_color_ff572e">#ff572e</color>
+    <color name="picture_color_ffd042">#FFFFD042</color>
+    <color name="picture_color_ffe85d">#FF96E85D</color>
+    <color name="picture_color_grey">#393a3e</color>
+    <color name="picture_color_grey_3e">#dd393a3e</color>
+    <color name="picture_color_half_grey">#a0393a3e</color>
+    <color name="picture_color_half_white">#99FFFFFF</color>
+    <color name="picture_color_light_grey">#999999</color>
+    <color name="picture_color_transparent">#00000000</color>
+    <color name="picture_color_transparent_e0db">#E0DBDBDB</color>
+    <color name="picture_color_transparent_white">#F0FFFFFF</color>
+    <color name="picture_color_white">#FFFFFF</color>
     <color name="pink">#FFC0CB</color>
     <color name="plum">#DDA0DD</color>
     <color name="powderblue">#B0E0E6</color>
@@ -938,6 +1033,7 @@
     <item name="fragment_container_view_tag" type="id"/>
     <item name="ghost_view" type="id"/>
     <item name="ghost_view_holder" type="id"/>
+    <item name="glide_custom_view_target_tag" type="id"/>
     <item name="home" type="id"/>
     <item name="item_touch_helper_previous_elevation" type="id"/>
     <item name="line1" type="id"/>
@@ -975,7 +1071,10 @@
     <item name="transition_scene_layoutid_cache" type="id"/>
     <item name="transition_transform" type="id"/>
     <item name="up" type="id"/>
+    <item name="view_count_tag" type="id"/>
+    <item name="view_index_tag" type="id"/>
     <item name="view_offset_helper" type="id"/>
+    <item name="view_tag" type="id"/>
     <item name="view_tag_instance_handle" type="id"/>
     <item name="view_tag_native_id" type="id"/>
     <item name="visible_removing_fragment_view_tag" type="id"/>
@@ -1039,6 +1138,7 @@
     <string name="abc_shareactionprovider_share_with_application">Share with <ns1:g example="Mail" id="application_name">%s</ns1:g></string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <string name="alert_description" translatable="false">Alert</string>
+    <string name="androidx_camera_default_config_provider" translatable="false"/>
     <string name="app_name">Bid System</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
     <string name="bottom_sheet_behavior" translatable="false">com.google.android.material.bottomsheet.BottomSheetBehavior</string>
@@ -1177,6 +1277,67 @@
     <string name="path_password_eye_mask_strike_through" translatable="false">M2,4.27 L19.73,22 L22.27,19.46 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_eye_mask_visible" translatable="false">M2,4.27 L2,4.27 L4.54,1.73 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_strike_through" translatable="false">M3.27,4.27 L19.74,20.74</string>
+    <string name="picture_all_audio">所有音频</string>
+    <string name="picture_audio">获取系统录音权限被拒绝</string>
+    <string name="picture_audio_empty">你可以使用系统录音录制音频</string>
+    <string name="picture_audio_error">音频已损坏</string>
+    <string name="picture_camera">获取系统相机权限被拒绝</string>
+    <string name="picture_camera_roll">相机胶卷</string>
+    <string name="picture_camera_roll_num">%1$s (%2$d)</string>
+    <string name="picture_cancel">取消</string>
+    <string name="picture_choose_limit_seconds">只能选择 %1$ds 至 %2$ds内的视频</string>
+    <string name="picture_choose_max_seconds">最大只能选择 %1$ds 以内的视频</string>
+    <string name="picture_choose_min_seconds">不能选择低于 %1$ds 内的视频</string>
+    <string name="picture_completed">已完成</string>
+    <string name="picture_confirm">确定</string>
+    <string name="picture_data_exception">获取相册数据异常…</string>
+    <string name="picture_data_null">这里空空如也…</string>
+    <string name="picture_done">完 成</string>
+    <string name="picture_done_front_num">%1$d/%2$d 完成</string>
+    <string name="picture_empty">你可以使用相机拍摄照片或视频</string>
+    <string name="picture_empty_audio_title">无音频文件\n</string>
+    <string name="picture_empty_title">无视频或照片\n</string>
+    <string name="picture_error">图片已损坏</string>
+    <string name="picture_gif_tag">动图</string>
+    <string name="picture_go_setting">去设置</string>
+    <string name="picture_jurisdiction">读取内存卡权限被拒绝</string>
+    <string name="picture_know">我知道了</string>
+    <string name="picture_long_chart">长图</string>
+    <string name="picture_message_audio_max_num">你最多只能选择%1$s个音频</string>
+    <string name="picture_message_max_num">你最多只能选择%1$s张照片</string>
+    <string name="picture_message_video_max_num">你最多只能选择%1$s个视频</string>
+    <string name="picture_min_img_num">图片最低选择不能少于%1$s张</string>
+    <string name="picture_min_video_num">视频最低选择不能少于%1$s个</string>
+    <string name="picture_not_crop_data">无可用裁剪数据</string>
+    <string name="picture_original_image">原图</string>
+    <string name="picture_pause_audio">暂停</string>
+    <string name="picture_photo_camera">单击拍照，长按摄像</string>
+    <string name="picture_photo_pictures">单击拍照</string>
+    <string name="picture_photo_recording">长按摄像</string>
+    <string name="picture_photograph">拍照</string>
+    <string name="picture_play_audio">播放</string>
+    <string name="picture_please">请稍候…</string>
+    <string name="picture_please_select">请选择</string>
+    <string name="picture_preview">预览</string>
+    <string name="picture_preview_image_num">%1$d/%2$d</string>
+    <string name="picture_preview_num">预览(%1$d)</string>
+    <string name="picture_prompt">提示</string>
+    <string name="picture_prompt_content">是否保存图片至手机？</string>
+    <string name="picture_quit_audio">退出</string>
+    <string name="picture_record_video">录视频</string>
+    <string name="picture_recording_time_is_short">录制时间过短</string>
+    <string name="picture_rule">不能同时选择图片或视频</string>
+    <string name="picture_save_error">图片保存失败</string>
+    <string name="picture_save_success">图片保存成功至</string>
+    <string name="picture_select">选择</string>
+    <string name="picture_send">完成</string>
+    <string name="picture_send_num">完成(%1$d/%2$d)</string>
+    <string name="picture_stop_audio">停止</string>
+    <string name="picture_take_picture">拍摄</string>
+    <string name="picture_tape">录音</string>
+    <string name="picture_video_error">视频已损坏</string>
+    <string name="picture_video_toast">视频不可预览</string>
+    <string name="picture_warning">暂无媒体文件！</string>
     <string name="progressbar_description" translatable="false">Progress Bar</string>
     <string name="project_id" translatable="false">bidsystem-76465</string>
     <string name="radiogroup_description" translatable="false">Radio Group</string>
@@ -1602,6 +1763,7 @@
     <item name="windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
   </style>
     <style name="Base.Theme.MaterialComponents.Light.DialogWhenLarge" parent="Theme.MaterialComponents.Light"/>
+    <style name="Base.Theme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar"/>
     <style name="Base.ThemeOverlay.AppCompat" parent="Platform.ThemeOverlay.AppCompat"/>
     <style name="Base.ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal">?android:attr/textColorPrimary</item>
@@ -2182,7 +2344,6 @@
     <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.MaterialComponents.Body.Text</item>
   </style>
     <style name="Base.V7.Theme.AppCompat" parent="Platform.AppCompat">
-        <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
         <item name="windowNoTitle">false</item>
         <item name="windowActionBar">true</item>
         <item name="windowActionBarOverlay">false</item>
@@ -2379,8 +2540,6 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
     <style name="Base.V7.Theme.AppCompat.Light" parent="Platform.AppCompat.Light">
-        <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
-
         <item name="windowNoTitle">false</item>
         <item name="windowActionBar">true</item>
         <item name="windowActionBarOverlay">false</item>
@@ -3135,6 +3294,55 @@
     <item name="android:layout_gravity">center</item>
     <item name="android:textAlignment" ns2:ignore="NewApi">center</item>
   </style>
+    <style name="Picture.Theme.AlertDialog" parent="android:Theme.Dialog">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@color/picture_color_transparent</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:backgroundDimAmount">0.4</item>
+    </style>
+    <style name="Picture.Theme.Dialog" parent="@android:style/Theme.Dialog">
+
+        <!-- 边框 -->
+        <item name="android:windowFrame">@android:color/transparent</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+
+        <!-- 自己想要的背景 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <style name="Picture.Theme.Dialog.AudioStyle">
+        <item name="android:windowEnterAnimation">@anim/picture_anim_enter</item>
+        <item name="android:windowExitAnimation">@anim/picture_anim_exit</item>
+    </style>
+    <style name="Picture.Theme.Translucent" parent="Base.Theme.NoActionBar">
+        <item name="android:windowBackground">@color/picture_color_transparent
+        </item> <!-- 背景色透明度 -->
+        <item name="android:windowNoTitle">true</item><!-- 无标题 -->
+        <item name="android:windowIsTranslucent">true</item><!-- 半透明,设置为false无透明效果 -->
+    </style>
+    <style mce_bogus="1" name="PictureThemeDialogFragmentAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/picture_anim_up_in</item>
+        <item name="android:windowExitAnimation">@anim/picture_anim_down_out</item>
+    </style>
+    <style name="PictureThemeDialogWindowStyle">
+        <item name="android:windowEnterAnimation">@anim/picture_anim_modal_in</item>
+        <item name="android:windowExitAnimation">@anim/picture_anim_modal_out</item>
+    </style>
+    <style name="PictureThemeWindowStyle">
+        <item name="android:windowEnterAnimation">@anim/picture_anim_album_show</item>
+        <item name="android:windowExitAnimation">@anim/picture_anim_album_dismiss</item>
+    </style>
     <style name="Platform.AppCompat" parent="android:Theme.Holo">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
@@ -3678,6 +3886,7 @@
     <style name="Theme.AppCompat.Dialog.MinWidth" parent="Base.Theme.AppCompat.Dialog.MinWidth"/>
     <style name="Theme.AppCompat.DialogWhenLarge" parent="Base.Theme.AppCompat.DialogWhenLarge">
     </style>
+    <style name="Theme.AppCompat.Empty" parent=""/>
     <style name="Theme.AppCompat.Light" parent="Base.Theme.AppCompat.Light"/>
     <style name="Theme.AppCompat.Light.DarkActionBar" parent="Base.Theme.AppCompat.Light.DarkActionBar"/>
     <style name="Theme.AppCompat.Light.Dialog" parent="Base.Theme.AppCompat.Light.Dialog"/>
@@ -4884,6 +5093,134 @@
        <item name="android:scaleX">1.5</item>
        <item name="android:scaleY">1.5</item>
    </style>
+    <style name="picture.WeChat.style" parent="Base.Theme.NoActionBar">
+        <!-- Customize your theme here. -->
+        <!--标题栏背景色-->
+        <item name="colorPrimary">@color/picture_color_grey</item>
+        <!--状态栏背景色-->
+        <item name="colorPrimaryDark">@color/picture_color_grey</item>
+        <!--是否改变图片列表界面状态栏字体颜色为黑色-->
+        <item name="picture.statusFontColor">false</item>
+        <!--返回键图标-->
+        <item name="picture.leftBack.icon">@drawable/picture_icon_close</item>
+        <!--标题下拉箭头-->
+        <item name="picture.arrow_down.icon">@drawable/picture_icon_wechat_down</item>
+        <!--标题上拉箭头-->
+        <item name="picture.arrow_up.icon">@drawable/picture_icon_wechat_up</item>
+        <!--标题文字颜色-->
+        <item name="picture.title.textColor">@color/picture_color_white</item>
+        <!--标题栏右边文字-->
+        <item name="picture.right.textColor">@color/picture_color_white</item>
+        <!--图片列表勾选样式-->
+        <item name="picture.checked.style">@drawable/picture_wechat_num_selector</item>
+        <!--开启图片列表勾选数字模式,开启的话勾选样式要换-->
+        <item name="picture.style.checkNumMode">true</item>
+        <!--选择图片样式0/9-->
+        <item name="picture.style.numComplete">false</item>
+        <!--图片列表底部背景色-->
+        <item name="picture.bottom.bg">@color/picture_color_grey</item>
+        <!--图片列表预览文字颜色-->
+        <item name="picture.preview.textColor">@color/picture_color_white</item>
+        <!--图片列表已完成文字颜色-->
+        <item name="picture.complete.textColor">@color/picture_color_white</item>
+        <!--图片已选数量圆点背景色-->
+        <item name="picture.num.style">@drawable/picture_num_oval</item>
+        <!--预览界面标题文字颜色-->
+        <item name="picture.ac_preview.title.textColor">@color/picture_color_white</item>
+        <!--预览界面已完成文字颜色-->
+        <item name="picture.ac_preview.complete.textColor">@color/picture_color_white</item>
+        <!--预览界面标题栏背景色-->
+        <item name="picture.ac_preview.title.bg">@color/picture_color_grey</item>
+        <!--预览界面底部背景色-->
+        <item name="picture.ac_preview.bottom.bg">@color/picture_color_grey</item>
+        <!--预览界面返回箭头-->
+        <item name="picture.preview.leftBack.icon">@drawable/picture_icon_back</item>
+        <!--裁剪页面标题背景色-->
+        <item name="picture.crop.toolbar.bg">@color/picture_color_grey</item>
+        <!--裁剪页面状态栏颜色-->
+        <item name="picture.crop.status.color">@color/picture_color_grey</item>
+        <!--裁剪页面标题文字颜色-->
+        <item name="picture.crop.title.color">@color/picture_color_white</item>
+        <!--相册文件夹列表选中图标-->
+        <item name="picture.folder_checked_dot">@drawable/picture_orange_oval</item>
+        <!--原图勾选样式-->
+        <item name="picture.original.check.style">@drawable/picture_original_wechat_checkbox</item>
+        <!--原图字体颜色-->
+        <item name="picture.original.text.color">@color/picture_color_white</item>
+        <!--相册目录文件夹字体颜色-->
+        <item name="picture.folder.textColor">@color/picture_color_4d</item>
+        <!--相册目录文件夹字体大小-->
+        <item name="picture.folder.textSize">16sp</item>
+        <!--相册背景底色-->
+        <item name="picture.container.backgroundColor">@color/picture_color_black</item>
+        <!--标题栏高度-->
+        <item name="picture.titleBar.height">48dp</item>
+        <!--标题栏右侧按钮方向箭头left Padding-->
+        <item name="picture.titleRightArrow.LeftPadding">3dp</item>
+    </style>
+    <style name="picture.default.style" parent="Base.Theme.NoActionBar">
+        <!-- Customize your theme here. -->
+        <!--标题栏背景色-->
+        <item name="colorPrimary">@color/picture_color_grey</item>
+        <!--状态栏背景色-->
+        <item name="colorPrimaryDark">@color/picture_color_grey</item>
+        <!--是否改变图片列表界面状态栏字体颜色为黑色-->
+        <item name="picture.statusFontColor">false</item>
+        <!--返回键图标-->
+        <item name="picture.leftBack.icon">@drawable/picture_icon_back</item>
+        <!--标题下拉箭头-->
+        <item name="picture.arrow_down.icon">@drawable/picture_icon_arrow_down</item>
+        <!--标题上拉箭头-->
+        <item name="picture.arrow_up.icon">@drawable/picture_icon_arrow_up</item>
+        <!--标题文字颜色-->
+        <item name="picture.title.textColor">@color/picture_color_white</item>
+        <!--标题栏右边文字-->
+        <item name="picture.right.textColor">@color/picture_color_white</item>
+        <!--图片列表勾选样式-->
+        <item name="picture.checked.style">@drawable/picture_checkbox_selector</item>
+        <!--开启图片列表勾选数字模式-->
+        <item name="picture.style.checkNumMode">false</item>
+        <!--选择图片样式0/9-->
+        <item name="picture.style.numComplete">false</item>
+        <!--图片列表底部背景色-->
+        <item name="picture.bottom.bg">@color/picture_color_grey</item>
+        <!--图片列表预览文字颜色-->
+        <item name="picture.preview.textColor">@color/picture_list_text_color</item>
+        <!--图片列表已完成文字颜色-->
+        <item name="picture.complete.textColor">@color/picture_list_text_color</item>
+        <!--图片已选数量圆点背景色-->
+        <item name="picture.num.style">@drawable/picture_num_oval</item>
+        <!--预览界面标题文字颜色-->
+        <item name="picture.ac_preview.title.textColor">@color/picture_color_white</item>
+        <!--预览界面已完成文字颜色-->
+        <item name="picture.ac_preview.complete.textColor">@color/picture_list_text_color</item>
+        <!--预览界面标题栏背景色-->
+        <item name="picture.ac_preview.title.bg">@color/picture_color_grey</item>
+        <!--预览界面底部背景色-->
+        <item name="picture.ac_preview.bottom.bg">@color/picture_color_grey</item>
+        <!--预览界面返回箭头-->
+        <item name="picture.preview.leftBack.icon">@drawable/picture_icon_back</item>
+        <!--裁剪页面标题背景色-->
+        <item name="picture.crop.toolbar.bg">@color/picture_color_grey</item>
+        <!--裁剪页面状态栏颜色-->
+        <item name="picture.crop.status.color">@color/picture_color_grey</item>
+        <!--裁剪页面标题文字颜色-->
+        <item name="picture.crop.title.color">@color/picture_color_white</item>
+        <!--相册文件夹列表选中图标-->
+        <item name="picture.folder_checked_dot">@drawable/picture_orange_oval</item>
+        <!--原图勾选样式-->
+        <item name="picture.original.check.style">@drawable/picture_original_wechat_checkbox</item>
+        <!--原图字体颜色-->
+        <item name="picture.original.text.color">@color/picture_color_white</item>
+        <!--相册目录文件夹字体颜色-->
+        <item name="picture.folder.textColor">@color/picture_color_4d</item>
+        <!--相册目录文件夹字体大小-->
+        <item name="picture.folder.textSize">16sp</item>
+        <!--相册背景底色-->
+        <item name="picture.container.backgroundColor">@color/picture_color_white</item>
+        <!--标题栏高度-->
+        <item name="picture.titleBar.height">48dp</item>
+    </style>
     <style name="redboxButton">
     <item name="android:layout_width">0dp</item>
     <item name="android:layout_height">wrap_content</item>
@@ -5876,6 +6213,19 @@
              enough space to lay them out side-by-side. -->
         <attr format="boolean" name="allowStacking"/>
     </declare-styleable>
+    <declare-styleable name="CameraView"><attr name="scaleType"/><attr format="enum" name="lensFacing">
+            <enum name="none" value="0"/>
+            <enum name="front" value="1"/>
+            <enum name="back" value="2"/>
+        </attr><attr format="enum" name="captureMode">
+            <enum name="image" value="0"/>
+            <enum name="video" value="1"/>
+            <enum name="mixed" value="2"/>
+        </attr><attr format="enum" name="flash">
+            <enum name="auto" value="1"/>
+            <enum name="on" value="2"/>
+            <enum name="off" value="4"/>
+        </attr><attr format="boolean" name="pinchToZoomEnabled"/></declare-styleable>
     <declare-styleable name="CardView">
         <!-- Background color for CardView. -->
         <attr format="color" name="cardBackgroundColor"/>
@@ -7119,6 +7469,14 @@
          itemShapeAppearance or itemShapeAppearanceOverlay. -->
     <attr format="color" name="itemShapeFillColor"/>
   </declare-styleable>
+    <declare-styleable name="PictureLongScaleImageView">
+        <attr format="reference" name="src"/>
+        <attr format="string" name="assetName"/>
+        <attr format="boolean" name="panEnabled"/>
+        <attr format="boolean" name="zoomEnabled"/>
+        <attr format="boolean" name="quickScaleEnabled"/>
+        <attr format="color" name="tileBackgroundColor"/>
+    </declare-styleable>
     <declare-styleable name="PopupWindow">
         <!-- Whether the popup window should overlap its anchor view. -->
         <attr format="boolean" name="overlapAnchor"/>
@@ -7129,6 +7487,7 @@
         <!-- State identifier indicating the popup will be above the anchor. -->
         <attr format="boolean" name="state_above_anchor"/>
     </declare-styleable>
+    <declare-styleable name="PreviewView"><attr name="scaleType"/><attr name="implementationMode"/></declare-styleable>
     <declare-styleable name="RecycleListView">
         <!-- Bottom padding to use when no buttons are present. -->
         <attr format="dimension" name="paddingBottomNoButtons"/>

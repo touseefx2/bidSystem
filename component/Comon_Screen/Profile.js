@@ -7,7 +7,7 @@ import firestore from '@react-native-firebase/firestore';
 
 let nameValidate=true
  
-  export default  function  UpdateProduct(props)  {
+  export default  function  Profile(props)  {
 
     const [loader, setloader] = useState(true)
  
@@ -203,7 +203,7 @@ style={{backgroundColor: "black",width:100,height:40,borderRadius:20,alignItems:
 
 return(
   <View style={{flex:1}}>
- <allOther.Header  title="" nav={props.navigation}/>
+ {/* <allOther.Header  title="" nav={props.navigation}/> */}
   <allOther.Loader loader={loader}/>
  
  <ScrollView>      

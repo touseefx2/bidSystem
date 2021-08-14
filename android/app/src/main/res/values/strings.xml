@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Bid System</string>
 
-     <string name="gallery_loading_view_click_loading_more">Load more</string>
+         <string name="gallery_loading_view_click_loading_more">Load more</string>
     <string name="gallery_loading_view_no_more">No more</string>
     <string name="gallery_loading_view_loading">Loading…</string>
 

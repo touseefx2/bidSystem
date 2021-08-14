@@ -86,10 +86,7 @@ componentDidMount(){
 
  <LottieView  style={{marginTop:"5%"}} source={require(Lottie)} autoPlay loop />
  
-        {/* or
-       <Image source={require(image)} style={{width:170,height:170,borderRadius:85,marginTop:"10%"}} />
-      
-        <ActivityIndicator  style={{marginTop:"15%"}} size="large" color="#307ecc" /> */}
+         
 
         </View>
     );

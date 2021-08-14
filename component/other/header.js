@@ -7,15 +7,18 @@ import allOther from "./allOther";
 export   function Header (props) {
 
   let headerTitle=props.title || "";
+  let st=props.st || ""
  
  
 
     return(
 
-<View style={{backgroundColor:null,marginTop:5,marginLeft:5,flexDirection:"row",alignItems:"center"}}>
+<View style={{backgroundColor:null,marginTop:10,marginLeft:5,flexDirection:"row" }}>
 <allOther.vectorIcon.Ionicons  name="arrow-back-outline" size={35} color="#15756c" onPress={()=>props.nav.goBack()} /> 
+<View>
 <Text style={styles.title}>{headerTitle}</Text>
-
+<Text style={styles.stitle}>{st}</Text>
+</View>
 </View>
 
     )
@@ -42,10 +45,16 @@ const styles = StyleSheet.create({
       //  borderColor: "black",
       } ,
       title:{
-        fontSize:18,
+        fontSize:25,
         fontWeight:"bold",
         marginLeft:30,
-        color:"#15756c",
+        color:"black",
+        textTransform:"capitalize"
+      },
+      stitle:{
+        fontSize:20,
+        marginLeft:30,
+        color:"silver",
         textTransform:"capitalize"
       }
   })
