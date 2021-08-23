@@ -36,8 +36,7 @@ const cardWidth=windowWidth-35;
          let  auctions  =   auctionsData.auctions.map((item,index)=>{
         
      
- 
-
+      if(item.data.active!="end"){
         c=true;    
         let name = item.data.name || ""
         let active = item.data.active || ""
@@ -48,15 +47,13 @@ const cardWidth=windowWidth-35;
         let et=item.data.et
         let cb=item.data.cb
     
-
-
        return (
   
  
         <View style={styles.card}>
 
   
-<TouchableOpacity onPress={()=>{props.navigation.navigate("Add_Products",{aid:id,an:name,ac:cb})}}>
+<TouchableOpacity onPress={()=>{props.navigation.navigate("Add_Products",{aid:id,an:name,ac:cb,st:st,et:et})}}>
 
      
       
@@ -119,6 +116,9 @@ const cardWidth=windowWidth-35;
       
  
              )
+
+          }
+
       
  
        })

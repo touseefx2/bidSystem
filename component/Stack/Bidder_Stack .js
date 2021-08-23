@@ -3,16 +3,25 @@ import { Dimensions} from "react-native";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Home from "../Comon_Screen/Home"
 import logout from "../Comon_Screen/logout";
-import Products  from "../Bidder_Stack_Screen/Products"
-import History from "../Bidder_Stack_Screen/History";
+ 
 import allOther from "../other/allOther";
 import CustomDrawerContent from "../Comon_Screen/CustomDrawerContent";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Profile from "../Comon_Screen/Profile"
-import View_Product from "../Bidder_Stack_Screen/View_Product";
+import Active_Product from "../Bidder_Stack_Screen/Active_Product";
+import History_Product from "../Bidder_Stack_Screen/History_Product";
+import View_Products from "../Bidder_Stack_Screen/View_Products";
+import Histroys from "../Bidder_Stack_Screen/Historys" 
+
+
 import { createStackNavigator } from '@react-navigation/stack';
+
+ 
+import Auction from "../Bidder_Stack_Screen/Auction"
+ 
+import PurchaseBid from "../Bidder_Stack_Screen/PurchaseBid"
 
 const headerColor="#307ecc"
 const headerTextColor="white"
@@ -35,8 +44,11 @@ const Drawer  = createDrawerNavigator();
     
         <Drawer.Screen  name="Home" component={Home} options={homeIcon} />
         <Drawer.Screen name="Profile" component={Profile}  options={profileIcon}  />
-         <Drawer.Screen name="Products" component={Products_Stack}  options={product_icon} />
-         {/* <Drawer.Screen name="History" component={History_Stack}  options={history_icon} /> */}
+        <Drawer.Screen name="Auction" component={Auction_Stack}  options={auctionIcon}  />
+         <Drawer.Screen name="History" component={History_Stack}  options={auctionIcon}  />
+
+        <Drawer.Screen name="Purchase Bid" component={PurchaseBid}  options={prchs_icon} />
+      
         <Drawer.Screen name="Logout" component={logout}  options={logoutIcon}  />
     </Drawer.Navigator>
  )
@@ -46,21 +58,26 @@ const Drawer  = createDrawerNavigator();
 
  const Stack = createStackNavigator();
 
-  const Products_Stack = ()=> 
+ 
+
+ 
+
+ 
+const Auction_Stack = ()=> 
 {
     return(
    <Stack.Navigator 
-       initialRouteName="Product"
+       initialRouteName="Auctions"
        screenOptions={{
          animationEnabled: true
        }}
        headerMode='none'
    >
 
-       <Stack.Screen name="Product" component={Products} />
-       <Stack.Screen name="View_Product" component={View_Product}  />
-        
-  
+       <Stack.Screen name="Auctions" component={Auction} />
+       <Stack.Screen name="Active_Products"   component={Active_Product}  />
+       <Stack.Screen name="View_Products"   component={View_Products}  />
+       
    </Stack.Navigator>
     )
 }
@@ -69,22 +86,21 @@ const History_Stack = ()=>
 {
     return(
    <Stack.Navigator 
-       initialRouteName="Histor"
+       initialRouteName="Historys"
        screenOptions={{
          animationEnabled: true
        }}
        headerMode='none'
    >
 
-       <Stack.Screen name="History" component={History} />
-       <Stack.Screen name="View_Product" component={View_Product}  />
+       <Stack.Screen name="Histroys" component={Histroys} />
+       <Stack.Screen name="History_Products" component={History_Product} />
+       <Stack.Screen name="View_Products"   component={View_Products}  />
         
   
    </Stack.Navigator>
     )
 }
-
- 
  
  const homeIcon = {
   headerStyle: {
@@ -135,6 +151,26 @@ headerTitleStyle: {
   )
 }
 
+const  prchs_icon = {
+  unmountOnBlur:true,
+  headerStyle: {
+    backgroundColor: headerColor, //Set Header color
+},
+headerTintColor: headerTextColor, //Set Header text color
+headerTitleStyle: {
+    fontWeight: 'bold', //Set Header text style
+},
+ 
+  drawerIcon: ({ focused, size }) => (
+    <AntDesign
+      name="shoppingcart"
+      size={iconSize}
+      color={focused ? iconfocuscolor : iconunfocuscolor}
+     
+    />
+  )
+}
+
 const  history_icon = {
   headerStyle: {
     backgroundColor: headerColor, //Set Header color
@@ -159,6 +195,22 @@ const profileIcon = {
   drawerIcon: ({ focused, size}) => (
     <allOther.vectorIcon.Fontisto
       name="person"   
+      size={iconSize}
+      color={focused ? iconfocuscolor : iconunfocuscolor}  
+    />
+  )
+}
+const auctionIcon = {
+  headerStyle: {
+    backgroundColor: headerColor, //Set Header color
+},
+headerTintColor: headerTextColor, //Set Header text color
+headerTitleStyle: {
+    fontWeight: 'bold', //Set Header text style
+},
+  drawerIcon: ({ focused, size}) => (
+    <allOther.vectorIcon.Fontisto
+      name="user-secret"   
       size={iconSize}
       color={focused ? iconfocuscolor : iconunfocuscolor}  
     />

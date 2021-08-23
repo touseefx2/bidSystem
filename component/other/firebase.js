@@ -73,6 +73,27 @@ import allActions from "../redux/allActions"
         }
       }
 
+      const __Add_BidReq = async (br) => {
+        try {    
+       let response =   firestore().collection("bidrequests").add(br)
+          if (response) {
+           // AlertMessage.alert("Success ✅", "Authenticated successfully")
+            return response;
+          }else{
+            return false;
+          }
+          
+        } catch (error) {
+              var errorMessage = error.message;
+              var si  = errorMessage.indexOf("]")+1
+              var  ei  = errorMessage.length -1
+              const msg = errorMessage.substr(si,ei)
+              allOther.AlertMessage("",msg)
+              return false;
+         
+        }
+      }
+
       const __Add_Auction = async (auction) => {
         try {    
        let response =   firestore().collection("auctions").add(auction)
@@ -159,6 +180,30 @@ import allActions from "../redux/allActions"
          
         }
       }
+
+      const __UpdateBidReq= async (rid,obj) => {
+        try {    
+
+         
+    
+          let response =   firestore().collection("bidrequests").doc(rid).update(obj);
+          if (response) {
+            return true;
+          }else{
+            return false;
+          }
+    
+
+        } catch (error) {
+              var errorMessage = error.message;
+              var si  = errorMessage.indexOf("]")+1
+              var  ei  = errorMessage.length -1
+              const msg = errorMessage.substr(si,ei)
+              allOther.AlertMessage("",msg)
+              return false;
+         
+        }
+      }
       
       const __Remove_Item = async (id,t) => {
         try {    
@@ -204,6 +249,10 @@ import allActions from "../redux/allActions"
         SetProductsData(uid,"specific")
       }
 
+      if(type=="set-allrbdata"){
+        SetallReqBidData()
+      }
+
       if(type=="set-auctions-data"){
         SetAuctionsData();
       }
@@ -222,9 +271,11 @@ import allActions from "../redux/allActions"
         SetAllBiddersData()
        }
 
-      
+       if(type=="set-product-bidders-data"){
+        SetbdData()
+       }
 
-
+  
     }, [])
   
  
@@ -236,7 +287,7 @@ import allActions from "../redux/allActions"
     const unsub =   auth().onAuthStateChanged( async (user)=> {
      
       if (user) {
-        console.log("Uuuuuu : ",user)
+        // console.log("Uuuuuu : ",user)
      await  db.update({
           emailVerified:user.emailVerified
         })
@@ -277,7 +328,7 @@ import allActions from "../redux/allActions"
 
       if(c=="specific")
       {
-       const unsubscribe = firestore().collection("products").onSnapshot(async  (d)=>{
+       const unsubscribe = firestore().collection("products").orderBy('createdAt', 'desc').onSnapshot(async  (d)=>{
        let arr=[]
        if(d){
         d.docs.map((data)=>{
@@ -301,7 +352,7 @@ import allActions from "../redux/allActions"
       if(c=="all")
       {
 
-        const unsubscribe = firestore().collection("products").onSnapshot(async  (d)=>{
+        const unsubscribe = firestore().collection("products").orderBy('createdAt', 'desc').onSnapshot(async  (d)=>{
           let arr=[]
           if(d){
            d.docs.map((data)=>{
@@ -340,7 +391,7 @@ import allActions from "../redux/allActions"
   
       try {
    
-        const unsubscribey = firestore().collection("auctions").onSnapshot(async  (d)=>{
+        const unsubscribey = firestore().collection("auctions").orderBy('createdAt', 'desc').onSnapshot(async  (d)=>{
           let arr=[]
           if(d){
            d.docs.map((data)=>{
@@ -369,6 +420,41 @@ import allActions from "../redux/allActions"
        
        
       }
+
+      function SetallReqBidData  ()  {
+  
+        try {
+     
+          const db=firestore().collection("bidrequests").orderBy('updatedAt', 'desc')
+          const unsub = db.onSnapshot(async (d)=>{
+            let arr=[]
+            if(d){
+             d.docs.map((data)=>{
+               
+               const id=data.id; //pid rndn
+               const u=data.data(); //all prdcts data
+               
+                 const obj={id,data:u}
+                 arr.push(obj)
+               
+             })
+            
+           } 
+      
+            dispatch(allActions.rb_action.setrb(arr))
+            //unsubscribe()
+         })
+       
+      } catch (error) {
+              var errorMessage = error.message;
+              var si  = errorMessage.indexOf("]")+1
+              var  ei  = errorMessage.length -1
+              const msg = errorMessage.substr(si,ei)
+               allOther.AlertMessage("",msg)
+        }
+         
+         
+        }
 
     function SetAllVendorsData  ()  {
   
@@ -432,6 +518,67 @@ import allActions from "../redux/allActions"
          
         }
 
+        function SetbdData  ()  {
+  
+          try {
+ 
+              const unsubscribe = firestore().collection("products").orderBy("updatedAt","desc").onSnapshot(async  (d)=>{
+                let arr=[]
+                
+                console.log("prdct snap" )
+                
+                if(d){
+                 d.docs.map((data)=>{
+                   
+                   const pid=data.id; //pid rndn
+                   let aa=[]
+ 
+
+                   firestore().collection("products").doc(pid).collection("bids").orderBy("createdAt","desc").onSnapshot((doc)=>{
+                    console.log("prdct bdr snap" )
+                    
+         
+                    
+                    if(doc.size>0){
+       
+                      doc.forEach((e,i,a)=>{
+                       let d=e.data()
+                        aa.push(d)
+                        
+                      })
+                    
+                    } 
+
+                   })
+                   
+                   const obj={pid:pid,data:aa}
+                   arr.push(obj)
+
+                   
+                 })
+                
+               } 
+          
+                dispatch(allActions.bd_action.setBd(arr))
+                //unsubscribe()
+             })
+      
+      
+           
+       
+          
+         
+        } catch (error) {
+                var errorMessage = error.message;
+                var si  = errorMessage.indexOf("]")+1
+                var  ei  = errorMessage.length -1
+                const msg = errorMessage.substr(si,ei)
+                 allOther.AlertMessage("",msg)
+          }
+           
+           
+          }
+
  async function LogOut()  {
     console.log("logout functn call")
     try {
@@ -468,8 +615,10 @@ import allActions from "../redux/allActions"
     FireBaseFunction,
     __Add_Product ,
     __Add_Auction,
+    __Add_BidReq,
     __Remove_Item,
     __Update,
+    __UpdateBidReq
  
   }
 

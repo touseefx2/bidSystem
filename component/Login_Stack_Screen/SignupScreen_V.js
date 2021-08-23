@@ -175,7 +175,7 @@ async __signUp(email,password,name){
     let phone=this.Phone;
 
         let obj={name,email:user.email,phone,type,photo,emailVerified:user.emailVerified,
-         uid:user.uid,createdAt:new Date(),token:null,updatedAt:new Date(),block:false}
+         uid:user.uid,createdAt:new Date(),token:null,updatedAt:new Date(),block:false,tb:0}
 
 firestore().collection('users').doc(user.uid).set(obj).
 then(

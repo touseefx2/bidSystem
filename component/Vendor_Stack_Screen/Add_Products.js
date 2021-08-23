@@ -9,26 +9,31 @@ import {productCategory} from "./Category"
 import {useSelector  } from 'react-redux'
 import firestore from '@react-native-firebase/firestore';
 import MultipleImagePicker from "@baronha/react-native-multiple-image-picker"; 
-import storage from '@react-native-firebase/storage';
-import RNFetchBlob from 'rn-fetch-blob'
 import DeviceInfo from 'react-native-device-info';
 import ImagePicker from "react-native-customized-image-picker"; 
+import storage from '@react-native-firebase/storage';
+import RNFetchBlob from 'rn-fetch-blob'
+import moment from "moment";
+
 import Textarea from 'react-native-textarea';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
  
 const cardWidth=windowWidth-35;
-const cardHeight=110;
+
 
  
-
-  let  items=null;
+ 
   let  docfolder=`Vendor_Products/Photos/`;
 
   export default  function  Products(props)  {
 
-    const {aid,an,ac}=props.route.params;
+   
+
+ 
+
+    const {aid,an,ac,st,et}=props.route.params;
     const auctionsData = useSelector(state => state.auctionReducer)
 
   const [pids, setpids] = useState([]) //for check random id not match other product
@@ -58,6 +63,18 @@ const cardHeight=110;
   const [cc,setcc]=useState(false);
 
 
+  const [vb, setvb] = useState(false)  //all bider show modal
+  const [b, setb] = useState([]) //bidders
+  const [pid, setpid] = useState("") //pid
+  const [bid, setbid] = useState("") //bid
+
+  const [vbd, setvbd] = useState(false)  //  bider detail show modal
+  const [bname, setbname] = useState("")
+  const [email, setemail] = useState("")
+  const [phone, setphone] = useState("")
+  const [ba, setba] = useState("") //bid at
+
+
   const [apiLevel,setapiLevel]=useState("");
   const getDeviceInfo=()=>{
     DeviceInfo.getApiLevel().then((apiLevel) => {
@@ -65,21 +82,131 @@ const cardHeight=110;
     });
   }
 
+useEffect(()=>{
+  let active="";
+  var s="";
+  var e="";
+
+  var st="";
+  var et="";
+
+  auctionsData.auctions.map((item,index)=>{    
+    if(item.id==aid){
+      active=item.data.active;
+      s=item.data.st;
+      e=item.data.et;
+    }
+  })
+
+  console.log(s)
+  console.log(e)
+  var startTime = moment(s, "HH:mm a");
+  var endTime = moment(e, "HH:mm a");
+
+  var duration = moment.duration(endTime.diff(startTime));
+
+  var hours = parseInt(duration.asHours());
+
+  var minutes = parseInt(duration.asMinutes())%60;
+ 
+
+  console.log("durastion : ",parseInt(duration.asSeconds()))
+
+
+  console.log('hours ', hours ,' and ', ' minutes ' ,minutes)
+
+  // productsData.products.map((e,i,a)=>{
+  //   if(active=="no"){
+
+  //   }
+  // })
+
+},[productsData])
+ 
+
   useEffect(()=>{
   getDeviceInfo();
  
   getProductsId();
 setTimeout(() => {
   setloader(false)
-}, 800);
-
-
-
-
-
-  },[])
+}, 400);
 
   
+  },[])
+
+  useEffect(()=>{
+  
+
+    const unsub = firestore().collection("products").doc(pid).collection("bids").orderBy("createdAt","desc").onSnapshot((doc)=>{
+      let arr=[]
+
+    if(pid!=""){
+    if(doc.size>0){
+      doc.forEach((e,i,a)=>{
+      arr.push(e.data())
+      })
+    } 
+           }
+  setb(arr)
+})
+
+
+
+
+ return () => {
+  // Anything in here is fired on component unmount.
+   unsub();
+}
+
+
+  },[pid])
+
+
+  useEffect(()=>{
+ 
+    if(bid!=""){
+    setloader(true)
+    }
+
+    const unsubb = firestore().collection("users").doc(bid).onSnapshot((doc)=>{
+     
+
+    if(bid!=""){
+     
+    if(doc.exists){
+       let d= doc.data();
+
+
+       let c =  d.createdAt.toDate()//bcs firbase cnvrt into obj so again parse date
+     
+      var time =  moment(c).format('hh:mm a')     //10:12 am 
+      var date =  moment(c).format("D MMMM Y");   //9 july 2021
+
+      c= date + " at  "+time
+
+       setbname(d.name);setemail(d.email);setphone(d.phone);setba(c)
+       setTimeout(() => {
+         setloader(false) 
+       }, 500);
+      
+    } 
+           }
+
+ 
+})
+
+
+
+
+ return () => {
+  // Anything in here is fired on component unmount.
+   unsubb();
+}
+
+
+  },[bid])
+
  
   const random=()=>{
     const min = 1;
@@ -104,12 +231,10 @@ setTimeout(() => {
   //unsubscribe();
    })
   }
- 
 
  const  uploadImage_android = async () =>
   {
    
-     permissions.requestReadExternalStorage()
    
 
      if(apiLevel<29){ //29 is andrd 10
@@ -253,7 +378,6 @@ const checkEmptyFields= ()=>
     }
 }
 
- 
 const removeProducts=  (id)=>{
  
   
@@ -327,6 +451,7 @@ const removeProducts=  (id)=>{
             const obj={uri:url}
             arr.push(obj)
             if(i==a.length-1){
+              console.log("arrr andr se: ",arr)
               onClickAdd(arr)
             }
           })
@@ -339,6 +464,8 @@ const removeProducts=  (id)=>{
       })
 
  
+      console.log("arrr bhr se: ",arr)
+
 
     }
 
@@ -349,9 +476,10 @@ const removeProducts=  (id)=>{
   
   }
 
-  
  const  onClickAdd = async (arr)=>{
  
+  console.log("arr on clck add se :  ",arr)
+
     try {
       
       let pid="";
@@ -369,18 +497,18 @@ const removeProducts=  (id)=>{
         const obj={
        name,
        photo:arr,
-       startDate:"",
-       endDate:"",
        category,
        startingAmount,
        sba,
        noi,
        inc,
+       st:"",
+       et:"",
+       active:"no",
        aid:aid,
        autoBid:startingAmount,
        description,
        uid:userData.user.uid,
-       status,
        pid,
        createdAt:new Date(),
        updatedAt:new Date(),
@@ -479,7 +607,6 @@ const removeProducts=  (id)=>{
     
     
           }
-
 
   const  render_Add_Product = ()=>
    {
@@ -681,20 +808,27 @@ const removeProducts=  (id)=>{
         )
       }
 
-       
-      const    RenderProducts  = (active) => { 
-    
+      const    RenderProducts  = ( ) => { 
+        let  cardHeight=130
+        let active="no"  
          let c= false;
-         let product  =   productsData.products.map((item,index)=>{
-        
-          if(item.data.status=="pending" && item.data.aid==aid){
+
+         let product  =  productsData.products.map((item,index)=>{
+            
+ 
+          if(item.data.aid==aid && item.data.block==false){
+
+         active=item.data.active;
+          
+         cardHeight= active!="no"?180:130;
 
         c=true;    
         let name = item.data.name || ""
-        let status = item.data.status || ""
+        let catg = item.data.category || ""
+        let noi= item.data.noi || ""
         let id=item.id || ""
         let Pid=item.data.pid
-        name  =   allOther.strLength(name,"name")
+         name  =   allOther.strLength(name,"name")
         
        const scale = scrollY.interpolate({
         inputRange :[
@@ -723,12 +857,13 @@ const removeProducts=  (id)=>{
         <Animated.View style={[styles.card,
           {
           opacity,
+          height:cardHeight,
           transform:[{scale}]
           }
         ]}>
 
       
-
+<View style={{padding:10}}> 
 
 {active=="no" && (
   <TouchableOpacity 
@@ -740,8 +875,9 @@ style={{position:"absolute",right:0,marginRight:5}}
 )}
 
 
+{/* /ac mean catgry array */}
 <TouchableOpacity style={{marginTop:10}}
- onPress={()=>{props.navigation.navigate("Update_Product",{pid:id,ac:ac})}} >
+ onPress={()=>{props.navigation.navigate("Update_Product",{pid:id,ac:ac,aid:aid})}} >
 
      
       
@@ -755,14 +891,21 @@ style={{position:"absolute",right:0,marginRight:5}}
  <View style={{marginLeft:30,marginTop:5}}> 
 
 
+ <View style={{flexDirection:"row",alignItems:"center",marginTop:5}}>
+<Text style={{color:"black",textTransform:"capitalize",fontSize:15}}>category</Text>  
+<Text style={{color:"#307ecc",textTransform:"capitalize",fontSize:15,position:"absolute",right:0}}>{catg}</Text>   
+ </View>
+
+
  <View style={{flexDirection:"row",alignItems:"center"}}>
           <Text style={{color:"black",textTransform:"capitalize",fontSize:14}}>Product Id</Text> 
           <Text style={{color:"black",textTransform:"capitalize",fontSize:14,position:"absolute",right:0}}>{Pid}</Text>
   </View>        
           
- <View style={{flexDirection:"row",alignItems:"center",marginTop:5}}>
-<Text style={{color:"black",textTransform:"capitalize",fontSize:15}}>status</Text>  
-<Text style={{color:"#307ecc",textTransform:"capitalize",fontSize:15,position:"absolute",right:0}}>{status}</Text>   
+
+ <View style={{flexDirection:"row",alignItems:"center"}}>
+<Text style={{color:"black",textTransform:"capitalize",fontSize:14}}>items</Text>  
+<Text style={{color:"black",textTransform:"capitalize",fontSize:14,position:"absolute",right:0}}>{noi}</Text>   
  </View>
 
  </View>
@@ -770,7 +913,18 @@ style={{position:"absolute",right:0,marginRight:5}}
        </TouchableOpacity>
        
      
+       </View>
 
+       {active!="no" &&(
+    <View style={{flex:1,height:30,justifyContent:"flex-end",marginTop:10,borderBottomRightRadius:10,borderBottomLeftRadius:10,alignItems:"center",justifyContent:"center",backgroundColor:"silver"}}>
+ 
+    <TouchableOpacity onPress={()=>{setpid(id);setvb(true)}}>
+     <Text style={{alignSelf:"center",color:"black",fontSize:16}}>View Bids</Text>
+    </TouchableOpacity>
+      
+            </View>
+  )}         
+     
 
        
     </Animated.View>  
@@ -789,7 +943,178 @@ style={{position:"absolute",right:0,marginRight:5}}
   
 
       }
+     
+      const ViewBids =()=>{
+        return(
+            <Modal
+            animationType='fade'
+            transparent={false}
+            visible={vb}
+            >
+           {BidderDetail()}
+            <View style={{ flex: 1}}>
+          
+          
+<TouchableOpacity style={{left:10,marginTop:5}} onPress={()=>{setpid("");setb([]);setvb(false)}}
+>
+<allOther.vectorIcon.Entypo size={40} color="#de5050" style={{opacity:0.8}} name="cross" />
+</TouchableOpacity>
+ 
+          <ScrollView>
+
+{renderBidders()}
+        
+         </ScrollView>
+ 
+            </View>
+        
+          </Modal>
+        )
+        }
        
+        const BidderDetail =()=>{
+          return(
+              <Modal
+              animationType='fade'
+              transparent={false}
+              visible={vbd}
+              >
+              
+
+              <View style={{ flex: 1}}>
+            
+            
+  <TouchableOpacity style={{left:10,marginTop:5}} onPress={()=>{setbid("");setvbd(false);setname("");setemail("");setphone("");setba("")}}
+  >
+  <allOther.vectorIcon.Entypo size={40} color="#de5050" style={{opacity:0.8}} name="cross" />
+  </TouchableOpacity>
+   
+            <ScrollView>
+  
+  {renderBidderDetail()}
+          
+           </ScrollView>
+   
+              </View>
+          
+            </Modal>
+          )
+          }
+
+          const renderBidderDetail=()=>{
+   
+       
+            return (
+             
+              <View style={{margin:10,padding:10}}>
+         <allOther.Loader loader={loader}/>
+         <View style={{flex:1,alignSelf:"center"}}>
+            <Image style={{height:150,width:150}} source={require("../../assets/dp.png")}  />  
+        </View> 
+          
+      
+        <TextInput
+            style={[styles.textInput,{marginTop:30}]}
+            mode="outlined"
+            disabled={true}
+            label="Name"
+            value={name}
+            placeholder="Name"
+            onChangeText={(txt)=>setname(txt)}
+          />
+          
+        <TextInput
+           style={styles.textInput}
+            disabled={true}
+            mode="outlined"
+            label="email"
+            value={email}
+            placeholder="email"
+          />
+      
+       
+      
+      
+        <TextInput
+            style={styles.textInput}
+            mode="outlined"
+            disabled={true}
+            label="Phone"
+            value={phone}
+            placeholder="Phone"
+          />
+      
+      <TextInput
+            style={styles.textInput}
+            mode="outlined"
+            disabled={true}
+            label="Bid Date"
+            value={ba}
+            placeholder="Bid Date"
+          />
+        
+                </View>
+       
+              
+            )
+             
+            }
+
+            const renderBidders=()=>{
+   
+              if(b.length>0){
+      
+            let bidder =  b.map((e,i,a)=>{
+      
+              let name=e.bidderName;
+              let email=e.bidderEmail;
+              let price = e.price;
+              let bid=e.bid
+      
+               name= allOther.strLength(name,"bname")
+               email= allOther.strLength(email,"email")
+      
+               return(
+      
+                <View style={{margin:10,padding:10}}>
+               
+              <TouchableOpacity
+              onPress={()=>{setbid(bid);setvbd(true)}}
+              style={{backgroundColor:"#66bd7d",padding:10,borderRadius:10}}>
+              
+         {i==0&&(
+           <allOther.vectorIcon.Entypo style={{position:"absolute",right:5,top:5}} size={18} name="star" color="yellow" />
+         )}
+              <View style={{flexDirection:"row" }}>
+              <Image style={{width:30,height:30}} source={require("../../assets/bidder.png")} />
+              <View style={{marginLeft:15}}> 
+              <Text style={{color:"white",fontWeight:"bold",textTransform:"capitalize"}}>{name}</Text>
+              <Text style={{color:"white",fontWeight:"bold"}}>{email}</Text>
+               
+              <View style={{flexDirection:"row",alignItems:"center" ,width:230}}>
+                        <Text style={{color:"white",textTransform:"capitalize"}}>Price :</Text> 
+                        <Text style={{color:"blue",textTransform:"capitalize",position:"absolute",right:0}}>{price}</Text>
+               </View>
+               
+              </View> 
+              </View>
+              
+               
+              </TouchableOpacity>
+              
+                </View>
+                    )
+                
+                })
+      
+                return bidder;
+      
+              }else{
+             return <Text style={{fontSize:38,color:"silver",marginTop:"60%",alignSelf:"center"}} >Empty</Text>
+              }
+        
+      
+            }
 
       let active="";
 
@@ -804,7 +1129,7 @@ return(
   <View style={{flex:1}}>
  
  <allOther.Header  st={"View Your Products"} title={an} nav={props.navigation}/>
-
+ {ViewBids()}
  {renderUp()} 
  {mv && renderFullImage()}
   <allOther.Loader loader={loader}/>
@@ -829,7 +1154,7 @@ onScroll={Animated.event([
               )
              :(
         
-            RenderProducts(active)
+            RenderProducts()
               ) 
 
             }
@@ -862,7 +1187,7 @@ onScroll={Animated.event([
      card:
      {
       marginTop:20,marginBottom:20,alignSelf:"center", width:cardWidth, backgroundColor:"white",
-      height:cardHeight,borderRadius:10,padding:10,borderRadius:10,
+       borderRadius:10,borderRadius:10,
       elevation:5,
     }
   

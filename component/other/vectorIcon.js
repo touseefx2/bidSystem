@@ -7,6 +7,7 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import Feather from 'react-native-vector-icons/Feather'
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5  from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome  from 'react-native-vector-icons/FontAwesome';
 import Ionicons  from 'react-native-vector-icons/Ionicons';
 import Zocial  from 'react-native-vector-icons/Zocial';
 
@@ -22,5 +23,6 @@ export default{
     Fontisto,
     FontAwesome5 ,
     Ionicons,
+    FontAwesome,
     Zocial
 }

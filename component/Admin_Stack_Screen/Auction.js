@@ -125,7 +125,7 @@ const removeAuction=  (id)=>{
   
   Alert.alert(
     "",
-    "Are you sure ?  you want to Cancel ?",
+    "Are you sure ?  you want to Delete this auction ?",
     [
       {
         text: "No",
@@ -139,7 +139,7 @@ const removeAuction=  (id)=>{
           let resp =  await allOther.firebase.__Remove_Item(id,"auctions")
          
          if(resp){
-           allOther.ToastAndroid.ToastAndroid_SB("auction Cancel Successful")
+           allOther.ToastAndroid.ToastAndroid_SB("auction Delete Successful")
           } 
            setloader(false)
      
@@ -323,7 +323,7 @@ const renderLabel = (label, style) => {
         
        
 
-          if(item.data.active=="no"){
+          if(item.data.active!="end"){
 
         c=true;    
         let name = item.data.name || ""
@@ -343,20 +343,23 @@ const renderLabel = (label, style) => {
         <View style={styles.card}>
 
       
-
-<TouchableOpacity 
+{active=="no" &&(
+  <TouchableOpacity 
 style={{position:"absolute",right:0,marginRight:5}}
   onPress={()=>{removeAuction(id)}}
 >
 <allOther.vectorIcon.Entypo size={26} color="#de5050" style={{opacity:0.8}} name="cross" />
 </TouchableOpacity>
 
+)}
 
-
+ 
+<TouchableOpacity onPress={()=>{props.navigation.navigate("Active_Products",{aid:id,an:name})}}>
+ 
 
 <View style={{marginTop:10}}>
 
-     
+
       
  <View style={{flexDirection:"row",alignItems:"center",flexShrink:1,marginTop:10}}>
 <allOther.vectorIcon.AntDesign size={20} color="#307ecc" name="rightcircle" />
@@ -407,7 +410,9 @@ style={{position:"absolute",right:0,marginRight:5}}
 
        </View>
        
-     
+    
+    
+     </TouchableOpacity>
 
 
        
@@ -453,7 +458,6 @@ const confirmTime = (t)=>{
 
   
 }
-
  
 const   renderDatePicker = ()=>
 {
@@ -482,6 +486,7 @@ const   renderTimePicker = ()=>
     <View>
       <DateTimePickerModal
         isVisible={tp}
+        minimumDate={new Date()}
         mode='time'
         date={new Date()}
         itemStyle={{
@@ -496,9 +501,7 @@ const   renderTimePicker = ()=>
     </View>
   )
 }
-
-
-      
+     
 return(
   <View style={{flex:1}}>
  

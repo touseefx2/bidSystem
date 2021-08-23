@@ -4,16 +4,16 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Home from "../Comon_Screen/Home"
 import logout from "../Comon_Screen/logout";
 import Products  from "../Vendor_Stack_Screen/Add_Products"
+import Auction from "../Vendor_Stack_Screen/Auction"
 import UpdateProduct from "../Vendor_Stack_Screen/Update_Product"
 import CustomDrawerContent from "../Comon_Screen/CustomDrawerContent";
 import allOther from "../other/allOther";
-import Active_Product from "../Vendor_Stack_Screen/Active_Product";
 import History_Product from "../Vendor_Stack_Screen/History_Product";
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import View_Product from "../Vendor_Stack_Screen/View_Product"
+import View_Products from "../Vendor_Stack_Screen/View_Products"
 import Profile from "../Comon_Screen/Profile"
-import Auction from "../Vendor_Stack_Screen/Auction"
+import Histroys from "../Vendor_Stack_Screen/Historys"
 
 const headerColor="#307ecc"
 const headerTextColor="white"
@@ -37,7 +37,8 @@ const Drawer  = createDrawerNavigator();
         <Drawer.Screen  name="Home" component={Home} options={homeIcon} />
          <Drawer.Screen name="Profile" component={Profile}  options={profileIcon}  />
          <Drawer.Screen name="Auctions" component={Auction_Stack}  options={add_product_icon} />
-         <Drawer.Screen name="Status" component={ProducStatus_Stack}  options={productStatus_icon} />
+         {/* <Drawer.Screen name="Status" component={ProducStatus_Stack}  options={productStatus_icon} /> */}
+         <Drawer.Screen name="History" component={History_Stack}  options={auctionIcon}  />
         <Drawer.Screen name="Logout" component={logout}  options={logoutIcon}  />
     </Drawer.Navigator>
  )
@@ -67,41 +68,20 @@ const Drawer  = createDrawerNavigator();
     )
 }
 
-
-
-const ActiveProducts_Stack = ()=> 
+const History_Stack = ()=> 
 {
     return(
    <Stack.Navigator 
-       initialRouteName="Active_Products"
+       initialRouteName="Historys"
        screenOptions={{
          animationEnabled: true
        }}
        headerMode='none'
    >
 
-       <Stack.Screen name="Active_Products" component={Active_Product} />
-       <Stack.Screen name="View_Products"   component={View_Product}  />
-        
-  
-   </Stack.Navigator>
-    )
-}
-
-
-const HistoryProducts_Stack = ()=> 
-{
-    return(
-   <Stack.Navigator 
-       initialRouteName="History_Products"
-       screenOptions={{
-         animationEnabled: true
-       }}
-       headerMode='none'
-   >
-
+       <Stack.Screen name="Histroys" component={Histroys} />
        <Stack.Screen name="History_Products" component={History_Product} />
-       <Stack.Screen name="View_Products"   component={View_Product}  />
+       <Stack.Screen name="View_Products"   component={View_Products}  />
         
   
    </Stack.Navigator>
@@ -198,6 +178,23 @@ headerTitleStyle: {
       size={iconSize}
       color={focused ? iconfocuscolor : iconunfocuscolor}
      
+    />
+  )
+}
+
+const auctionIcon = {
+  headerStyle: {
+    backgroundColor: headerColor, //Set Header color
+},
+headerTintColor: headerTextColor, //Set Header text color
+headerTitleStyle: {
+    fontWeight: 'bold', //Set Header text style
+},
+  drawerIcon: ({ focused, size}) => (
+    <allOther.vectorIcon.Fontisto
+      name="user-secret"   
+      size={iconSize}
+      color={focused ? iconfocuscolor : iconunfocuscolor}  
     />
   )
 }

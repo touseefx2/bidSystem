@@ -9,12 +9,12 @@ import storage from '@react-native-firebase/storage';
 import RNFetchBlob from 'rn-fetch-blob'
 import { TextInput } from 'react-native-paper';
 
-let  items=null;
+ 
 
   export default  function  UpdateProduct(props)  {
 
     const [loader, setloader] = useState(true)
-    const  {pid,ac} = props.route.params;
+    const  {pid,ac,aid} = props.route.params;
 
     const [name, setname] = useState("")
     const [photo, setphoto] = useState([])
@@ -25,7 +25,6 @@ let  items=null;
     const [inc, setinc] = useState("")
     const [ab, setab] = useState("")
     const [startingAmount, setstartingAmount] = useState("")
-    const [status, setstatus] = useState("")
     const [Pid, setPid] = useState("")
 
     const [mv,setmv]=useState(false);    //fulll image render modal vs
@@ -33,7 +32,7 @@ let  items=null;
     const [spi,setspi]=useState(null);  //slectd photo index
     const [cc,setcc]=useState(false);
   
- 
+    const auctionsData = useSelector(state => state.auctionReducer)
     const productsData = useSelector(state => state.productReducer)
 
  
@@ -45,7 +44,6 @@ let  items=null;
           let name = item.data.name || ""
           let category = item.data.category || ""
           let starting_Amount = item.data.startingAmount || ""
-          let status = item.data.status || ""
           let photo = item.data.photo || []
           let noi = item.data.noi || ""
           let ab = item.data.autoBid || ""
@@ -56,7 +54,7 @@ let  items=null;
   
  
         setname(name);setphoto(photo);setcategory(category);setdescription(description);setstartingAmount(starting_Amount);
-       setstatus(status);setPid(Pid);setsba(sba);setnoi(noi);setab(ab);setinc(inc)
+        setPid(Pid);setsba(sba);setnoi(noi);setab(ab);setinc(inc)
           setTimeout(() => {
           setloader(false)
           }, 1000);
@@ -70,11 +68,9 @@ let  items=null;
       })
      },[productsData])
 
- 
   
-
      const checkEmptyFields=()=>{
-      if(name!=""   && category!="" && description!="" && startingAmount!=""  && status!="" && sba!="" && inc!="" && noi!="" )
+      if(name!=""   && category!="" && description!="" && startingAmount!="" && sba!="" && inc!="" && noi!="" && ab!="" )
     {
       return false
     }else{
@@ -85,7 +81,11 @@ let  items=null;
 
     const onClickUpdate=async ()=>{
       setloader(true);
-      if(!checkEmptyFields())
+      const c= checkEmptyFields();
+
+      console.log("c : ",c)
+
+      if(!c)
       {
 
         try {
@@ -214,17 +214,10 @@ let  items=null;
       placeholder="Product Id"
     />
     
-  {/* <TextInput
-     style={styles.textInput}
-      disabled={true}
-      mode="outlined"
-      label="Status"
-      value={status}
-      placeholder="Status"
-    /> */}
-
  
-<DropDownPicker
+
+ {active=="no" ?(
+  <DropDownPicker
       items={ac||[]} 
       placeholder={category.toUpperCase()}
       placeholderStyle={{ textAlign: 'center'}}
@@ -235,11 +228,24 @@ let  items=null;
         setcategory(i.value)
      }  
  />
+ ):(
+  <TextInput
+  style={styles.textInput}
+  mode="outlined"
+  disabled={true}
+  label="Category"
+  value={category.toUpperCase()}
+  placeholder="Category"
+  // onChangeText={(txt)=>setname(txt)}
+/>
+ )}
+
 
 
   <TextInput
       style={styles.textInput}
       mode="outlined"
+      disabled={active=="no"?false:true}
       label="Product Name"
       value={name}
       placeholder="Product name"
@@ -250,7 +256,9 @@ let  items=null;
       style={styles.textInput}
       mode="outlined"
       label="Num Of Items"
+      disabled={active=="no"?false:true}
       value={noi}
+      keyboardType={"number-pad"}
       placeholder="Num Of Items"
       onChangeText={(txt)=>setnoi(txt)}
     />
@@ -260,6 +268,7 @@ let  items=null;
 <TextInput
       style={styles.textInput}
       mode="outlined"
+      disabled={active=="no"?false:true}
       label="Starting Amount"
       value={startingAmount} 
       keyboardType="number-pad"
@@ -274,8 +283,9 @@ let  items=null;
       mode="outlined"
       label='Increment'
       value={inc} 
+      disabled={active=="no"?false:true}
       keyboardType="number-pad"
-      onChangeText={(txt)=>setunc(txt)}
+      onChangeText={(txt)=>setinc(txt)}
       placeholder='Increment'
     />
  
@@ -284,6 +294,7 @@ let  items=null;
       mode="outlined"
       label='Start Bid Amount'
       value={sba} 
+      disabled={active=="no"?false:true}
       keyboardType="number-pad"
       onChangeText={(txt)=>setsba(txt)}
       placeholder='Start Bid Amount'
@@ -304,6 +315,7 @@ let  items=null;
       style={styles.textInput}
       mode="outlined"
       label='Descritption'
+      disabled={active=="no"?false:true}
       value={description}  
       onChangeText={(txt)=>setdescription(txt)}
       placeholder='Descritption'
@@ -312,12 +324,14 @@ let  items=null;
     />
 
  
-<TouchableOpacity  
+ {active=="no"&&(
+  <TouchableOpacity  
 style={{backgroundColor: "black",width:100,height:40,borderRadius:20,alignItems:"center",justifyContent:"center",alignSelf:"center",marginTop:40,elevation:5}} 
  onPress={()=>{onClickUpdate()}}
 >
 <Text style={{color :"white"  ,fontSize:22}}>Update</Text>
 </TouchableOpacity>
+ )}
 
 
           </View>
@@ -326,13 +340,22 @@ style={{backgroundColor: "black",width:100,height:40,borderRadius:20,alignItems:
       )
     }
  
+
+    let active="";
+
+    auctionsData.auctions.map((item,index)=>{    
+      if(item.id==aid){
+        active=item.data.active
+      }
+    })
+
 return(
   <View style={{flex:1}}>
  <allOther.Header  title="" nav={props.navigation}/>
   <allOther.Loader loader={loader}/>
   {mv && render_FullImage()} 
  <ScrollView>      
-          {renderProduct()}
+          {renderProduct(active)}
 </ScrollView>    
 
  

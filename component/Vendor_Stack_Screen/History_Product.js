@@ -1,57 +1,158 @@
 import React, { useEffect, useState,useRef} from 'react';
-import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Modal,Image} from "react-native";
+import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Animated,Platform,Alert,Image,FlatList,Modal} from "react-native";
 import  allOther from "../other/allOther"
+import {TextInput} from 'react-native-paper';
+import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTitle} from 'react-native-popup-dialog';
+import DropDownPicker from 'react-native-dropdown-picker';
+import permissions from "../permissions/permissions"
+import {productCategory} from "./Category"
 import {useSelector  } from 'react-redux'
 import firestore from '@react-native-firebase/firestore';
-import { TextInput } from 'react-native-paper';
-import moment from "moment";
+import MultipleImagePicker from "@baronha/react-native-multiple-image-picker"; 
+import DeviceInfo from 'react-native-device-info';
+import ImagePicker from "react-native-customized-image-picker"; 
+import storage from '@react-native-firebase/storage';
+import RNFetchBlob from 'rn-fetch-blob'
+
+import Textarea from 'react-native-textarea';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
  
 const cardWidth=windowWidth-35;
-const cardHeight=110;
+const cardHeight=130;
 
  
-  export default  function  History_Product(props)  {
- 
-    const [vb, setvb] = useState(false)  //all bider show modal
-
-    const [vbd, setvbd] = useState(false)  //  bider detail show modal
-    const [name, setname] = useState("")
-    const [email, setemail] = useState("")
-    const [phone, setphone] = useState("")
-    const [ba, setba] = useState("") //bid at
   
-    
-    const [b, setb] = useState([]) //bidders
-    const [pid, setpid] = useState("") //pid
-    const [bid, setbid] = useState("") //bid
+  export default  function  History_Product(props)  {
 
+    const {aid,an}=props.route.params;
+    const auctionsData = useSelector(state => state.auctionReducer)
 
-  const [loader, setloader] = useState(false)
-   
+  const [pids, setpids] = useState([]) //for check random id not match other product
+  const listViewRef = useRef(); 
+  const [name, setname] = useState("")
+  const [category, setcategory] = useState("")
+  const [noi, setnoi] = useState("")
+  const [sba, setsba] = useState("")
+  const [inc, setinc] = useState("")
+  const [description, setdescription] = useState("")
+  const [startingAmount, setstartingAmount] = useState("")
+  const [status, setstatus] = useState("pending")
+  const [dialogVisible, setdialogVisible] = useState(false)
+  const [dialogClick, setdialogClick] = useState(false)
+  const [loader, setloader] = useState(true)
+ 
+ 
+  const scrollY= useRef(new Animated.Value(0)).current;
   const productsData = useSelector(state => state.productReducer)
   const userData = useSelector(state => state.userReducer)
+ 
+
+  const [photo,setphoto]=useState([]);
+  const [mv,setmv]=useState(false);    //fulll image render modal vs
+  const [p,setp]=useState("");  //slectd photo uri
+  const [spi,setspi]=useState(null);  //slectd photo index
+  const [cc,setcc]=useState(false);
+
+ 
+  useEffect(()=>{
+setTimeout(() => {
+  setloader(false)
+}, (400));
+  },[])
+ 
+
+  
+ 
+  
+      const    renderUp=()=>{
+        return(
+          <View  style={{width:"100%",height:30}}>
    
-      const    RenderProducts  = () => { 
+<TouchableOpacity  style={{alignSelf:"flex-end",marginRight:12,marginTop:5}} onPress={()=>{
+  listViewRef.current?.scrollTo({
+    offset: 0,
+    animated: true,
+});
+  }} >
+     <allOther.vectorIcon.FontAwesome5  style={{opacity:.7}}    size={25} color="black" name="angle-double-up" />
+    </TouchableOpacity>
+   
+         </View>
+        )
+      } 
+
+      const    renderDown=()=>{
+        return(
+          <View  style={{width:"100%",height:30,bottom:0}}>
+ 
+    <TouchableOpacity  style={{alignSelf:"flex-end",marginRight:12,marginBottom:5}} onPress={()=>{
+       listViewRef.current?.scrollToEnd({ animated: true })
+    }} >
+     <allOther.vectorIcon.FontAwesome5   style={{opacity:.7}}   size={25} color="black" name="angle-double-down" />
+    </TouchableOpacity>
+   
+         </View>
+        )
+      }
+  
+       
+      const    RenderProducts  = (active) => { 
     
+         let c= false;
          let product  =   productsData.products.map((item,index)=>{
         
-        if((item.data.status=="reject" ||  item.data.status=="end") && (item.data.block==false)  ){
+ 
+          if(item.data.aid==aid && item.data.block==false){
 
+        c=true;    
         let name = item.data.name || ""
-        let status = item.data.status || ""
+        let catg = item.data.category || ""
+        let uid=item.data.uid || ""
+        let noi= item.data.noi || ""
         let id=item.id || ""
         let Pid=item.data.pid
         name  =   allOther.strLength(name,"name")
-    
+        
+       const scale = scrollY.interpolate({
+        inputRange :[
+          -1,0,
+          cardHeight * index,
+          cardHeight * (index+2)
+        ]
+        ,  
+        outputRange:[1, 1, 1, 0]
+      })
+
+      const opacity = scrollY.interpolate({
+        inputRange :[
+          -1,0,
+          cardHeight * index,
+          cardHeight * (index+0.9)
+        ]
+        ,  
+        outputRange:[1, 1, 1, 0]
+      })
+
+
        return (
   
-        <View style={[styles.card,{height:item.data.status=="end" ?140:cardHeight}]}>
-  
-<TouchableOpacity 
- onPress={()=>{props.navigation.navigate("View_Products",{pid:id})}} >
+ 
+        <Animated.View style={[styles.card,
+          {
+          opacity,
+          transform:[{scale}]
+          }
+        ]}>
+
+      
+
+ 
+
+
+<TouchableOpacity style={{marginTop:10}}
+ onPress={()=>{props.navigation.navigate("View_Products",{pid:id,aid:aid})}} >
 
      
       
@@ -65,310 +166,90 @@ const cardHeight=110;
  <View style={{marginLeft:30,marginTop:5}}> 
 
 
+ <View style={{flexDirection:"row",alignItems:"center",marginTop:5}}>
+<Text style={{color:"black",textTransform:"capitalize",fontSize:15}}>category</Text>  
+<Text style={{color:"#307ecc",textTransform:"capitalize",fontSize:15,position:"absolute",right:0}}>{catg}</Text>   
+ </View>
+
+
  <View style={{flexDirection:"row",alignItems:"center"}}>
           <Text style={{color:"black",textTransform:"capitalize",fontSize:14}}>Product Id</Text> 
           <Text style={{color:"black",textTransform:"capitalize",fontSize:14,position:"absolute",right:0}}>{Pid}</Text>
   </View>        
           
- <View style={{flexDirection:"row",alignItems:"center",marginTop:5}}>
-<Text style={{color:"black",textTransform:"capitalize",fontSize:15}}>status</Text>  
-<Text style={{color:"#307ecc",textTransform:"capitalize",fontSize:15,position:"absolute",right:0}}>{status}</Text>   
+
+ <View style={{flexDirection:"row",alignItems:"center"}}>
+<Text style={{color:"black",textTransform:"capitalize",fontSize:14}}>items</Text>  
+<Text style={{color:"black",textTransform:"capitalize",fontSize:14,position:"absolute",right:0}}>{noi}</Text>   
  </View>
 
  </View>
 
        </TouchableOpacity>
-    
-  {item.data.status == "end" &&(
-      <View style={{position:"absolute",bottom:0,width:cardWidth,borderBottomRightRadius:10,borderBottomLeftRadius:10}}>
-<TouchableOpacity 
-onPress={()=>{setpid(id);setvb(true)}}
-style={{backgroundColor:"#dedede",borderBottomRightRadius:10,borderBottomLeftRadius:10}} >
-<Text style={{fontSize:18,color:"black",alignSelf:"center",fontWeight:"800"}}>View Bids</Text>
-</TouchableOpacity>
- </View>
-
-  )}     
+       
+     
 
 
-    </View>  
+       
+    </Animated.View>  
       
  
              )
           }
-
-    
-
+ 
        })
     
-  return  product;
-
-      }
-
-      useEffect(()=>{
-  
-
-        const unsub = firestore().collection("products").doc(pid).collection("bids").orderBy("createdAt","desc").onSnapshot((doc)=>{
-          let arr=[]
- 
-        if(pid!=""){
-        if(doc.size>0){
-          doc.forEach((e,i,a)=>{
-          arr.push(e.data())
-          })
-        } 
-               }
-      setb(arr)
-    })
-
-    
- 
-
-     return () => {
-      // Anything in here is fired on component unmount.
-       unsub();
-    }
-    
-
-      },[pid])
-
-
-      useEffect(()=>{
-     
-        if(bid!=""){
-        setloader(true)
-        }
-
-        const unsubb = firestore().collection("users").doc(bid).onSnapshot((doc)=>{
-         
- 
-        if(bid!=""){
-         
-        if(doc.exists){
-           let d= doc.data();
-
-
-           let c =  d.createdAt.toDate()//bcs firbase cnvrt into obj so again parse date
-         
-          var time =  moment(c).format('hh:mm a')     //10:12 am 
-          var date =  moment(c).format("D MMMM Y");   //9 july 2021
-
-          c= date + " at  "+time
-
-           setname(d.name);setemail(d.email);setphone(d.phone);setba(c)
-           setTimeout(() => {
-             setloader(false) 
-           }, 500);
-          
-        } 
-               }
-   
-     
-    })
-
-    
- 
-
-     return () => {
-      // Anything in here is fired on component unmount.
-       unsubb();
-    }
-    
-
-      },[bid])
-
- 
-      const renderBidders=()=>{
-   
-        if(b.length>0){
-
-      let bidder =  b.map((e,i,a)=>{
-
-        let name=e.bidderName;
-        let email=e.bidderEmail;
-        let price = e.price;
-        let bid=e.bid
-
-         name= allOther.strLength(name,"bname")
-         email= allOther.strLength(email,"email")
-
-         return(
-
-          <View style={{margin:10,padding:10}}>
-         
-        <TouchableOpacity
-        onPress={()=>{setbid(bid);setvbd(true)}}
-        style={{backgroundColor:"#66bd7d",padding:10,borderRadius:10}}>
-        
-   {i==0&&(
-     <allOther.vectorIcon.Entypo style={{position:"absolute",right:5,top:5}} size={18} name="star" color="yellow" />
-   )}
-        <View style={{flexDirection:"row" }}>
-        <Image style={{width:30,height:30}} source={require("../../assets/bidder.png")} />
-        <View style={{marginLeft:15}}> 
-        <Text style={{color:"white",fontWeight:"bold",textTransform:"capitalize"}}>{name}</Text>
-        <Text style={{color:"white",fontWeight:"bold"}}>{email}</Text>
-         
-        <View style={{flexDirection:"row",alignItems:"center" ,width:230}}>
-                  <Text style={{color:"white",textTransform:"capitalize"}}>Price :</Text> 
-                  <Text style={{color:"blue",textTransform:"capitalize",position:"absolute",right:0}}>{price}</Text>
-         </View>
-         
-        </View> 
-        </View>
-        
-         
-        </TouchableOpacity>
-        
-          </View>
-              )
-          
-          })
-
-          return bidder;
-
-        }else{
-       return <Text style={{fontSize:38,color:"silver",marginTop:"60%",alignSelf:"center"}} >Empty</Text>
-        }
+   if(c){
+    return  product;
+   }  else{
+     return    <Text style={{fontSize:38,color:"silver",marginTop:"60%",alignSelf:"center"}} >Empty</Text>
+   }  
   
 
       }
-
-      const renderBidderDetail=()=>{
-   
        
-      return (
-       
-        <View style={{margin:10,padding:10}}>
-   <allOther.Loader loader={loader}/>
-   <View style={{flex:1,alignSelf:"center"}}>
-      <Image style={{height:150,width:150}} source={require("../../assets/dp.png")}  />  
-  </View> 
-    
 
-  <TextInput
-      style={[styles.textInput,{marginTop:30}]}
-      mode="outlined"
-      disabled={true}
-      label="Name"
-      value={name}
-      placeholder="Name"
-      onChangeText={(txt)=>setname(txt)}
-    />
-    
-  <TextInput
-     style={styles.textInput}
-      disabled={true}
-      mode="outlined"
-      label="email"
-      value={email}
-      placeholder="email"
-    />
+      let active="";
 
- 
-
-
-  <TextInput
-      style={styles.textInput}
-      mode="outlined"
-      disabled={true}
-      label="Phone"
-      value={phone}
-      placeholder="Phone"
-    />
-
-<TextInput
-      style={styles.textInput}
-      mode="outlined"
-      disabled={true}
-      label="Bid Date"
-      value={ba}
-      placeholder="Bid Date"
-    />
-  
-          </View>
- 
-        
-      )
-       
-      }
-      
-      const ViewBids =()=>{
-        return(
-            <Modal
-            animationType='fade'
-            transparent={false}
-            visible={vb}
-            >
-           {BidderDetail()}
-            <View style={{ flex: 1}}>
-          
-          
-<TouchableOpacity style={{left:10,marginTop:5}} onPress={()=>{setpid("");setb([]);setvb(false)}}
->
-<allOther.vectorIcon.Entypo size={40} color="#de5050" style={{opacity:0.8}} name="cross" />
-</TouchableOpacity>
- 
-          <ScrollView>
-
-{renderBidders()}
-        
-         </ScrollView>
- 
-            </View>
-        
-          </Modal>
-        )
+      auctionsData.auctions.map((item,index)=>{    
+        if(item.id==aid){
+          active=item.data.active
         }
+      })
 
-        const BidderDetail =()=>{
-          return(
-              <Modal
-              animationType='fade'
-              transparent={false}
-              visible={vbd}
-              >
-              
-
-              <View style={{ flex: 1}}>
-            
-            
-  <TouchableOpacity style={{left:10,marginTop:5}} onPress={()=>{setbid("");setvbd(false);setname("");setemail("");setphone("");setba("")}}
-  >
-  <allOther.vectorIcon.Entypo size={40} color="#de5050" style={{opacity:0.8}} name="cross" />
-  </TouchableOpacity>
-   
-            <ScrollView>
-  
-  {renderBidderDetail()}
-          
-           </ScrollView>
-   
-              </View>
-          
-            </Modal>
-          )
-          }
      
 return(
   <View style={{flex:1}}>
  
-  <allOther.Loader loader={loader}/>
-  {ViewBids()}
- <ScrollView >
-          
-              {productsData.products.length<=0   && !loader   
-              ?(
-              <Text style={{fontSize:38,color:"silver",marginTop:"60%",alignSelf:"center"}} >Empty</Text>
-              )
-             :(
-        
-            RenderProducts()
-              ) 
+ <allOther.Header  st={"View All Products"} title={an} nav={props.navigation}/>
 
-            }
+ {renderUp()} 
+ 
+  <allOther.Loader loader={loader}/>
+
+ <ScrollView ref={listViewRef}
+onScroll={Animated.event([
+  {
+    nativeEvent: {
+      contentOffset: {
+        y: scrollY
+      }
+    }
+  }
+])}
+  scrollEventThrottle={1}
+ >
+          
+
+             
+            {RenderProducts(active)}
+             
 
 </ScrollView>    
+
+{renderDown()}    
+ 
+
  
 </View>   
 )
@@ -391,13 +272,8 @@ return(
      card:
      {
       marginTop:20,marginBottom:20,alignSelf:"center", width:cardWidth, backgroundColor:"white",
-      borderRadius:10,padding:10,borderRadius:10,
+      height:cardHeight,borderRadius:10,padding:10,borderRadius:10,
       elevation:5,
-    },
-    textInput:
-    {
-    marginTop:25,
-    textTransform:"capitalize"
-}
+    }
   
   });  
