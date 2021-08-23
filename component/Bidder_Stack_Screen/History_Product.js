@@ -28,6 +28,7 @@ const cardHeight=130;
 
     const {aid,an}=props.route.params;
     const auctionsData = useSelector(state => state.auctionReducer)
+    const bdd = useSelector(state => state.bdReducer)
 
   const [pids, setpids] = useState([]) //for check random id not match other product
   const listViewRef = useRef(); 
@@ -136,7 +137,27 @@ setTimeout(() => {
       })
 
 
-       return (
+        let v=false;
+        if(bdd.bd.length>0){
+
+          bdd.bd.map((item,index)=>{
+          
+            if(id==item.data.pid )
+            {
+              c=true
+              v=true
+            }
+      
+          })
+      
+        }else{
+          c=false
+          v=false
+        }  
+
+
+        if(v){
+          return (
   
  
         <Animated.View style={[styles.card,
@@ -195,6 +216,8 @@ setTimeout(() => {
       
  
              )
+        }
+       
           }
  
        })

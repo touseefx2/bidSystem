@@ -13,11 +13,14 @@ export   function Header (props) {
 
     return(
 
-<View style={{backgroundColor:null,marginTop:10,marginLeft:5,flexDirection:"row" }}>
+<View style={{backgroundColor:null,marginTop:5,marginLeft:5,flexDirection:"row" }}>
 <allOther.vectorIcon.Ionicons  name="arrow-back-outline" size={35} color="#15756c" onPress={()=>props.nav.goBack()} /> 
 <View>
 <Text style={styles.title}>{headerTitle}</Text>
-<Text style={styles.stitle}>{st}</Text>
+{st!==""&&(
+  <Text style={styles.stitle}>{st}</Text>
+)}
+
 </View>
 </View>
 

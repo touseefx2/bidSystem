@@ -328,15 +328,17 @@ import allActions from "../redux/allActions"
 
       if(c=="specific")
       {
-       const unsubscribe = firestore().collection("products").orderBy('createdAt', 'desc').onSnapshot(async  (d)=>{
+       const unsubscribe = firestore().collection("products").orderBy('createdAt').onSnapshot(async  (d)=>{
        let arr=[]
        if(d){
         d.docs.map((data)=>{
           
           const id=data.id;
           const u=data.data();
+      
           if(u.uid == uid)
           {
+            
             const obj={id,data:u}
             arr.push(obj)
           }
@@ -352,7 +354,7 @@ import allActions from "../redux/allActions"
       if(c=="all")
       {
 
-        const unsubscribe = firestore().collection("products").orderBy('createdAt', 'desc').onSnapshot(async  (d)=>{
+        const unsubscribe = firestore().collection("products").orderBy('createdAt').onSnapshot(async  (d)=>{
           let arr=[]
           if(d){
            d.docs.map((data)=>{
@@ -360,12 +362,15 @@ import allActions from "../redux/allActions"
              const id=data.id; //pid rndn
              const u=data.data(); //all prdcts data
              
+           
                const obj={id,data:u}
                arr.push(obj)
              
            })
           
          } 
+
+
     
           dispatch(allActions.p_acton.setProducts(arr))
           //unsubscribe()
@@ -521,52 +526,25 @@ import allActions from "../redux/allActions"
         function SetbdData  ()  {
   
           try {
- 
-              const unsubscribe = firestore().collection("products").orderBy("updatedAt","desc").onSnapshot(async  (d)=>{
-                let arr=[]
-                
-                console.log("prdct snap" )
-                
-                if(d){
-                 d.docs.map((data)=>{
-                   
-                   const pid=data.id; //pid rndn
-                   let aa=[]
- 
-
-                   firestore().collection("products").doc(pid).collection("bids").orderBy("createdAt","desc").onSnapshot((doc)=>{
-                    console.log("prdct bdr snap" )
-                    
-         
-                    
-                    if(doc.size>0){
-       
-                      doc.forEach((e,i,a)=>{
-                       let d=e.data()
-                        aa.push(d)
-                        
-                      })
-                    
-                    } 
-
-                   })
-                   
-                   const obj={pid:pid,data:aa}
+   
+            const unsubscribey = firestore().collection("bd").onSnapshot(async  (d)=>{
+              let arr=[]
+              if(d){
+               d.docs.map((data)=>{
+                 
+                 const id=data.id; //pid rndn
+                 const u=data.data(); //all prdcts data
+                 
+                   const obj={id,data:u}
                    arr.push(obj)
-
-                   
-                 })
-                
-               } 
-          
-                dispatch(allActions.bd_action.setBd(arr))
-                //unsubscribe()
-             })
-      
-      
-           
-       
-          
+                 
+               })
+              
+             } 
+        
+              dispatch(allActions.bd_action.setBd(arr))
+              //unsubscribe()
+           })
          
         } catch (error) {
                 var errorMessage = error.message;
@@ -575,7 +553,7 @@ import allActions from "../redux/allActions"
                 const msg = errorMessage.substr(si,ei)
                  allOther.AlertMessage("",msg)
           }
-           
+     
            
           }
 

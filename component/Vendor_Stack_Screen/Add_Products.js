@@ -14,7 +14,7 @@ import ImagePicker from "react-native-customized-image-picker";
 import storage from '@react-native-firebase/storage';
 import RNFetchBlob from 'rn-fetch-blob'
 import moment from "moment";
-
+import CountDown from 'react-native-countdown-component';
 import Textarea from 'react-native-textarea';
 
 const windowWidth = Dimensions.get('window').width;
@@ -82,46 +82,6 @@ const cardWidth=windowWidth-35;
     });
   }
 
-useEffect(()=>{
-  let active="";
-  var s="";
-  var e="";
-
-  var st="";
-  var et="";
-
-  auctionsData.auctions.map((item,index)=>{    
-    if(item.id==aid){
-      active=item.data.active;
-      s=item.data.st;
-      e=item.data.et;
-    }
-  })
-
-  console.log(s)
-  console.log(e)
-  var startTime = moment(s, "HH:mm a");
-  var endTime = moment(e, "HH:mm a");
-
-  var duration = moment.duration(endTime.diff(startTime));
-
-  var hours = parseInt(duration.asHours());
-
-  var minutes = parseInt(duration.asMinutes())%60;
- 
-
-  console.log("durastion : ",parseInt(duration.asSeconds()))
-
-
-  console.log('hours ', hours ,' and ', ' minutes ' ,minutes)
-
-  // productsData.products.map((e,i,a)=>{
-  //   if(active=="no"){
-
-  //   }
-  // })
-
-},[productsData])
  
 
   useEffect(()=>{
@@ -501,6 +461,7 @@ const removeProducts=  (id)=>{
        startingAmount,
        sba,
        noi,
+       duration:"",
        inc,
        st:"",
        et:"",
@@ -808,25 +769,52 @@ const removeProducts=  (id)=>{
         )
       }
 
-      const    RenderProducts  = ( ) => { 
-        let  cardHeight=130
-        let active="no"  
+      const    RenderProducts  = (active) => { 
+        let  cardHeight= active!="no"?180:130;
+ 
          let c= false;
 
          let product  =  productsData.products.map((item,index)=>{
             
+         
  
           if(item.data.aid==aid && item.data.block==false){
-
-         active=item.data.active;
-          
-         cardHeight= active!="no"?180:130;
-
+  
         c=true;    
         let name = item.data.name || ""
         let catg = item.data.category || ""
         let noi= item.data.noi || ""
         let id=item.id || ""
+        let duration = item.data.duration || ""
+  
+        let stime=""
+        let ms=""
+           if(duration!=""){
+            ms= moment.duration(duration);
+           }
+        
+if(ms!=""){
+  let h=ms.hours()
+  let m=ms.minutes()
+  let s=ms.seconds()
+
+   if(h<=0 && m<=0){
+            stime= s+" Seconds"
+          }else
+          if(h<=0 && s<=0){
+            stime= m+" Min "
+          }else  if(h<=0 && s>0){
+            stime= m+" Min "+": "+s+" Sec"
+          }else if(h>0 && s<=0 && m<=0){
+            stime= h+" Hours "
+          }
+        else{
+            stime=ms.hours() +" H " + ': ' + ms.minutes()+" M "+": "+ms.seconds()+" S"
+          }
+}
+          
+
+
         let Pid=item.data.pid
          name  =   allOther.strLength(name,"name")
         
@@ -907,6 +895,14 @@ style={{position:"absolute",right:0,marginRight:5}}
 <Text style={{color:"black",textTransform:"capitalize",fontSize:14}}>items</Text>  
 <Text style={{color:"black",textTransform:"capitalize",fontSize:14,position:"absolute",right:0}}>{noi}</Text>   
  </View>
+
+{stime!=""&&(
+   <View style={{flexDirection:"row",alignItems:"center"}}>
+<Text style={{color:"black",textTransform:"capitalize",fontSize:14}}>duration</Text>  
+<Text style={{color:"black",textTransform:"capitalize",fontSize:12,position:"absolute",right:0}}>{stime}</Text>   
+ </View>
+)}
+
 
  </View>
 
@@ -1116,6 +1112,15 @@ style={{position:"absolute",right:0,marginRight:5}}
       
             }
 
+            const renderTimer=()=>{
+              return(
+                <View style={{position:"absolute",top:5,right:20}}>
+
+                </View>
+              )
+            }
+
+
       let active="";
 
       auctionsData.auctions.map((item,index)=>{    
@@ -1154,7 +1159,7 @@ onScroll={Animated.event([
               )
              :(
         
-            RenderProducts()
+            RenderProducts(active)
               ) 
 
             }

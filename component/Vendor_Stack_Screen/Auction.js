@@ -29,7 +29,11 @@ const cardWidth=windowWidth-35;
  
  
   const auctionsData = useSelector(state => state.auctionReducer)
+  const productsData = useSelector(state => state.productReducer)
+
+
   
+
       const    RenderAuctions  = () => { 
     
          let c= false;

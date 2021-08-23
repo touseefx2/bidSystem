@@ -56,6 +56,7 @@ const cardWidth=windowWidth-35;
   const [cb, setcb] = useState([]) //checkbox
 
   const auctionsData = useSelector(state => state.auctionReducer)
+  const bdd = useSelector(state => state.bdReducer)
  
   
   
@@ -70,7 +71,7 @@ const cardWidth=windowWidth-35;
 
           if(item.data.active=="end"){
 
-        c=true;    
+        
         let name = item.data.name || ""
         let active = item.data.active || ""
         let id=item.id || ""
@@ -79,10 +80,29 @@ const cardWidth=windowWidth-35;
         let st=item.data.st
         let et=item.data.et
         let cb=item.data.cb
-    
+
+        let v=false;
+        if(bdd.bd.length>0){
+
+          bdd.bd.map((item,index)=>{
+          
+            if(userData.user.uid==item.data.bid && id==item.data.aid )
+            {
+              c=true
+              v=true
+            }
+      
+          })
+      
+        }else{
+          c=false
+          v=false
+        }    
 
 
-       return (
+
+if(v){
+ return (
   
  
         <View style={styles.card}>
@@ -156,6 +176,8 @@ const cardWidth=windowWidth-35;
       
  
              )
+}
+    
           }
  
        })

@@ -13,7 +13,7 @@ import DeviceInfo from 'react-native-device-info';
 import ImagePicker from "react-native-customized-image-picker"; 
 import storage from '@react-native-firebase/storage';
 import RNFetchBlob from 'rn-fetch-blob'
-
+import moment from "moment";
 import Textarea from 'react-native-textarea';
 
 const windowWidth = Dimensions.get('window').width;
@@ -30,7 +30,7 @@ const cardWidth=windowWidth-35;
 
    
 
-    const {aid,an}=props.route.params;
+    const {aid,an,st,et}=props.route.params;
     const auctionsData = useSelector(state => state.auctionReducer)
  
   const listViewRef = useRef(); 
@@ -169,7 +169,7 @@ setTimeout(() => {
        
       const    RenderProducts  = (active) => { 
     
-         let  cardHeight=150;
+         let  cardHeight=170;
          let c= false;
          let product  =   productsData.products.map((item,index)=>{
         
@@ -184,6 +184,34 @@ setTimeout(() => {
         let id=item.id || ""
         let Pid=item.data.pid
         name  =   allOther.strLength(name,"name")
+
+        let duration = item.data.duration || ""
+  
+        let stime=""
+        let ms=""
+           if(duration!=""){
+            ms= moment.duration(duration);
+           }
+        
+if(ms!=""){
+  let h=ms.hours()
+  let m=ms.minutes()
+  let s=ms.seconds()
+
+   if(h<=0 && m<=0){
+            stime= s+" Seconds"
+          }else
+          if(h<=0 && s<=0){
+            stime= m+" Min "
+          }else  if(h<=0 && s>0){
+            stime= m+" Min "+": "+s+" Sec"
+          }else if(h>0 && s<=0 && m<=0){
+            stime= h+" Hours "
+          }
+        else{
+            stime=ms.hours() +" H " + ': ' + ms.minutes()+" M "+": "+ms.seconds()+" S"
+          }
+}
         
        const scale = scrollY.interpolate({
         inputRange :[
@@ -234,7 +262,7 @@ style={{position:"absolute",right:0,marginRight:5}}
 
 
 <TouchableOpacity style={{marginTop:10}}
- onPress={()=>{props.navigation.navigate("View_Products",{pid:id,aid:aid})}} >
+ onPress={()=>{props.navigation.navigate("View_Products",{pid:id,aid:aid,st,et})}} >
 
      
       
@@ -269,6 +297,14 @@ style={{position:"absolute",right:0,marginRight:5}}
 <Text style={{color:"black",textTransform:"capitalize",fontSize:14}}>Start Bidding Amount</Text>  
 <Text style={{color:"black",textTransform:"capitalize",fontSize:14,position:"absolute",right:0}}>{sba}</Text>   
  </View>
+
+ {stime!=""&&(
+   <View style={{flexDirection:"row",alignItems:"center"}}>
+<Text style={{color:"black",textTransform:"capitalize",fontSize:14}}>duration</Text>  
+<Text style={{color:"black",textTransform:"capitalize",fontSize:12,position:"absolute",right:0}}>{stime}</Text>   
+ </View>
+)}
+
 
  </View>
 

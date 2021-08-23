@@ -57,7 +57,7 @@ const cardWidth=windowWidth-35;
   
 <TouchableOpacity onPress={()=>{
   if(active!="no")
-  props.navigation.navigate("Active_Products",{aid:id,an:name})
+  props.navigation.navigate("Active_Products",{aid:id,an:name,st:st,et:et})
   else
   null
   }}>

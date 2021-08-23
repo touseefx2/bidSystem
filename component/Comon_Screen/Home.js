@@ -4,7 +4,7 @@ import  allOther from "../other/allOther"
 import {useSelector,useDispatch  } from 'react-redux'
 import firestore from '@react-native-firebase/firestore';
 import allActions  from "../redux/allActions"
-import moment from "moment";
+import moment  from "moment";
 import auth from '@react-native-firebase/auth';
 
   export default  function  Home(props)  {
@@ -17,7 +17,8 @@ import auth from '@react-native-firebase/auth';
   const [setbdData, setsetbdData] = useState(false)
   const [setAllProductstData, setsetAllProductsData] = useState(false)
   const [setAllrbData, setsetAllrbData] = useState(false)
-
+  const productsData = useSelector(state => state.productReducer)
+  const auctionsData = useSelector(state => state.auctionReducer)
   const dispatch = useDispatch()
   const userData = useSelector(state => state.userReducer)
   let unsubP=null;
@@ -64,6 +65,7 @@ import auth from '@react-native-firebase/auth';
                 active:"yes"
               })      
             }
+         
           }
       
 
@@ -127,6 +129,101 @@ import auth from '@react-native-firebase/auth';
     GlobaldynamicheckProduct()
     let  interval  = setInterval(  () => {GlobaldynamicheckProduct()},2000); 
     const db=firestore().collection("users").doc(userData.user.uid)
+
+    const usu = firestore().collection("auctions").onSnapshot(async  (d)=>{
+      
+      if(d){
+       d.docs.map((d)=>{
+         
+        let item=d.data();
+
+        if(item.active=="yes"){
+  
+   
+          var  s=item.st;
+          var  e=item.et;
+           let aid=item.id
+    
+          
+          var startTime = moment(s, "hh:mm a");
+          var endTime = moment(e, "hh:mm a");
+  
+          
+        
+          var duration = moment.duration(endTime.diff(startTime));
+          var minutes = parseInt(duration.asMilliseconds());
+          let i=0;
+          let arr=[]
+    
+    
+      firestore().collection("products").orderBy('createdAt', 'desc').get().then(async  (d)=>{
+    
+           if(d){
+            d.docs.map((data)=>{
+              
+              const id=data.id; //pid rndn
+              const u=data.data();
+    
+             
+   
+              if(u.aid==aid){
+   
+               
+               
+                i++;
+                arr.push({id:id})
+         
+    
+              }
+              
+            })
+           
+   
+           
+           
+            let dfc= minutes/i
+       
+    
+            if(arr.length>0){
+              arr.map((e,ii,a)=>{
+   
+               
+        let db=firestore().collection("products").doc(e.id)
+        
+           
+              let d= dfc*(ii+1)
+              console.log("yes dur update")
+             db.update({
+                duration:d
+              })
+            
+           
+              
+        
+        
+              })
+            }
+   
+          } 
+     
+           
+        })
+   
+      
+      
+     
+     
+    
+          }
+
+         
+       })
+      
+     } 
+
+      dispatch(allActions.a_action.setAuctions(arr))
+      //unsubscribe()
+   })
    
      const unsub= db.onSnapshot(async  (doc)=>{
       
@@ -212,13 +309,14 @@ if(userData.user.type=="bidder"){
   setsetAllProductsData(true)
   setsetAuctionData(true)
   setsetAllrbData(true)
-  // setsetbdData(true)
+  setsetbdData(true)
 }
 
 return () => {
   // Anything in here is fired on component unmount.
    clearInterval(interval)
    unsub();
+   usu();
    if(unsubP!=null){
     unsubP();
    }
@@ -226,7 +324,9 @@ return () => {
 }
 
   },[])
-     
+
+      
+ 
 return(
   <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
  
@@ -239,7 +339,7 @@ return(
  {setAllVendorstData && <allOther.firebase.FireBaseFunction type={"set-all-vendors-data"}  /> }   
  {setAllrbData && <allOther.firebase.FireBaseFunction type={"set-allrbdata"}  /> }   
  {setAllBiddersData && <allOther.firebase.FireBaseFunction type={"set-all-bidders-data"}  /> }   
- {/* {setbdData && <allOther.firebase.FireBaseFunction type={"set-product-bidders-data"}  /> }    */}
+ {setbdData && <allOther.firebase.FireBaseFunction type={"set-product-bidders-data"}  /> }   
  {setAllProductstData && <allOther.firebase.FireBaseFunction type={"set-all-products-data"}   /> } 
  
 <Text style={{fontSize:30,color:"silver",alignSelf:"center"}}>Welcome</Text>

@@ -9,11 +9,14 @@ import storage from '@react-native-firebase/storage';
 import RNFetchBlob from 'rn-fetch-blob'
 import { TextInput } from 'react-native-paper';
 import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTitle} from 'react-native-popup-dialog';
- 
+import CountDown from 'react-native-countdown-component'; 
+import moment, { min }  from "moment";
+import { act } from 'react-test-renderer';
+
   export default  function  View_Products(props)  {
 
     const [loader, setloader] = useState(true)
-    const  {pid,aid} = props.route.params;
+    const  {pid,aid,st,et} = props.route.params;
 
     const [name, setname] = useState("")
     const [photo, setphoto] = useState([])
@@ -23,6 +26,8 @@ import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTi
     const [description, setdescription] = useState("")
     const [noi, setnoi] = useState("")
     const [sba, setsba] = useState("")
+    const [dur, setdur] = useState("")
+    const [fdur, setfdur] = useState("")
     const [inc, setinc] = useState("")
     const [ab, setab] = useState("")
     const [startingAmount, setstartingAmount] = useState("")
@@ -41,11 +46,19 @@ import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTi
     const [bn, setbn] = useState("")
     const [be, setbe] = useState("")
     const [bp, setbp] = useState("")
+
+    const [ybn, setybn] = useState("")
+    const [ybe, setybe] = useState("")
+    const [ybp, setybp] = useState("")
+    const [ynob, setynob] = useState("")
+
     const [tb, settb] = useState(0)
     const [dialogVisible2, setdialogVisible2] = useState(false) //bid dialog
     const [dialogClick2, setdialogClick2] = useState(false)
 
     const [ip, setip] = useState(0)   //incrmt dec plus   minus check
+
+    const [dc, setdc] = useState(false)  //vie tour bid modal
     
     const windowWidth = Dimensions.get('window').width;
 
@@ -74,7 +87,7 @@ import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTi
  
          
         setname(name);setphoto(photo);setcategory(category);setdescription(description);setstartingAmount(starting_Amount);
-        setPid(Pid);setsba(sba);setnoi(noi);setab(ab);setinc(inc);setlprice(sba);setprice(sba)
+        setPid(Pid);setsba(sba);setnoi(noi);setab(ab);setinc(inc);setlprice(sba);setprice(sba);setdur(item.data.duration)
           setTimeout(() => {
           setloader(false)
           }, 400);
@@ -88,6 +101,31 @@ import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTi
       })
      },[productsData])
  
+
+     useEffect(()=>{
+    if(dur!="" & active=="yes"){
+      var startTime = moment(st, "hh:mm:ss a");
+      let cd=moment(new Date()).format("hh:mm:ss a")
+      var ct = moment(cd, "hh:mm:ss a");
+
+      var durationn = moment.duration(ct.diff(startTime));
+      var minutes = parseInt(durationn.asMilliseconds());
+
+
+
+      if(minutes>dur){
+        setfdur("end")
+        
+      }else{
+        let d=  dur-minutes
+        let s= d/1000
+    
+        setfdur(s)
+    
+      }
+     
+    }
+     },[dur])
 
      useEffect(() => {
       // Anything in here is fired on component mount.
@@ -103,6 +141,11 @@ import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTi
 
             if(userData.user.uid==d.bid){
               setb(true)
+              
+            setybn(d.bidderName);
+            setybe(d.bidderEmail);
+            setybp(d.price);
+            setynob(d.nob);
             }
 
             if(i==0){  //bcd 1st one is latest date 
@@ -139,15 +182,21 @@ import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTi
    if(price>lprice){
      setloader(true);
 
-       const obj={
+     const obj={
       createdAt:new Date(),
       bidderName:userData.user.name,
       bidderEmail:userData.user.email,
       price:price,
-      bid:userData.user.uid
+      bid:userData.user.uid,
+      nob:ip
     }
   firestore().collection("products").doc(pid).collection("bids").doc(userData.user.uid).set(obj).then(
 
+    firestore().collection("bd").add({
+      bid:userData.user.uid,
+      aid:aid,
+      pid:pid
+    }),
     firestore().collection("users").doc(userData.user.uid).update({tb:tb}).then(
       allOther.ToastAndroid.ToastAndroid_SB("Bid Success"),setloader(false),setdialogVisible2(false),setip(0)
     ).catch((e)=>console.log("user tb update error add error , ",e),setloader(false))
@@ -418,17 +467,19 @@ import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTi
      
     }
 
-    const renderButton=()=>{
+    const renderButton=(active)=>{
 
 
       return(
         <View style={{width:"100%",marginTop:20,padding:10,justifyContent:"flex-end",backgroundColor:"#383838"}}>
 
        
-{renderLastBid()}
-<TouchableOpacity 
+{((active=="yes"&&  fdur!=="end") )  && renderLastBid()}
+
+{fdur!="end" && active=="yes" &&(
+  <TouchableOpacity
  onPress={()=>{
-  if(b==false) {
+  if(b==false ) {
       setdialogClick2(true);setdialogVisible2(true)
   }
   else{
@@ -437,8 +488,31 @@ import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTi
   
   }}
 style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"center",borderRadius:10}} >
-<Text style={{fontSize:20,color:"white",alignSelf:"center",fontWeight:"bold"}}>{b==false?"Bid Now":"View Your Bid"}</Text>
+<Text style={{fontSize:20,color:"white",alignSelf:"center",fontWeight:"bold"}}>{(b==false)?"Bid Now":"View Your Bid"}</Text>
 </TouchableOpacity>
+)}
+
+{(fdur=="end" && b==true && active=="yes" ) &&(
+  <TouchableOpacity
+ onPress={()=>{ 
+    // allOther.AlertMessage("","You have already bid this poduct")
+   }}
+style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"center",borderRadius:10}} >
+<Text style={{fontSize:20,color:"white",alignSelf:"center",fontWeight:"bold"}}>View Your Bid</Text>
+</TouchableOpacity>
+)}
+
+{active!="yes"&& b==true &&(
+  <TouchableOpacity
+ onPress={()=>{ 
+    setdc(true)
+   }}
+style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"center",borderRadius:10}} >
+<Text style={{fontSize:20,color:"white",alignSelf:"center",fontWeight:"bold"}}>View Your Bid</Text>
+</TouchableOpacity>
+)}
+
+    
       </View>
       )
     }
@@ -589,6 +663,90 @@ style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"
     
     }
 
+    const renderTimer=()=>{
+      return(
+        <View style={{position:"absolute",top:5,right:5}}>
+
+{(fdur!="" && fdur!="end" )&&(
+  <View style={{flexDirection:"row",alignItems:"center"}}>
+    <Text style={{fontSize:14,color:"red",marginRight:10}}>Time Left</Text>
+ <CountDown
+ size={15}
+ until={fdur}
+ onFinish={() =>{setfdur("end")} }
+ digitStyle={{backgroundColor: '#FFF', borderWidth: 1, borderColor: '#1CC625'}}
+ digitTxtStyle={{color: '#1CC625'}}
+ timeLabelStyle={{color: 'red', fontWeight: 'bold'}}
+ separatorStyle={{color: '#1CC625'}}
+ timeToShow={['H', 'M', 'S']}
+ timeLabels={{h:"H",m:"M", s:"S"}}
+ showSeparator
+/>
+</View>
+)}
+
+{fdur=="end" &&(
+  <Text style={{fontSize:18,color:"red",fontWeight:"bold",alignSelf:"center"}}>Time Over</Text>
+)}
+    
+
+        </View>
+      )
+    }
+
+    const ViewYourBid =()=>{
+
+ 
+      return(
+          <Modal
+          animationType='fade'
+          transparent={false}
+          visible={dc}
+          >
+       
+          <View style={{ flex:1,justifyContent:"center",alignItems:"center"}}>
+        
+        
+<TouchableOpacity style={{left:5,top:5,position:"absolute"}} onPress={()=>{setdc(false)}}
+>
+<allOther.vectorIcon.Entypo size={40} color="#de5050" style={{opacity:0.8}} name="cross" />
+</TouchableOpacity>
+
+      
+ 
+          <View style={{backgroundColor:"silver",marginTop:5,padding:10}}>
+          
+     
+          <View style={{flexDirection:"row" }}>
+          <Image style={{width:30,height:30}} source={require("../../assets/bidder.png")} />
+          <View style={{marginLeft:15}}> 
+          <Text style={{color:"black",fontWeight:"bold",textTransform:"capitalize"}}>{ybn}</Text>
+          <Text style={{color:"black",fontWeight:"bold"}}>{ybe}</Text>
+           
+          <View style={{flexDirection:"row",alignItems:"center" ,width:230}}>
+                    <Text style={{color:"black",textTransform:"capitalize"}}>Price :</Text> 
+                    <Text style={{color:"blue",textTransform:"capitalize",position:"absolute",right:0}}>{ybp}</Text>
+           </View>
+
+           <View style={{flexDirection:"row",alignItems:"center" ,width:230}}>
+                    <Text style={{color:"black",textTransform:"capitalize"}}>Bids :</Text> 
+                    <Text style={{color:"blue",textTransform:"capitalize",position:"absolute",right:0}}>{ynob}</Text>
+           </View>
+           
+          </View> 
+          </View>
+          
+           
+          </View>
+      
+  
+
+          </View>
+      
+        </Modal>
+      )
+      }
+
     let active="";
 
     auctionsData.auctions.map((item,index)=>{    
@@ -601,12 +759,14 @@ return(
   <View style={{flex:1}}>
  <allOther.Header  title="" nav={props.navigation}/>
   <allOther.Loader loader={loader}/>
+  {dc && ViewYourBid()}
+  { fdur!="" && active=="yes" && renderTimer()}
   {mv && render_FullImage()} 
   {dialogClick2 &&  render_Bid()}
  <ScrollView>      
           {renderProduct(active)}
 </ScrollView>    
-{renderButton()}
+{renderButton(active)}
  
   
  
