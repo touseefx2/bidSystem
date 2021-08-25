@@ -465,7 +465,6 @@ const removeProducts=  (id)=>{
        inc,
        st:"",
        et:"",
-       active:"no",
        aid:aid,
        autoBid:startingAmount,
        description,

@@ -133,16 +133,17 @@ import auth from '@react-native-firebase/auth';
     const usu = firestore().collection("auctions").onSnapshot(async  (d)=>{
       
       if(d){
+
        d.docs.map((d)=>{
          
         let item=d.data();
 
         if(item.active=="yes"){
-  
-   
+
+ 
           var  s=item.st;
           var  e=item.et;
-           let aid=item.id
+           let aid=d.id
     
           
           var startTime = moment(s, "hh:mm a");
@@ -152,9 +153,12 @@ import auth from '@react-native-firebase/auth';
         
           var duration = moment.duration(endTime.diff(startTime));
           var minutes = parseInt(duration.asMilliseconds());
-          let i=0;
-          let arr=[]
-    
+
+          console.log("min ",minutes);
+         
+       
+    let i=0;
+    let arr=[]
     
       firestore().collection("products").orderBy('createdAt', 'desc').get().then(async  (d)=>{
     
@@ -163,13 +167,13 @@ import auth from '@react-native-firebase/auth';
               
               const id=data.id; //pid rndn
               const u=data.data();
-    
-             
-   
-              if(u.aid==aid){
-   
-               
-               
+     
+              console.log("u ",u);
+
+              console.log("u.uid ",u.aid);
+              console.log("aid ",aid);
+
+              if(u.aid==aid){       
                 i++;
                 arr.push({id:id})
          
@@ -178,11 +182,11 @@ import auth from '@react-native-firebase/auth';
               
             })
            
-   
-           
-           
+        
             let dfc= minutes/i
-       
+
+            console.log("arr ",arr);
+            console.log("i ",i);
     
             if(arr.length>0){
               arr.map((e,ii,a)=>{
@@ -211,7 +215,7 @@ import auth from '@react-native-firebase/auth';
    
       
       
-     
+        dispatch(allActions.a_action.setAuctions(arr))
      
     
           }
@@ -221,7 +225,7 @@ import auth from '@react-native-firebase/auth';
       
      } 
 
-      dispatch(allActions.a_action.setAuctions(arr))
+    
       //unsubscribe()
    })
    

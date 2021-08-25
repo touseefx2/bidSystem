@@ -2,18 +2,10 @@ import React, { useEffect, useState,useRef} from 'react';
 import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Animated,Platform,Alert,Image, FlatList} from "react-native";
 import  allOther from "../other/allOther"
 import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTitle} from 'react-native-popup-dialog';
-import DropDownPicker from 'react-native-dropdown-picker';
-import permissions from "../permissions/permissions"
 import {productCategory} from "./Category"
 import {useSelector  } from 'react-redux'
-import firestore from '@react-native-firebase/firestore';
-import storage from '@react-native-firebase/storage';
-import RNFetchBlob from 'rn-fetch-blob'
-import DeviceInfo from 'react-native-device-info';
-import ImagePicker from "react-native-customized-image-picker"; 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
-import { TextInput } from 'react-native-paper';
 import SelectMultiple from 'react-native-select-multiple'
 
 const windowWidth = Dimensions.get('window').width;
@@ -319,6 +311,7 @@ const renderLabel = (label, style) => {
       const    RenderAuctions  = () => { 
     
          let c= false;
+
          let  auctions  =   auctionsData.auctions.map((item,index)=>{
         
        
@@ -501,9 +494,11 @@ const   renderTimePicker = ()=>
     </View>
   )
 }
-     
+
+
+     console.log("ad: ",auctionsData.auctions)
 return(
-  <View style={{flex:1}}>
+<View style={{flex:1}}>
  
    
  {renderUp()} 

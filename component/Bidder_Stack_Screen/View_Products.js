@@ -483,7 +483,7 @@ import { act } from 'react-test-renderer';
       setdialogClick2(true);setdialogVisible2(true)
   }
   else{
-    // allOther.AlertMessage("","You have already bid this poduct")
+    setdc(true)
   }
   
   }}
@@ -495,7 +495,7 @@ style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"
 {(fdur=="end" && b==true && active=="yes" ) &&(
   <TouchableOpacity
  onPress={()=>{ 
-    // allOther.AlertMessage("","You have already bid this poduct")
+  setdc(true)
    }}
 style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"center",borderRadius:10}} >
 <Text style={{fontSize:20,color:"white",alignSelf:"center",fontWeight:"bold"}}>View Your Bid</Text>
