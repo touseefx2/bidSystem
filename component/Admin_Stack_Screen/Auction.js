@@ -316,7 +316,7 @@ const renderLabel = (label, style) => {
         
        
 
-          if(item.data.active!="end"){
+          if(item.data.active!=="end"){
 
         c=true;    
         let name = item.data.name || ""
@@ -496,7 +496,7 @@ const   renderTimePicker = ()=>
 }
 
 
-     console.log("ad: ",auctionsData.auctions)
+  console.log("ad: ",auctionsData.auctions)
 return(
 <View style={{flex:1}}>
  
