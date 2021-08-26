@@ -160,7 +160,7 @@ import auth from '@react-native-firebase/auth';
     let i=0;
     let arr=[]
     
-      firestore().collection("products").orderBy('createdAt', 'desc').get().then(async  (d)=>{
+      firestore().collection("products").orderBy('createdAt', 'asc').get().then(async  (d)=>{
     
            if(d){
             d.docs.map((data)=>{
@@ -215,7 +215,7 @@ import auth from '@react-native-firebase/auth';
    
       
       
-        dispatch(allActions.a_action.setAuctions(arr))
+        // dispatch(allActions.a_action.setAuctions(arr))
      
     
           }
@@ -226,7 +226,7 @@ import auth from '@react-native-firebase/auth';
      } 
 
     
-      //unsubscribe()
+      
    })
    
      const unsub= db.onSnapshot(async  (doc)=>{
@@ -299,11 +299,15 @@ import auth from '@react-native-firebase/auth';
    if(userData.user.type=="vendor"){
         setsetProductData(true)
         setsetAuctionData(true)
+        setsetAllVendorsData(true)
+        setsetAllBiddersData(true)
+        setsetbdData(true)
    }
 
    if(userData.user.type=="admin"){
-      setsetAllVendorsData(true)
+     
       setsetAuctionData(true)
+      setsetAllVendorsData(true)
       setsetAllBiddersData(true)
       setsetAllProductsData(true)
       setsetAllrbData(true)
@@ -314,6 +318,8 @@ if(userData.user.type=="bidder"){
   setsetAuctionData(true)
   setsetAllrbData(true)
   setsetbdData(true)
+  setsetAllVendorsData(true)
+  setsetAllBiddersData(true)
 }
 
 return () => {

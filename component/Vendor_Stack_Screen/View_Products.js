@@ -93,6 +93,8 @@ import { TextInput } from 'react-native-paper';
       <Image source={{uri: item.uri}}   style={{
          width: 150,
          height:150,
+         borderWidth:0.5,
+         borderColor:"green",
          shadowColor: "black",
          elevation: 2,
       } } />
@@ -144,7 +146,7 @@ import { TextInput } from 'react-native-paper';
       
             }
  
-   const  renderProduct  =   ()  => {
+   const  renderProduct  =   (active)  => {
  
       return (
        

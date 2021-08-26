@@ -81,11 +81,11 @@ passwordV:false,
 passwordF:false,
 showAlert:false,
 setUserData:false,
+loader:true,
 uid:null,
 //out focus color of input field
 emailInputFieldborderColor:null,
 passwordInputFieldborderColor:null,
-loader:false,
 //SIGNUP MODAL
 clkD:false,
 loadD:false,
@@ -325,7 +325,10 @@ focusField(field){
 
 componentDidMount()
 {
-  const {darkMode}= this.state;
+  const {darkMode,loader}= this.state;
+  setTimeout(() => {
+    this.setState({loader:false})
+  }, 1000);
   this.getDarkModeData()
   let  color= !darkMode?InputFieldborderColor:dmInputFieldborderColor
   this.setState({
@@ -469,6 +472,7 @@ renderLogin()
       const{userData}=this.props;
       return (
         <View style={{ flex: 1,backgroundColor:!darkMode ? containerBackgroundColor:dmcontainerBackgroundColor}}>
+          <allOther.Loader loader={loader} />
           {setUserData         && <allOther.firebase.FireBaseFunction type={"set-user-data"} uid={uid} /> } 
           {(userData.length<=0 || userData.user.length<=0   ) && <allOther.Loader loader={loader} /> }
           {this.renderLogin()}

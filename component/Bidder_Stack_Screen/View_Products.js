@@ -1,18 +1,13 @@
 import React, { useEffect, useState,useRef} from 'react';
 import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Modal,Image,FlatList} from "react-native";
 import  allOther from "../other/allOther"
-import DropDownPicker from 'react-native-dropdown-picker';
-import {productCategory} from "./Category"
 import {useSelector} from 'react-redux'
 import firestore from '@react-native-firebase/firestore';
-import storage from '@react-native-firebase/storage';
-import RNFetchBlob from 'rn-fetch-blob'
 import { TextInput } from 'react-native-paper';
 import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTitle} from 'react-native-popup-dialog';
 import CountDown from 'react-native-countdown-component'; 
-import moment, { min }  from "moment";
-import { act } from 'react-test-renderer';
-
+import moment   from "moment";
+ 
   export default  function  View_Products(props)  {
 
     const [loader, setloader] = useState(true)
@@ -28,6 +23,7 @@ import { act } from 'react-test-renderer';
     const [sba, setsba] = useState("")
     const [dur, setdur] = useState("")
     const [fdur, setfdur] = useState("")
+    const [abo,setabo]=useState("") //autobid optnl
     const [inc, setinc] = useState("")
     const [ab, setab] = useState("")
     const [startingAmount, setstartingAmount] = useState("")
@@ -50,9 +46,12 @@ import { act } from 'react-test-renderer';
     const [ybn, setybn] = useState("")
     const [ybe, setybe] = useState("")
     const [ybp, setybp] = useState("")
-    const [ynob, setynob] = useState("")
+    const [yab, setyab] = useState("")
 
-    const [tb, settb] = useState(0)
+    const [bid, setbid] = useState("")
+
+
+    // const [tb, settb] = useState(0)
     const [dialogVisible2, setdialogVisible2] = useState(false) //bid dialog
     const [dialogClick2, setdialogClick2] = useState(false)
 
@@ -65,6 +64,11 @@ import { act } from 'react-test-renderer';
     const auctionsData = useSelector(state => state.auctionReducer)
     const productsData = useSelector(state => state.productReducer)
     const userData = useSelector(state => state.userReducer)
+
+    const allBiddersData = useSelector(state => state.bidderReducer)
+    const allVendorsData = useSelector(state => state.vendorReducer)
+
+    const bdd = useSelector(state => state.bdReducer)
  
     useEffect(()=>{
       productsData.products.map((item,index)=>{
@@ -127,90 +131,118 @@ import { act } from 'react-test-renderer';
     }
      },[dur])
 
-     useEffect(() => {
-      // Anything in here is fired on component mount.
-         settb(userData.user.tb)
-         const unsub = firestore().collection("products").doc(pid).collection("bids").orderBy("createdAt","desc").onSnapshot((doc)=>{
-         
-        if(doc.size>0){
-   
-          doc.forEach((e,i,a)=>{
+ 
 
-            let d=e.data()
-           
+  useEffect(()=>{
 
-            if(userData.user.uid==d.bid){
-              setb(true)
-              
-            setybn(d.bidderName);
-            setybe(d.bidderEmail);
-            setybp(d.price);
-            setynob(d.nob);
-            }
+  if(bdd.bd.length>0){
 
-            if(i==0){  //bcd 1st one is latest date 
+    let arr=[]
+    bdd.bd.map((e,i,a)=>{
 
-            setbn(d.bidderName);
-            setbe(d.bidderEmail);
-            setbp(d.price);
-            setlprice(d.price)
-            setprice(d.price)
-            setlb(true)
-            }
-       
-            
-          })
-        
+      console.log("i : ",i)
+      let d=e.data
 
-        }else{
-          console.log("no any bid found")
-          setlb(false)
-          setb(false)
-        }
+      if(d.pid==pid && d.aid==aid){
 
-      
-      })
-
-      return () => {
-          // Anything in here is fired on component unmount.
-          unsub()
-      }
+        if(userData.user.uid==d.bid){
+          setb(true)
+          
+        setybn(userData.user.name);
+        setybe(userData.user.email);
+        setybp(d.price);
+        setyab(d.abo);
+                                   }
+          arr.push(d)
   
-  }, [])
+        // if(i==0){  //bcd 1st one is latest date 
+        
+        //   console.log("yes last bid : ",i)
+        // // setbn(d.bidderName);
+        // // setbe(d.bidderEmail);
+        // setbid(d,bid)
+        // setbp(d.price);
+        // setlprice(d.price)
+        // setprice(d.price)
+        // setab(d.abo);
+        // setlb(true)
+        // }
+  
+
+      }
+   
+
+    })
+
+    if(arr.length>0){
+      arr.map((d,i,a)=>{
+      if(i==0){  //bcd 1st one is latest date 
+        
+       console.log("yes last bid : ",i)
+         
+        setbid(d.bid)
+        setbp(d.price);
+        setlprice(d.price)
+        setprice(d.price)
+        setab(d.abo);
+        setlb(true)
+        }
+      })
+    }
+
+  }else{
+    console.log("no any bid found")
+    setlb(false)
+    setb(false)
+  }
+   
+
+  },[bdd])
 
   const bidnow=()=>{
-   if(price>lprice){
-     setloader(true);
 
-     const obj={
-      createdAt:new Date(),
-      bidderName:userData.user.name,
-      bidderEmail:userData.user.email,
-      price:price,
-      bid:userData.user.uid,
-      nob:ip
-    }
-  firestore().collection("products").doc(pid).collection("bids").doc(userData.user.uid).set(obj).then(
+    if(userData.user.tb>0){
 
-    firestore().collection("bd").add({
-      bid:userData.user.uid,
-      aid:aid,
-      pid:pid
-    }),
-    firestore().collection("users").doc(userData.user.uid).update({tb:tb}).then(
-      allOther.ToastAndroid.ToastAndroid_SB("Bid Success"),setloader(false),setdialogVisible2(false),setip(0)
-    ).catch((e)=>console.log("user tb update error add error , ",e),setloader(false))
+      let t = userData.user.tb-1;
+      let ab=  abo!="" ?parseInt(abo) : ""
+
+      setloader(true);
  
-
-  ).catch((e)=>console.log("bid add error , ",e),setloader(false))
+      const obj={
+       createdAt:new Date(),
+       aid:aid,
+       pid:pid,
+       price: parseInt(lprice)+parseInt(inc),
+       bid:userData.user.uid,
+       abo:ab
+       // nob:ip
+     }
+ 
+   firestore().collection("products").doc(pid).collection("bids").doc(userData.user.uid).set(obj).then(
+ 
+     firestore().collection("bd").add({
+       bid:userData.user.uid,
+       aid:aid,
+       pid:pid,
+       createdAt:new Date(),
+       price: parseInt(lprice)+parseInt(inc),
+       abo:ab
+     }),
+     
+     firestore().collection("users").doc(userData.user.uid).update({tb:t}).then(
+       allOther.ToastAndroid.ToastAndroid_SB("Bid Success"),setloader(false),setdialogVisible2(false),setip(0)
+     ).catch((e)=>console.log("user tb update error add error , ",e),setloader(false))
   
-   }else{
-     allOther.AlertMessage("","Please Add  Bid !")
-   }
  
+   ).catch((e)=>console.log("bid add error , ",e),setloader(false))
+   
+    }else{
+      allOther.AlertMessage("","Your total bids is 0 , Please Purchase  bids")
+    }
 
-}
  
+   } 
+  
     const renderPhoto=({item,index})=>{
       return(
       <TouchableOpacity  onPress={()=>{setp(item.uri);setspi(index);setmv(true)}} style={{marginLeft:5,marginRight:5,marginTop:10}} >
@@ -409,10 +441,47 @@ import { act } from 'react-test-renderer';
     const renderLastBid=()=>{
 
       if(lb){
-         let bname =bn
+        let bname="";
+        let bemail="";
+        let c=false        
+ 
+if(bid!=""){
+
+
+
+  if( allVendorsData.vendor.length>0){
+    allVendorsData.vendor.map((e,i,a)=>{
+     if(e.uid==bid){
+       bname=e.name
+       bemail=e.email
+       c=true
+     }
+    })
+  }
+
+  if(c==false){
+
+    if( allBiddersData.bidders.length>0){
+        allBiddersData.bidders.map((e,i,a)=>{
+       if(e.uid==bid){
+         bname=e.name
+         bemail=e.email
+         c=true
+       }
+      })
+    }
+
+  }
+
+
+
+}
+
+         
           bname= allOther.strLength(bname,"bname")
-          let bemail=be
+         
           bemail= allOther.strLength(bemail,"email")
+
          let bprice=bp
 
 
@@ -429,7 +498,15 @@ import { act } from 'react-test-renderer';
           <View style={{marginLeft:15}}> 
           <Text style={{color:"black",fontWeight:"bold",textTransform:"capitalize"}}>{bname}</Text>
           <Text style={{color:"black",fontWeight:"bold"}}>{bemail}</Text>
-           
+
+          {ab!=""&&(
+ <View style={{flexDirection:"row",alignItems:"center" ,width:230}}>
+ <Text style={{color:"black",textTransform:"capitalize"}}>Autobid :</Text> 
+ <Text style={{color:"blue",textTransform:"capitalize",position:"absolute",right:0}}>{ab}</Text>
+</View>
+          )} 
+         
+
           <View style={{flexDirection:"row",alignItems:"center" ,width:230}}>
                     <Text style={{color:"black",textTransform:"capitalize"}}>Price :</Text> 
                     <Text style={{color:"blue",textTransform:"capitalize",position:"absolute",right:0}}>{bprice}</Text>
@@ -474,7 +551,7 @@ import { act } from 'react-test-renderer';
         <View style={{width:"100%",marginTop:20,padding:10,justifyContent:"flex-end",backgroundColor:"#383838"}}>
 
        
-{((active=="yes"&&  fdur!=="end") )  && renderLastBid()}
+{((active=="yes" &&  fdur!=="end" && b==false)  )  && renderLastBid()}
 
 {fdur!="end" && active=="yes" &&(
   <TouchableOpacity
@@ -533,7 +610,9 @@ style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"
             style={{backgroundColor:"white"}}
               text="Cancel"
               textStyle={{color:"black"}}
-              onPress={() => {setdialogVisible2(false);setip(0);settb(userData.user.tb);setprice(lprice)}}
+              onPress={() => {setdialogVisible2(false);setip(0);;setprice(lprice)
+                // settb(userData.user.tb)
+              }}
             />
             <DialogButton
             
@@ -559,10 +638,10 @@ style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"
  
  <View style={{alignSelf:"center",marginTop:10,flexDirection:"row"}}>
 <Text>Total Bids : </Text>
-<Text style={{color:"green",marginLeft:10}}>{tb}</Text>
+<Text style={{color:"green",marginLeft:10}}>{userData.user.tb}</Text>
  </View>
   
-      <View style={{marginTop:15}}>
+      <View style={{marginTop:20,padding:10}}>
  
  <View style={{flexDirection:"row",justifyContent:"space-between"}}>
          <Text> 
@@ -575,7 +654,7 @@ style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"
  
  </View>
  
- <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:10}}>
+ <View style={{flexDirection:"row",justifyContent:"space-between"}}>
          <Text> 
          Increment : 
         </Text>
@@ -586,7 +665,7 @@ style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"
  
  </View>
         
- <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:10}}>
+ <View style={{flexDirection:"row",justifyContent:"space-between"}}>
          <Text> 
          Last Bid Price : 
         </Text>
@@ -597,7 +676,15 @@ style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"
  
  </View>
 
- <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:10}}>
+ <TextInput
+  style={{marginTop:10}}
+  mode="outlined"
+  value={abo}
+  label="set Auto Bid (Optional)"
+  onChangeText={(txt)=>setabo(txt)}
+/>
+
+ {/* <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:10}}>
          <Text> 
          Bid : 
         </Text>
@@ -649,7 +736,7 @@ style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"
         </Text>
  
  </View> 
-)}
+)} */}
   
    
      </View>
@@ -671,7 +758,7 @@ style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"
   <View style={{flexDirection:"row",alignItems:"center"}}>
     <Text style={{fontSize:14,color:"red",marginRight:10}}>Time Left</Text>
  <CountDown
- size={15}
+ size={13}
  until={fdur}
  onFinish={() =>{setfdur("end")} }
  digitStyle={{backgroundColor: '#FFF', borderWidth: 1, borderColor: '#1CC625'}}
@@ -722,16 +809,22 @@ style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"
           <View style={{marginLeft:15}}> 
           <Text style={{color:"black",fontWeight:"bold",textTransform:"capitalize"}}>{ybn}</Text>
           <Text style={{color:"black",fontWeight:"bold"}}>{ybe}</Text>
+
+
+          {yab!==""&&(
+  <View style={{flexDirection:"row",alignItems:"center" ,width:230}}>
+  <Text style={{color:"black",textTransform:"capitalize"}}>AutoBid :</Text> 
+  <Text style={{color:"blue",textTransform:"capitalize",position:"absolute",right:0}}>{yab}</Text>
+</View>
+)}
            
           <View style={{flexDirection:"row",alignItems:"center" ,width:230}}>
                     <Text style={{color:"black",textTransform:"capitalize"}}>Price :</Text> 
                     <Text style={{color:"blue",textTransform:"capitalize",position:"absolute",right:0}}>{ybp}</Text>
            </View>
 
-           <View style={{flexDirection:"row",alignItems:"center" ,width:230}}>
-                    <Text style={{color:"black",textTransform:"capitalize"}}>Bids :</Text> 
-                    <Text style={{color:"blue",textTransform:"capitalize",position:"absolute",right:0}}>{ynob}</Text>
-           </View>
+
+         
            
           </View> 
           </View>
@@ -757,7 +850,7 @@ style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"
 
 return(
   <View style={{flex:1}}>
- <allOther.Header  title="" nav={props.navigation}/>
+ <allOther.Header   title="" t="tmr" active={active}  nav={props.navigation}/>
   <allOther.Loader loader={loader}/>
   {dc && ViewYourBid()}
   { fdur!="" && active=="yes" && renderTimer()}

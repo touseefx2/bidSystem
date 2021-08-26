@@ -512,7 +512,7 @@ return(
               <Text style={{fontSize:38,color:"silver",marginTop:"60%",alignSelf:"center"}} >Empty</Text>
               )
              :(
-        RenderAuctions()
+              RenderAuctions()
               ) 
 
             }

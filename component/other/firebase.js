@@ -147,21 +147,21 @@ import allActions from "../redux/allActions"
  
           if (response) {
 
-            if(typ=="vendor"){
-               let bid=id;
-            firestore().collection("products").get().then(async  (d)=>{ 
-              if(d.docs){
-               d.docs.map((data)=>{
-                 const pid=data.id; //pid rndn
-                 const uid=data.data().uid; //all prdcts data                
-                 if(bid==uid)
-                 {
-                  firestore().collection("products").doc(pid).update(obj);
-                 }                
-               })
-              }
-            })
-            }
+            // if(typ=="vendor"){
+            //    let bid=id;
+            // firestore().collection("products").get().then(async  (d)=>{ 
+            //   if(d.docs){
+            //    d.docs.map((data)=>{
+            //      const pid=data.id; //pid rndn
+            //      const uid=data.data().uid; //all prdcts data                
+            //      if(bid==uid)
+            //      {
+            //       firestore().collection("products").doc(pid).update(obj);
+            //      }                
+            //    })
+            //   }
+            // })
+            // }
  
             return true;
           }else{
@@ -328,7 +328,7 @@ import allActions from "../redux/allActions"
 
       if(c=="specific")
       {
-       const unsubscribe = firestore().collection("products").orderBy('createdAt').onSnapshot(async  (d)=>{
+       const unsubscribe = firestore().collection("products").orderBy('createdAt','desc').onSnapshot(async  (d)=>{
        let arr=[]
        if(d){
         d.docs.map((data)=>{
@@ -354,7 +354,7 @@ import allActions from "../redux/allActions"
       if(c=="all")
       {
 
-        const unsubscribe = firestore().collection("products").orderBy('createdAt').onSnapshot(async  (d)=>{
+        const unsubscribe = firestore().collection("products").orderBy('createdAt',"desc").onSnapshot(async  (d)=>{
           let arr=[]
           if(d){
            d.docs.map((data)=>{
@@ -527,7 +527,7 @@ import allActions from "../redux/allActions"
   
           try {
    
-            const unsubscribey = firestore().collection("bd").onSnapshot(async  (d)=>{
+            const unsubscribey = firestore().collection("bd").orderBy("createdAt","desc").onSnapshot(async  (d)=>{
               let arr=[]
               if(d){
                d.docs.map((data)=>{

@@ -63,10 +63,7 @@ setTimeout(() => {
 }, (400));
   },[])
  
-
-  
  
-  
       const    renderUp=()=>{
         return(
           <View  style={{width:"100%",height:30}}>

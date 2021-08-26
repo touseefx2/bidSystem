@@ -8,12 +8,12 @@ export   function Header (props) {
 
   let headerTitle=props.title || "";
   let st=props.st || ""
- 
- 
+  let active= props.active || ""
+  let t=props.t || "" 
 
     return(
 
-<View style={{backgroundColor:null,marginTop:5,marginLeft:5,flexDirection:"row" }}>
+<View style={{marginTop:5,marginLeft:5,flexDirection:"row",height:(active=="yes"&&t=="tmr") ?50:null }}>
 <allOther.vectorIcon.Ionicons  name="arrow-back-outline" size={35} color="#15756c" onPress={()=>props.nav.goBack()} /> 
 <View>
 <Text style={styles.title}>{headerTitle}</Text>

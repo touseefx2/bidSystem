@@ -13,7 +13,7 @@ import DeviceInfo from 'react-native-device-info';
 import ImagePicker from "react-native-customized-image-picker"; 
 import storage from '@react-native-firebase/storage';
 import RNFetchBlob from 'rn-fetch-blob'
-
+import moment   from "moment";
 import Textarea from 'react-native-textarea';
 
 const windowWidth = Dimensions.get('window').width;
@@ -41,6 +41,11 @@ const cardWidth=windowWidth-35;
   const scrollY= useRef(new Animated.Value(0)).current;
   const productsData = useSelector(state => state.productReducer)
   const userData = useSelector(state => state.userReducer)
+
+  const allBiddersData = useSelector(state => state.bidderReducer)
+  const allVendorsData = useSelector(state => state.vendorReducer)
+ 
+  const bdd = useSelector(state => state.bdReducer)
  
   const [vb, setvb] = useState(false)  //all bider show modal
   const [b, setb] = useState([]) //bidders
@@ -62,27 +67,57 @@ setTimeout(() => {
 
   useEffect(()=>{
   
-
-    const unsub = firestore().collection("products").doc(pid).collection("bids").orderBy("createdAt","desc").onSnapshot((doc)=>{
-      let arr=[]
-
     if(pid!=""){
-    if(doc.size>0){
-      doc.forEach((e,i,a)=>{
-      arr.push(e.data())
-      })
-    } 
-           }
-  setb(arr)
-})
 
 
+      if(bdd.bd.length>0){
+
+        let arr=[]
+        bdd.bd.map((e,i,a)=>{
+   
+          let d=e.data
+    
+          if(d.pid==pid && d.aid==aid){
+    
+            
+              arr.push(d)
+      
+            
+      
+    
+          }
+       
+    
+        })
+    
+        setb(arr)
+
+      }
+    
+    
+      } 
 
 
- return () => {
-  // Anything in here is fired on component unmount.
-   unsub();
-}
+ 
+
+
+//     const unsub = firestore().collection("products").doc(pid).collection("bids").orderBy("createdAt","desc").onSnapshot((doc)=>{
+//       let arr=[]
+
+//     if(pid!=""){
+//     if(doc.size>0){
+//       doc.forEach((e,i,a)=>{
+//       arr.push(e.data())
+//       })
+//     } 
+//            }
+//   setb(arr)
+// })
+ 
+//  return () => {
+//   // Anything in here is fired on component unmount.
+//    unsub();
+// }
 
 
   },[pid])
@@ -94,41 +129,49 @@ setTimeout(() => {
     setloader(true)
     }
 
-    const unsubb = firestore().collection("users").doc(bid).onSnapshot((doc)=>{
-     
-
+    
+    let c=false        
+ 
     if(bid!=""){
      
-    if(doc.exists){
-       let d= doc.data();
-
-
-       let c =  d.createdAt.toDate()//bcs firbase cnvrt into obj so again parse date
-     
-      var time =  moment(c).format('hh:mm a')     //10:12 am 
-      var date =  moment(c).format("D MMMM Y");   //9 july 2021
-
-      c= date + " at  "+time
-
-       setname(d.name);setemail(d.email);setphone(d.phone);setba(c)
-       setTimeout(() => {
-         setloader(false) 
-       }, 500);
-      
-    } 
+      if( allVendorsData.vendor.length>0){
+        allVendorsData.vendor.map((d,i,a)=>{
+         if(d.uid==bid){
+                 setname(d.name);setemail(d.email);setphone(d.phone);
+                 setTimeout(() => {
+                   setloader(false) 
+                 }, 500);
+                   c=true
+         }
+        })
+      }
+    
+      if(c==false){
+    
+        if( allBiddersData.bidders.length>0){
+            allBiddersData.bidders.map((d,i,a)=>{
+           if(d.uid==bid){
+            setname(d.name);setemail(d.email);setphone(d.phone);
+            setTimeout(() => {
+              setloader(false) 
+            }, 500);
+             c=true
            }
+          })
+        }
+    
+      }
+    
+    
+    
+    }
 
+    if(!c){
+      setTimeout(() => {
+        setloader(false) 
+      }, 500);
+    }
  
-})
-
-
-
-
- return () => {
-  // Anything in here is fired on component unmount.
-   unsubb();
-}
-
 
   },[bid])
 
@@ -437,14 +480,7 @@ style={{position:"absolute",right:0,marginRight:5}}
             placeholder="Phone"
           />
       
-      <TextInput
-            style={styles.textInput}
-            mode="outlined"
-            disabled={true}
-            label="Bid Date"
-            value={ba}
-            placeholder="Bid Date"
-          />
+    
         
                 </View>
        
@@ -453,15 +489,53 @@ style={{position:"absolute",right:0,marginRight:5}}
              
             }
 
-
             const renderBidders=()=>{
    
               if(b.length>0){
       
             let bidder =  b.map((e,i,a)=>{
       
-              let name=e.bidderName;
-              let email=e.bidderEmail;
+              let name="";
+              let email="";
+              let c=false        
+ 
+              if(e.bid!=""){
+               
+                if( allVendorsData.vendor.length>0){
+                  allVendorsData.vendor.map((ee,i,a)=>{
+                   if(ee.uid==e.bid){
+                     name=ee.name
+                     email=ee.email
+                     c=true
+                   }
+                  })
+                }
+              
+                if(c==false){
+              
+                  if( allBiddersData.bidders.length>0){
+                      allBiddersData.bidders.map((ee,i,a)=>{
+                     if(ee.uid==e.bid){
+                       name=ee.name
+                       email=ee.email
+                       c=true
+                     }
+                    })
+                  }
+              
+                }
+               
+              }
+
+      let cc =  e.createdAt.toDate()//bcs firbase cnvrt into obj so again parse date
+     
+      var time =  moment(cc).format('hh:mm a')     //10:12 am 
+      var date =  moment(cc).format("D MMMM Y");   //9 july 2021
+
+      cc= date + " at  "+time
+     
+
+
               let price = e.price;
               let bid=e.bid
       
@@ -484,12 +558,11 @@ style={{position:"absolute",right:0,marginRight:5}}
               <View style={{marginLeft:15}}> 
               <Text style={{color:"white",fontWeight:"bold",textTransform:"capitalize"}}>{name}</Text>
               <Text style={{color:"white",fontWeight:"bold"}}>{email}</Text>
-               
               <View style={{flexDirection:"row",alignItems:"center" ,width:230}}>
                         <Text style={{color:"white",textTransform:"capitalize"}}>Price :</Text> 
                         <Text style={{color:"blue",textTransform:"capitalize",position:"absolute",right:0}}>{price}</Text>
                </View>
-               
+               <Text style={{color:"white",fontSize:12}}>{cc}</Text>   
               </View> 
               </View>
               
@@ -509,6 +582,7 @@ style={{position:"absolute",right:0,marginRight:5}}
         
       
             }
+       
 
 
       let active="";
