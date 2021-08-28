@@ -6,7 +6,7 @@ import firestore from '@react-native-firebase/firestore';
 import allActions  from "../redux/allActions"
 import moment  from "moment";
 import auth from '@react-native-firebase/auth';
-
+ 
   export default  function  Home(props)  {
 
  
@@ -273,7 +273,7 @@ import auth from '@react-native-firebase/auth';
                       }  
        });
 
-   dispatch(allActions.u_action.setUser(data))
+     dispatch(allActions.u_action.setUser(data))
             
        unsubb();
 

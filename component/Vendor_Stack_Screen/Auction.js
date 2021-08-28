@@ -73,17 +73,17 @@ const cardWidth=windowWidth-35;
 
  <View style={{flexDirection:"row",alignItems:"center"}}>
           <Text style={{color:"black",textTransform:"capitalize",fontSize:14}}>Date</Text> 
-          <Text style={{color:"black",textTransform:"capitalize",fontSize:14,position:"absolute",right:0}}>{date}</Text>
+          <Text style={{color:"black",fontSize:14,position:"absolute",right:0}}>{date}</Text>
   </View>        
           
  <View style={{flexDirection:"row",alignItems:"center",marginTop:5}}>
 <Text style={{color:"black",textTransform:"capitalize",fontSize:15}}>start Time</Text>  
-<Text style={{color:"black",textTransform:"capitalize",fontSize:15,position:"absolute",right:0}}>{st}</Text>   
+<Text style={{color:"black" ,fontSize:15,position:"absolute",right:0}}>{st}</Text>   
  </View>
 
  <View style={{flexDirection:"row",alignItems:"center",marginTop:5}}>
 <Text style={{color:"black",textTransform:"capitalize",fontSize:15}}>end Time</Text>  
-<Text style={{color:"black",textTransform:"capitalize",fontSize:15,position:"absolute",right:0}}>{et}</Text>   
+<Text style={{color:"black", fontSize:15,position:"absolute",right:0}}>{et}</Text>   
  </View>
 
  <View style={{marginTop:5}}>

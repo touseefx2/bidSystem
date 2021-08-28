@@ -6,6 +6,7 @@
         <item name="android:textColor">#000000</item>
     </style>
 
+<color name="primary_dark">#000000</color>
  
    <style name="Theme_Light.Default">
        <item name="gallery_toolbar_bg">#233</item>

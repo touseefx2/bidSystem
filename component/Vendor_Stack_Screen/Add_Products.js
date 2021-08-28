@@ -234,8 +234,7 @@ setTimeout(() => {
 
  const  uploadImage_android = async () =>
   {
-   
-   
+    
 
      if(apiLevel<29){ //29 is andrd 10
 
@@ -244,21 +243,31 @@ setTimeout(() => {
         ImagePicker.openPicker({
           multiple: true,
           maxSize:3,
-          imageLoader:"UNIVERSAL"
+          // imageLoader:"UNIVERSAL"
         }).then(res => {
            
+          console.log("ph : ", res)
 
           if(photo.length>0  )
           {
             let arr=photo 
             res.map((e,i,a)=>{
-              const obj={name:e.fileName,uri:e.path}
-             arr.push(obj)
-           }) 
+ RNFetchBlob.fs.stat(e.path)
+.then((stats) => { 
+ let  name=stats.filename
+ const obj={name:name,uri:e.path}
+ arr.push(obj) 
+ if(a.length-1==i){
+   console.log("arr n : ",arr)
+  setphoto(arr)   
+  setcc(!cc)
+ }
 
-       
-            setphoto(arr)   
-            setcc(!cc)
+})
+.catch((err) => {})
+            
+           }) 
+     
            
                 
           }
@@ -266,10 +275,21 @@ setTimeout(() => {
           {
             let arr=[]
             res.map((e,i,a)=>{
-              const obj={name:e.fileName,uri:e.path}
-              arr.push(obj)
+ RNFetchBlob.fs.stat(e.path)
+.then((stats) => { 
+ let  name=stats.filename
+ const obj={name:name,uri:e.path}
+ arr.push(obj) 
+ if(a.length-1==i){
+  setphoto(arr)
+ }
+
+})
+.catch((err) => {})
+
             }) 
-            setphoto(arr)
+     
+           
           }
 
 
@@ -292,6 +312,7 @@ setTimeout(() => {
 
     const res = await MultipleImagePicker.openPicker(options);
     if(res){
+      console.log("ph : ", res)
       if(photo.length>0)
       {
         let arr=photo  
@@ -300,7 +321,7 @@ setTimeout(() => {
          arr.push(obj)
        }) 
 
-    
+       
          setphoto(arr) 
           setcc(!cc)
       

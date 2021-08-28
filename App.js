@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React from "react";
-import SplashScreen from "./component/Comon_Screen/SplashScreen";
+ import  Loading from "./component/Comon_Screen/SplashScreen";
 import NetInfo from "@react-native-community/netinfo";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,17 +9,13 @@ import allStack from "./component/Stack/allStack"
 import allOther from "./component/other/allOther";
 import CheckVerification from "./component/Comon_Screen/CheckVerification";
  import Block from "./component/Comon_Screen/Block"
- 
+ import SplashScreen from 'react-native-splash-screen'
+
 const RootStack = createStackNavigator();
 
  class App extends React.Component {
  
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-    };
-  }
+  
 
 handleConnectivityChange = state => {
   if (state.isConnected) {
@@ -28,36 +24,30 @@ handleConnectivityChange = state => {
   }
 };
 
-componentDidMount() {
+componentDidMount() { 
   NetInfo.addEventListener(this.handleConnectivityChange);
-  
-  setTimeout(() => {
-    this.setState({loading:false})
-  }, 2000);
-
-
 }
+
  
+
 render()
 {
-  const {loading} = this.state;
+ 
   const{userData}=this.props;
   
-  console.log("user data :::: ",userData)
- 
-  if (loading) 
-  {
-    return  <SplashScreen />
-  }
+  console.log("ud : ",userData)
 
-  else if (!loading) 
-  {
+  // if(userData.length<=0 || userData.user.length<=0 || userData.user==[] || userData.user)
+  // {
+   
+  //     SplashScreen.hide();
+   
+  // }
 
-   return (  
-   <NavigationContainer>
- <RootStack.Navigator  screenOptions={{
-    headerShown: false
-  }}>
+   return ( 
+    
+  <NavigationContainer>
+ <RootStack.Navigator  screenOptions={{headerShown: false}} >
 
      {(userData.length<=0 || userData.user.length<=0 || userData.user==[] ) && (
       <RootStack.Screen name='Login_Stack' component={allStack.Login_Stack}/> 
@@ -104,7 +94,7 @@ render()
     </NavigationContainer>
 
    )
-  }
+ 
 
 }}
 

@@ -10,6 +10,8 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 import allOther from "../other/allOther"
 import { connect} from 'react-redux'
 import Dialog, { DialogContent,DialogFooter,DialogButton,SlideAnimation,DialogTitle} from 'react-native-popup-dialog';
+import auth from '@react-native-firebase/auth';
+import SplashScreen from 'react-native-splash-screen'
 
 //text
 const title= "Bidding System"
@@ -71,6 +73,7 @@ super(props);
 this.state=
 {
 darkMode:null,
+uid:null,
 email : "",
 password : "",
 isInternetConnected:null,
@@ -125,6 +128,18 @@ getDarkModeData = async () => {
     console.log(e)
   }
 }
+
+chkusr()
+    {
+        this.unsuscribeAuth =   auth().onAuthStateChanged( async (user)=> {
+          if (user) { 
+            this.setState({setUserData:true,uid:user.uid})
+        } else{
+            this.setState({loader:false})        
+        }
+    
+     });
+    }
 
   storeDarkModeData = async () => {
     const {darkMode}=this.state;
@@ -326,16 +341,15 @@ focusField(field){
 componentDidMount()
 {
   const {darkMode,loader}= this.state;
-  setTimeout(() => {
-    this.setState({loader:false})
-  }, 1000);
+  SplashScreen.hide();
+  this.chkusr()
   this.getDarkModeData()
   let  color= !darkMode?InputFieldborderColor:dmInputFieldborderColor
   this.setState({
   emailInputFieldborderColor:color,
   passwordInputFieldborderColor:color,
       })
-
+ 
   this.unsubscribe = NetInfo.addEventListener(this.handleInternetConnectivityChange)
 }
  
@@ -469,13 +483,13 @@ renderLogin()
 
     render() {
       const  {isInternetConnected,darkMode,loader,uid,setUserData} = this.state;
-      const{userData}=this.props;
+
+  
       return (
         <View style={{ flex: 1,backgroundColor:!darkMode ? containerBackgroundColor:dmcontainerBackgroundColor}}>
           <allOther.Loader loader={loader} />
-          {setUserData         && <allOther.firebase.FireBaseFunction type={"set-user-data"} uid={uid} /> } 
-          {(userData.length<=0 || userData.user.length<=0   ) && <allOther.Loader loader={loader} /> }
-          {this.renderLogin()}
+          { setUserData && <allOther.firebase.FireBaseFunction type={"set-user-data"} uid={uid} /> } 
+          {(!loader ) && this.renderLogin()}
           {!isInternetConnected && this.renderShowInternetErrorAlert("No internet connection","Please connect internet.")}
        </View>
 
