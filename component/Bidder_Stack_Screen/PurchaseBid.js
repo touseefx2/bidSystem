@@ -46,7 +46,9 @@ let  docfolder=`Bidder_Bid_Request/Photos/`;
   const [rb, setrb] = useState("") //rqr bid
   const [pb, setpb] = useState("")  //pymnt by
   const [ta, setta] = useState("")  //total amount
-  const [photo, setphoto] = useState([])  //photo 
+  const [photo, setphoto] = useState("")  //photo 
+
+  const [mvvv,setmvvv]=useState(false); //amin detail modal
 
   const auctionsData = useSelector(state => state.auctionReducer)
   const userData = useSelector(state => state.userReducer)
@@ -72,12 +74,12 @@ if(rb!==""){
 
   const  uploadImage_android = async () =>
   { 
-     if(apiLevel<29){ //29 is andrd 10
+     if(apiLevel<30){ //29 is andrd 10
 
       try {
       
         ImagePicker.openPicker({
-          multiple: true,
+          multiple: false,
           maxSize:1,
           imageLoader:"UNIVERSAL"
         }).then(res => {
@@ -85,11 +87,17 @@ if(rb!==""){
  
           let obj=null
           res.map((e,i,a)=>{
-            obj={name:e.fileName||"",uri:e.path}
+  
+            RNFetchBlob.fs.stat(e.path)
+            .then((stats) => { 
+             let  name=stats.filename
+             obj={name:name,uri:e.path}
+  
+             setphoto(obj) 
+            })
+   
              
           }) 
-        
-            setphoto(obj)   
      
            
          
@@ -343,7 +351,7 @@ const getPathForFirebaseStorage = async(uri) => {
 
 const uploaddocumentfirebase = async () =>
 {
-      setloader(true)
+       setloader(true)
   
         let uri = await getPathForFirebaseStorage(photo.uri)
 
@@ -403,11 +411,59 @@ const submit= async (p)=>{
 
 
 }
+
+const ViewDetail =()=>{
+  return(
+      <Modal
+      animationType='fade'
+      transparent={false}
+      visible={mvvv}
+      >
+    
+      <View style={{ flex: 1}}>
+    
+    
+<TouchableOpacity style={{left:10,marginTop:5}} onPress={()=>{setmvvv(false)}}
+>
+<allOther.vectorIcon.Entypo size={40} color="#de5050" style={{opacity:0.8}} name="cross" />
+</TouchableOpacity>
+
+<Text style={{alignSelf:"center",marginTop:10,marginBottom:10,fontSize:17}}>Admin Account Details</Text>
+
+    <ScrollView>
+<View style={{padding:20,marginTop:"20%"}}>
+
+<View>
+<Text>Easy Paisa :</Text>
+<Text>03001212212 </Text>
+</View>
+
+<View style={{marginTop:20}}>
+<Text>Jazz Cash :</Text>
+<Text>03001212212 </Text>
+</View>
+
+<View style={{marginTop:20}}>
+<Text>HBL Bank :</Text>
+<Text>03070104564483</Text>
+</View>
+
+
+</View>
+
+   </ScrollView>
+
+      </View>
+  
+    </Modal>
+  )
+  }
+ 
  
 let c= checkEmptyFields()
 return(
   <View style={{flex:1}}>
- 
+ {mvvv&& ViewDetail()}
  {mv && renderFullImage()}
  {dc &&  render_ShowReq()}
   <allOther.Loader loader={loader}/>
@@ -472,15 +528,22 @@ return(
     </View>
 
 
-{photo.length<=0&&(
+{photo==""&&(
+  <View>
   <Text style={{fontSize:14,color:(rb=="" || pb=="")?"silver":"black",marginTop:20}}>
        Please send payment to admin account throug selected method and upload payment confirmation receipt 
      </Text>
+     <TouchableOpacity onPress={()=>{setmvvv(true)}}>
+     <Text style={{fontSize:12,color:(rb=="" || pb=="")?"silver":"green",textDecorationLine:"underline"}}>
+       Account Detail 
+     </Text> 
+     </TouchableOpacity>
+</View>
 )}
     
  
 
- {photo.length<=0?(
+ {photo==""?(
    <View style={{alignSelf:"center",marginTop:20}}>
  <TouchableOpacity onPress={()=>{uploadImage_android()}} disabled={(rb!="" && pb !="")==""?true:false} style={{alignItems:"center",justifyContent:"center"}}>
  <allOther.vectorIcon.MaterialIcons name="insert-photo" size={50} color={(rb!="" && pb !="")==""?"silver":"green"} />
@@ -492,7 +555,7 @@ return(
   <TouchableOpacity onPress={()=>{setp(photo.uri);setmv(true)}}>
     <Image source={{uri:photo.uri}}  style={{width:150,height:150,borderColor:"green",borderWidth:0.5}}    />
  </TouchableOpacity>
-<TouchableOpacity style={{marginLeft:10}} onPress={()=>setphoto([])} >
+<TouchableOpacity style={{marginLeft:10}} onPress={()=>setphoto("")} >
   <allOther.vectorIcon.Entypo name="cross" size={35} color="red" />
 </TouchableOpacity>
 </View>

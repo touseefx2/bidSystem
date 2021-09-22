@@ -243,7 +243,7 @@ setTimeout(() => {
         ImagePicker.openPicker({
           multiple: true,
           maxSize:3,
-          // imageLoader:"UNIVERSAL"
+        imageLoader:"UNIVERSAL"
         }).then(res => {
            
           console.log("ph : ", res)
@@ -494,11 +494,11 @@ const removeProducts=  (id)=>{
        startingAmount,
        sba,
        noi,
+       done:false,
        duration:"",
        inc,
-       st:"",
-       et:"",
        aid:aid,
+       active:"no",
        autoBid:startingAmount,
        description,
        uid:userData.user.uid,
@@ -808,6 +808,7 @@ const removeProducts=  (id)=>{
 
          let product  =  productsData.products.map((item,index)=>{
             
+          console.log("item : ",item)
          
  
           if(item.data.aid==aid && item.data.block==false){
@@ -870,10 +871,11 @@ if(ms!=""){
         outputRange:[1, 1, 1, 0]
       })
 
+     
+ 
 
        return (
-  
- 
+        
         <Animated.View style={[styles.card,
           {
           opacity,
@@ -1129,6 +1131,7 @@ style={{position:"absolute",right:0,marginRight:5}}
 
 
               let price = e.price;
+              let ab= e.abo
               let bid=e.bid
       
                name= allOther.strLength(name,"bname")
@@ -1154,6 +1157,12 @@ style={{position:"absolute",right:0,marginRight:5}}
                         <Text style={{color:"white",textTransform:"capitalize"}}>Price :</Text> 
                         <Text style={{color:"blue",textTransform:"capitalize",position:"absolute",right:0}}>{price}</Text>
                </View>
+               {ab!=""&&(
+  <View style={{flexDirection:"row",alignItems:"center" ,width:230}}>
+  <Text style={{color:"white",textTransform:"capitalize"}}>autobid :</Text> 
+  <Text style={{color:"blue",textTransform:"capitalize",position:"absolute",right:0}}>{ab}</Text>
+</View>
+               )}   
                <Text style={{color:"white",fontSize:12}}>{cc}</Text>   
               </View> 
               </View>
@@ -1184,6 +1193,7 @@ style={{position:"absolute",right:0,marginRight:5}}
       })
 
      
+      console.log("pd : ",productsData)
 return(
   <View style={{flex:1}}>
  

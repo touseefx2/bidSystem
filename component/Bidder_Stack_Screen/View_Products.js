@@ -131,8 +131,7 @@ import moment   from "moment";
     }
      },[dur])
 
- 
-
+  
   useEffect(()=>{
 
   if(bdd.bd.length>0){
@@ -140,7 +139,7 @@ import moment   from "moment";
     let arr=[]
     bdd.bd.map((e,i,a)=>{
 
-      console.log("i : ",i)
+ 
       let d=e.data
 
       if(d.pid==pid && d.aid==aid){
@@ -155,18 +154,7 @@ import moment   from "moment";
                                    }
           arr.push(d)
   
-        // if(i==0){  //bcd 1st one is latest date 
-        
-        //   console.log("yes last bid : ",i)
-        // // setbn(d.bidderName);
-        // // setbe(d.bidderEmail);
-        // setbid(d,bid)
-        // setbp(d.price);
-        // setlprice(d.price)
-        // setprice(d.price)
-        // setab(d.abo);
-        // setlb(true)
-        // }
+     
   
 
       }
@@ -177,8 +165,6 @@ import moment   from "moment";
     if(arr.length>0){
       arr.map((d,i,a)=>{
       if(i==0){  //bcd 1st one is latest date 
-        
-       console.log("yes last bid : ",i)
          
         setbid(d.bid)
         setbp(d.price);
@@ -203,32 +189,26 @@ import moment   from "moment";
 
     if(userData.user.tb>0){
 
-      let t = userData.user.tb-1;
-      let ab=  abo!="" ?parseInt(abo) : ""
-
       setloader(true);
+      let ab=  abo!="" ?parseInt(abo) : ""
+      let t = userData.user.tb-1;
+     
  
       const obj={
        createdAt:new Date(),
        aid:aid,
+       from:"bidder",
        pid:pid,
+       sp: parseInt(startingAmount), //also prdct same autobid
        price: parseInt(lprice)+parseInt(inc),
        bid:userData.user.uid,
        abo:ab
-       // nob:ip
      }
  
    firestore().collection("products").doc(pid).collection("bids").doc(userData.user.uid).set(obj).then(
  
-     firestore().collection("bd").add({
-       bid:userData.user.uid,
-       aid:aid,
-       pid:pid,
-       createdAt:new Date(),
-       price: parseInt(lprice)+parseInt(inc),
-       abo:ab
-     }),
-     
+     firestore().collection("bd").add(obj),
+
      firestore().collection("users").doc(userData.user.uid).update({tb:t}).then(
        allOther.ToastAndroid.ToastAndroid_SB("Bid Success"),setloader(false),setdialogVisible2(false),setip(0)
      ).catch((e)=>console.log("user tb update error add error , ",e),setloader(false))
@@ -476,8 +456,7 @@ if(bid!=""){
 
 
 }
-
-         
+       
           bname= allOther.strLength(bname,"bname")
          
           bemail= allOther.strLength(bemail,"email")
@@ -499,12 +478,12 @@ if(bid!=""){
           <Text style={{color:"black",fontWeight:"bold",textTransform:"capitalize"}}>{bname}</Text>
           <Text style={{color:"black",fontWeight:"bold"}}>{bemail}</Text>
 
-          {ab!=""&&(
+          {/* {ab!=""&&(
  <View style={{flexDirection:"row",alignItems:"center" ,width:230}}>
  <Text style={{color:"black",textTransform:"capitalize"}}>Autobid :</Text> 
  <Text style={{color:"blue",textTransform:"capitalize",position:"absolute",right:0}}>{ab}</Text>
 </View>
-          )} 
+          )}  */}
          
 
           <View style={{flexDirection:"row",alignItems:"center" ,width:230}}>
@@ -677,6 +656,7 @@ style={{backgroundColor:"#32a852",height:40,alignItems:"center",justifyContent:"
  </View>
 
  <TextInput
+  keyboardType="number-pad"
   style={{marginTop:10}}
   mode="outlined"
   value={abo}

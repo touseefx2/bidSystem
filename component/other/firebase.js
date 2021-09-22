@@ -565,6 +565,13 @@ import allActions from "../redux/allActions"
       .then(()=>
       console.log("Logout"),
       dispatch(allActions.u_action.logOut()),
+      //after change
+      dispatch(allActions.bd_action.setBd([])),
+      dispatch(allActions.b_action.setBidders([])),
+      dispatch(allActions.v_action.setVendors([])),
+      dispatch(allActions.rb_action.setrb([])),
+      dispatch(allActions.a_action.setAuctions([])),
+      dispatch(allActions.p_acton.setProducts([]))
       )
       .catch(error=>{ 
       //  allOther.AlertMessage("",error.message)

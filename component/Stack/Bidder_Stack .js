@@ -15,6 +15,9 @@ import History_Product from "../Bidder_Stack_Screen/History_Product";
 import View_Products from "../Bidder_Stack_Screen/View_Products";
 import Histroys from "../Bidder_Stack_Screen/Historys" 
 
+import YourProducts  from "../Bidder_Stack_Screen/YourProducts"
+import View_YP from "../Bidder_Stack_Screen/View_YP"
+
 
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -44,6 +47,7 @@ const Drawer  = createDrawerNavigator();
     
         <Drawer.Screen  name="Home" component={Home} options={homeIcon} />
         <Drawer.Screen name="Profile" component={Profile}  options={profileIcon}  />
+        <Drawer.Screen name="Your Products" component={ Product_Stack}  options={yproduct_icon} />
         <Drawer.Screen name="Auction" component={Auction_Stack}  options={auctionIcon}  />
          <Drawer.Screen name="History" component={History_Stack}  options={auctionIcon}  />
 
@@ -74,7 +78,7 @@ const Auction_Stack = ()=>
        headerMode='none'
    >
 
-       <Stack.Screen name="Auctions" component={Auction} />
+       <Stack.Screen name="Auctions"        component={Auction} />
        <Stack.Screen name="Active_Products"   component={Active_Product}  />
        <Stack.Screen name="View_Products"   component={View_Products}  />
        
@@ -100,6 +104,45 @@ const History_Stack = ()=>
   
    </Stack.Navigator>
     )
+}
+
+const Product_Stack = ()=> 
+{
+  return(
+ <Stack.Navigator 
+     initialRouteName="Your_Products"
+     screenOptions={{
+       animationEnabled: true
+     }}
+     headerMode='none'
+ >
+
+     <Stack.Screen name="Your_Products" component={YourProducts} />
+     <Stack.Screen name="View_YP" component={View_YP}  />
+      
+
+ </Stack.Navigator>
+  )
+}
+
+
+const yproduct_icon = {
+  headerStyle: {
+    backgroundColor: headerColor, //Set Header color
+},
+headerTintColor: headerTextColor, //Set Header text color
+headerTitleStyle: {
+    fontWeight: 'bold', //Set Header text style
+},
+ 
+  drawerIcon: ({ focused, size }) => (
+    <allOther.vectorIcon.Ionicons
+      name="add-circle-outline"
+      size={iconSize}
+      color={focused ? iconfocuscolor : iconunfocuscolor}
+     
+    />
+  )
 }
  
  const homeIcon = {
@@ -191,7 +234,14 @@ headerTitleStyle: {
 }
 
 const profileIcon = {
-  headerShown: false,
+  // headerShown: false,
+  headerStyle: {
+    backgroundColor: headerColor, //Set Header color
+},
+headerTintColor: headerTextColor, //Set Header text color
+headerTitleStyle: {
+    fontWeight: 'bold', //Set Header text style
+},
   drawerIcon: ({ focused, size}) => (
     <allOther.vectorIcon.Fontisto
       name="person"   

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View} from "react-native";
  import allOther from "../other/allOther"
- 
+ import auth from '@react-native-firebase/auth';
 
  export default class  logout extends Component  {
   
@@ -17,8 +17,7 @@ import { View} from "react-native";
 }
 
 componentDidMount(){
-  
-
+   
     this.logout() 
 }
 
@@ -26,7 +25,8 @@ componentDidMount(){
       logout(){
          this.setState({loader:true})
          setTimeout(() => {
-            this.setState({logout:true,loader:false})
+            this.setState({logout:true,loader:false});
+          
          }, (500));   
       }
 

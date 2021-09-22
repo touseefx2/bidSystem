@@ -59,14 +59,11 @@ const button1TextColor="white"
 //Validation 
 let emailValidate=true
 let passwordValidate=true
- 
-
- 
+  
 //main Component
 
  class LoginScreen extends React.Component {
-  
- 
+   
   constructor(props)
 {
 super(props);
@@ -115,8 +112,7 @@ async __logIn(email,password){
 
   }
 
- 
-
+  
 getDarkModeData = async () => {
   try {
     const value = await AsyncStorage.getItem('darkMode')
@@ -129,18 +125,7 @@ getDarkModeData = async () => {
   }
 }
 
-chkusr()
-    {
-        this.unsuscribeAuth =   auth().onAuthStateChanged( async (user)=> {
-          if (user) { 
-            this.setState({setUserData:true,uid:user.uid})
-        } else{
-            this.setState({loader:false})        
-        }
-    
-     });
-    }
-
+ 
   storeDarkModeData = async () => {
     const {darkMode}=this.state;
     try {
@@ -341,14 +326,26 @@ focusField(field){
 componentDidMount()
 {
   const {darkMode,loader}= this.state;
+  
+  setTimeout(() => {
+    this.unsuscribeAuth =   auth().onAuthStateChanged( (user)=> {
+      if (user) { 
+        this.setState({setUserData:true,uid:user.uid})
+    } else{
+        this.setState({loader:false})        
+    }
+  
+  }); 
+  }, 1000);
+
   SplashScreen.hide();
-  this.chkusr()
   this.getDarkModeData()
   let  color= !darkMode?InputFieldborderColor:dmInputFieldborderColor
   this.setState({
   emailInputFieldborderColor:color,
   passwordInputFieldborderColor:color,
       })
+ 
  
   this.unsubscribe = NetInfo.addEventListener(this.handleInternetConnectivityChange)
 }
@@ -369,6 +366,7 @@ passwordInputFieldborderColor:color,
 
 componentWillUnmount() {
   if (this.unsubscribe){this.unsubscribe()}
+  if(this.unsuscribeAuth){this.unsuscribeAuth()}
   }
  
 renderShowInternetErrorAlert(title,message){
@@ -489,7 +487,7 @@ renderLogin()
         <View style={{ flex: 1,backgroundColor:!darkMode ? containerBackgroundColor:dmcontainerBackgroundColor}}>
           <allOther.Loader loader={loader} />
           { setUserData && <allOther.firebase.FireBaseFunction type={"set-user-data"} uid={uid} /> } 
-          {(!loader ) && this.renderLogin()}
+          {(!loader ) && this.renderLogin()} 
           {!isInternetConnected && this.renderShowInternetErrorAlert("No internet connection","Please connect internet.")}
        </View>
 

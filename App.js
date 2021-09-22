@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React from "react";
- import  Loading from "./component/Comon_Screen/SplashScreen";
+//  import  Loading from "./component/Comon_Screen/SplashScreen";
 import NetInfo from "@react-native-community/netinfo";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,6 +10,7 @@ import allOther from "./component/other/allOther";
 import CheckVerification from "./component/Comon_Screen/CheckVerification";
  import Block from "./component/Comon_Screen/Block"
  import SplashScreen from 'react-native-splash-screen'
+ import auth from '@react-native-firebase/auth';
 
 const RootStack = createStackNavigator();
 
@@ -35,14 +36,9 @@ render()
  
   const{userData}=this.props;
   
-  console.log("ud : ",userData)
+  // console.log("ud : ",userData)
 
-  // if(userData.length<=0 || userData.user.length<=0 || userData.user==[] || userData.user)
-  // {
-   
-  //     SplashScreen.hide();
-   
-  // }
+ 
 
    return ( 
     

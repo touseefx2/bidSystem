@@ -83,7 +83,6 @@ setTimeout(() => {
               arr.push(d)
       
             
-      
     
           }
        
@@ -91,6 +90,7 @@ setTimeout(() => {
         })
     
         setb(arr)
+        console.log("arr : ",arr)
 
       }
     
@@ -495,6 +495,8 @@ style={{position:"absolute",right:0,marginRight:5}}
       
             let bidder =  b.map((e,i,a)=>{
       
+              console.log("bifrrrrr",e)
+
               let name="";
               let email="";
               let c=false        
@@ -538,7 +540,8 @@ style={{position:"absolute",right:0,marginRight:5}}
 
               let price = e.price;
               let bid=e.bid
-      
+               let ab=e.abo
+
                name= allOther.strLength(name,"bname")
                email= allOther.strLength(email,"email")
       
@@ -562,6 +565,12 @@ style={{position:"absolute",right:0,marginRight:5}}
                         <Text style={{color:"white",textTransform:"capitalize"}}>Price :</Text> 
                         <Text style={{color:"blue",textTransform:"capitalize",position:"absolute",right:0}}>{price}</Text>
                </View>
+               {ab!=""&&(
+  <View style={{flexDirection:"row",alignItems:"center" ,width:230}}>
+  <Text style={{color:"white",textTransform:"capitalize"}}>autobid :</Text> 
+  <Text style={{color:"blue",textTransform:"capitalize",position:"absolute",right:0}}>{ab}</Text>
+</View>
+               )} 
                <Text style={{color:"white",fontSize:12}}>{cc}</Text>   
               </View> 
               </View>

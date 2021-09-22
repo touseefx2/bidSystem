@@ -11,6 +11,8 @@
     })
     }
 }
+
+ 
   const logOut = () => {
     return async (dispacth)=> 
     {

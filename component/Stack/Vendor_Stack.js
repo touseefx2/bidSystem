@@ -14,6 +14,8 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import View_Products from "../Vendor_Stack_Screen/View_Products"
 import Profile from "../Comon_Screen/Profile"
 import Histroys from "../Vendor_Stack_Screen/Historys"
+import Request  from "../Vendor_Stack_Screen/Request"
+import View_Request from "../Vendor_Stack_Screen/View_Request"
 
 const headerColor="#307ecc"
 const headerTextColor="white"
@@ -36,6 +38,7 @@ const Drawer  = createDrawerNavigator();
     
         <Drawer.Screen  name="Home" component={Home} options={homeIcon} />
          <Drawer.Screen name="Profile" component={Profile}  options={profileIcon}  />
+         <Drawer.Screen name="Request" component={Request_Stack}  options={request_icon} />
          <Drawer.Screen name="Auctions" component={Auction_Stack}  options={add_product_icon} />
          {/* <Drawer.Screen name="Status" component={ProducStatus_Stack}  options={productStatus_icon} /> */}
          <Drawer.Screen name="History" component={History_Stack}  options={auctionIcon}  />
@@ -102,6 +105,44 @@ const ProducStatus_Stack = ()=>
   
 }
 
+const Request_Stack = ()=> 
+{
+  return(
+ <Stack.Navigator 
+     initialRouteName="Request"
+     screenOptions={{
+       animationEnabled: true
+     }}
+     headerMode='none'
+ >
+
+     <Stack.Screen name="Request" component={Request} />
+     <Stack.Screen name="View_Request" component={View_Request}  />
+      
+
+ </Stack.Navigator>
+  )
+}
+
+
+const request_icon = {
+  headerStyle: {
+    backgroundColor: headerColor, //Set Header color
+},
+headerTintColor: headerTextColor, //Set Header text color
+headerTitleStyle: {
+    fontWeight: 'bold', //Set Header text style
+},
+ 
+  drawerIcon: ({ focused, size }) => (
+    <allOther.vectorIcon.Ionicons
+      name="add-circle-outline"
+      size={iconSize}
+      color={focused ? iconfocuscolor : iconunfocuscolor}
+     
+    />
+  )
+}
  
  const homeIcon = {
   headerStyle: {
@@ -134,7 +175,14 @@ const logoutIcon = {
 }
 
 const profileIcon = {
-  headerShown: false,
+  // headerShown: false,
+  headerStyle: {
+    backgroundColor: headerColor, //Set Header color
+},
+headerTintColor: headerTextColor, //Set Header text color
+headerTitleStyle: {
+    fontWeight: 'bold', //Set Header text style
+},
   drawerIcon: ({ focused, size}) => (
     <allOther.vectorIcon.Fontisto
       name="person"   
@@ -198,3 +246,5 @@ headerTitleStyle: {
     />
   )
 }
+
+
