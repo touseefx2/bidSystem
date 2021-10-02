@@ -14,11 +14,13 @@ import RNFetchBlob from 'rn-fetch-blob'
 import moment from "moment";
 import CountDown from 'react-native-countdown-component';
 import Textarea from 'react-native-textarea';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+ 
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
  
-const cardWidth=windowWidth-35;
+const cardWidth=wp("45%");
 
 
  
@@ -75,6 +77,9 @@ const cardWidth=windowWidth-35;
   const [email, setemail] = useState("")
   const [phone, setphone] = useState("")
   const [ba, setba] = useState("") //bid at
+
+  const [pp,setpp]=useState("");  //slectd photo uri
+  const [mvvv,setmvvv]=useState(false);    //fulll image render modal vs
 
 
   const [apiLevel,setapiLevel]=useState("");
@@ -601,6 +606,47 @@ const removeProducts=  (id)=>{
     
           }
 
+          const  render_FullImageactive=()=>{
+             
+            return(
+              <Modal
+              animationType='fade'
+              visible={mvvv}
+              >
+          
+          
+          <View style={{flex: 1,backgroundColor:"black"}}>
+             
+             <Image style={{position: 'absolute',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,}} resizeMode="contain"   source={{uri:pp}}  />   
+          
+          
+          
+          <View style={{backgroundColor:null,width:"100%",flexDirection:"row",alignItems:"center",position:"absolute",top:5,padding:5,paddingLeft:20}}>
+          
+          <TouchableOpacity  
+          onPress={()=>{setmvvv(!mvvv);setpp("")}}
+          style={{backgroundColor:"black",borderRadius:25}}>
+          <allOther.vectorIcon.Entypo  name="cross" color="red" size={30} />
+          </TouchableOpacity> 
+          
+          
+          
+          
+          </View>
+          
+              </View>
+          
+          
+            </Modal>
+          )
+          
+          
+          }
+
   const  render_Add_Product = ()=>
    {
     
@@ -802,21 +848,22 @@ const removeProducts=  (id)=>{
       }
 
       const    RenderProducts  = (active) => { 
-        let  cardHeight= active!="no"?180:130;
+
+        let  cardHeight=active!="no"?220:200;
+       
  
          let c= false;
 
          let product  =  productsData.products.map((item,index)=>{
             
-          console.log("item : ",item)
          
- 
           if(item.data.aid==aid && item.data.block==false){
   
         c=true;    
         let name = item.data.name || ""
-        let catg = item.data.category || ""
-        let noi= item.data.noi || ""
+        // let catg = item.data.category || ""
+      //   let noi= item.data.noi || ""
+        let photo = item.data.photo || []
         let id=item.id || ""
         let duration = item.data.duration || ""
   
@@ -848,56 +895,82 @@ if(ms!=""){
           
 
 
-        let Pid=item.data.pid
+         let Pid=item.data.pid
          name  =   allOther.strLength(name,"name")
         
-       const scale = scrollY.interpolate({
-        inputRange :[
-          -1,0,
-          cardHeight * index,
-          cardHeight * (index+2)
-        ]
-        ,  
-        outputRange:[1, 1, 1, 0]
-      })
-
-      const opacity = scrollY.interpolate({
-        inputRange :[
-          -1,0,
-          cardHeight * index,
-          cardHeight * (index+0.9)
-        ]
-        ,  
-        outputRange:[1, 1, 1, 0]
-      })
-
-     
+      
  
 
        return (
         
-        <Animated.View style={[styles.card,
+        <View style={[styles.card,
           {
-          opacity,
           height:cardHeight,
-          transform:[{scale}]
+          margin:5
           }
         ]}>
 
-      
-<View style={{padding:10}}> 
-
 {active=="no" && (
   <TouchableOpacity 
-style={{position:"absolute",right:0,marginRight:5}}
+style={{height:"14%",width:"25%"}}
   onPress={()=>{removeProducts(id)}}
 >
-<allOther.vectorIcon.Entypo size={26} color="#de5050" style={{opacity:0.8}} name="cross" />
+<allOther.vectorIcon.Entypo size={28} color="#de5050" style={{opacity:0.8}} name="cross" />
 </TouchableOpacity>
+)}
+ 
+<TouchableOpacity
+ onPress={()=>{props.navigation.navigate("Update_Product",{pid:id,ac:ac,aid:aid})}}
+ style={{flexDirection:"row",alignItems:"center",flexShrink:1 ,height:active=="no"?"14%":"12%",width:"100%",paddingLeft:5,paddingTop:5,paddingRight:5}}>
+<allOther.vectorIcon.AntDesign size={20} color="#307ecc" name="rightcircle" />
+<View style={{marginLeft:10,width:"85%"}}>
+<Text numberOfLines={1} ellipsizeMode="tail" style={{color:"#307ecc",fontWeight:"bold",textTransform:"capitalize",fontSize:15}}>{name}</Text>  
+ </View>
+ 
+ </TouchableOpacity>
+
+
+
+{photo.length>0&&(
+  <TouchableOpacity 
+  onPress={()=>{setpp( photo[0].uri);setmvvv(true)}}
+  style={{height:"66%" ,width:"100%",padding:5}}>
+         <Image source={{uri: photo[0].uri}}   
+            style={{
+            flex:1,
+               borderWidth:0.5,
+               borderColor:"green",
+               shadowColor: "black",
+               elevation: 2,
+               borderRadius:10,
+            } } />
+ </TouchableOpacity>
+
+)}
+
+{active=="yes"&&(
+  <View style={{width:"100%" ,height:"12%",padding:5,flexDirection:"row",justifyContent:"space-between"}}>
+  <Text style={{color:"black",textTransform:"capitalize",fontSize:12}}>duration :</Text>  
+  <Text style={{color:"#307ecc",textTransform:"capitalize",fontSize:11,fontWeight:"bold"}}>{stime}</Text>  
+  </View>
+  
 )}
 
 
-{/* /ac mean catgry array */}
+{active!="no" &&(
+  <View style={{width:"100%" ,height:"10%",justifyContent:"center",alignItems:"center",backgroundColor:"#307ecc"}}>
+ 
+    <TouchableOpacity onPress={()=>{setpid(id);setvb(true)}}>
+     <Text style={{alignSelf:"center",color:"white",fontWeight:"bold",fontSize:16}}>View Bids</Text>
+    </TouchableOpacity>
+      
+            </View>
+  )}         
+      
+
+
+{/*
+ 
 <TouchableOpacity style={{marginTop:10}}
  onPress={()=>{props.navigation.navigate("Update_Product",{pid:id,ac:ac,aid:aid})}} >
 
@@ -930,12 +1003,7 @@ style={{position:"absolute",right:0,marginRight:5}}
 <Text style={{color:"black",textTransform:"capitalize",fontSize:14,position:"absolute",right:0}}>{noi}</Text>   
  </View>
 
-{/* {stime!=""&&(
-   <View style={{flexDirection:"row",alignItems:"center"}}>
-<Text style={{color:"black",textTransform:"capitalize",fontSize:14}}>duration</Text>  
-<Text style={{color:"black",textTransform:"capitalize",fontSize:12,position:"absolute",right:0}}>{stime}</Text>   
- </View>
-)} */}
+ 
 
 
  </View>
@@ -943,7 +1011,7 @@ style={{position:"absolute",right:0,marginRight:5}}
        </TouchableOpacity>
        
      
-       </View>
+   
 
        {active!="no" &&(
     <View style={{flex:1,height:30,justifyContent:"flex-end",marginTop:10,borderBottomRightRadius:10,borderBottomLeftRadius:10,alignItems:"center",justifyContent:"center",backgroundColor:"silver"}}>
@@ -954,10 +1022,10 @@ style={{position:"absolute",right:0,marginRight:5}}
       
             </View>
   )}         
-     
+      */}
 
        
-    </Animated.View>  
+    </View>  
       
  
              )
@@ -968,8 +1036,8 @@ style={{position:"absolute",right:0,marginRight:5}}
    if(c){
     return  product;
    }  else{
-     return    <Text style={{fontSize:38,color:"silver",marginTop:"60%",alignSelf:"center"}} >Empty</Text>
-   }  
+    return    <Text style={{fontSize:38,color:"silver",marginTop:"60%",alignSelf:"center"}} >Empty</Text>
+  }   
   
 
       }
@@ -1193,7 +1261,7 @@ style={{position:"absolute",right:0,marginRight:5}}
       })
 
      
-      console.log("pd : ",productsData)
+ 
 return(
   <View style={{flex:1}}>
  
@@ -1201,34 +1269,23 @@ return(
  {ViewBids()}
  {renderUp()} 
  {mv && renderFullImage()}
-  <allOther.Loader loader={loader}/>
+ {mvvv && render_FullImageactive()} 
+ <allOther.Loader loader={loader}/>
 
+  <View style={{flex:1,alignSelf:"center"}}> 
  <ScrollView ref={listViewRef}
-onScroll={Animated.event([
-  {
-    nativeEvent: {
-      contentOffset: {
-        y: scrollY
-      }
-    }
-  }
-])}
   scrollEventThrottle={1}
+  showsHorizontalScrollIndicator={false}
+ contentContainerStyle={{flexDirection:"row",flexWrap:"wrap" }}
  >
          {dialogClick &&  render_Add_Product()}  
 
-              {productsData.products.length<=0   && !loader   
-              ?(
-              <Text style={{fontSize:38,color:"silver",marginTop:"60%",alignSelf:"center"}} >Empty</Text>
-              )
-             :(
-        
-            RenderProducts(active)
-              ) 
-
-            }
+              
+           {RenderProducts(active)}
+           
 
 </ScrollView>    
+</View>
 
 {renderDown()}    
  
@@ -1255,8 +1312,8 @@ onScroll={Animated.event([
      },  
      card:
      {
-      marginTop:20,marginBottom:20,alignSelf:"center", width:cardWidth, backgroundColor:"white",
-       borderRadius:10,borderRadius:10,
+      marginTop:20,marginBottom:20,width:cardWidth, backgroundColor:"white",
+      borderRadius:10,borderRadius:10,
       elevation:5,
     }
   

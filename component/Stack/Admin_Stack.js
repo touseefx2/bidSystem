@@ -11,13 +11,15 @@ import allOther from "../other/allOther";
 
 import Request  from "../Admin_Stack_Screen/Request"
 import View_Request from "../Admin_Stack_Screen/View_Request"
+import View_Request_ps from "../Admin_Stack_Screen/View_Request_ps"
 import Auction from "../Admin_Stack_Screen/Auction"
 import Active_Product from "../Admin_Stack_Screen/Active_Product";
 import History_Product from "../Admin_Stack_Screen/History_Product";
 import Histroys from "../Admin_Stack_Screen/Historys"
 import View_Products from "../Admin_Stack_Screen/View_Products";
 import { createStackNavigator } from '@react-navigation/stack';
- 
+import Sale_Products from "../Admin_Stack_Screen/Sale_Products" 
+
 import Profile from "../Comon_Screen/Profile"
 
 const headerColor="#307ecc"
@@ -38,16 +40,15 @@ const Drawer  = createDrawerNavigator();
     detachInactiveScreens={true}
     drawerContent={props => <CustomDrawerContent {...props}/>}
     >
-    
-         <Drawer.Screen  name="Home" component={Home} options={homeIcon} />
+         <Drawer.Screen name="Home" component={Home} options={homeIcon} />
          <Drawer.Screen name="Profile" component={Profile}  options={profileIcon}  />
          <Drawer.Screen name="Request" component={Request_Stack}  options={request_icon} />
+         <Drawer.Screen name="Sales Product" component={ProductSale_Stack}  options={saleIcon} />
          <Drawer.Screen name="Auction" component={Auction_Stack}  options={auctionIcon}  />
          <Drawer.Screen name="History" component={History_Stack}  options={auctionIcon}  />
          <Drawer.Screen name="Vendors" component={Vendor_Stack}  options={vendor_icon} />
          <Drawer.Screen name="Bidders" component={Bidder_Stack}  options={bidder_icon} />
-         {/* <Drawer.Screen name="Auction Status" component={ProducStatus_Stack}  options={productStatus_icon} /> */}
-        <Drawer.Screen name="Logout" component={logout}  options={logoutIcon}  />
+         <Drawer.Screen name="Logout" component={logout}  options={logoutIcon}  />
     </Drawer.Navigator>
  )
 
@@ -153,41 +154,26 @@ const Request_Stack = ()=>
   )
 }
 
+ 
+const ProductSale_Stack = ()=> 
+{
+  return(
+ <Stack.Navigator 
+     initialRouteName="Sale Product"
+     screenOptions={{
+       animationEnabled: true
+     }}
+     headerMode='none'
+ >
 
-// const HistoryProducts_Stack = ()=> 
-// {
-//     return(
-//    <Stack.Navigator 
-//        initialRouteName="History_Products"
-//        screenOptions={{
-//          animationEnabled: true
-//        }}
-//        headerMode='none'
-//    >
+     <Stack.Screen name="Sale Product" component={Sale_Products} />
+     <Stack.Screen name="View_Request_ps" component={View_Request_ps}  />
+      
 
-//        <Stack.Screen name="History_Products" component={History_Product} />
-//        <Stack.Screen name="View_Products"   component={View_Products}  />
-        
-  
-//    </Stack.Navigator>
-//     )
-// }
-
-// const Tab =  createMaterialTopTabNavigator();
-
-// const ProducStatus_Stack = ()=> 
-// {
-  
-//     return (
-//       <Tab.Navigator initialRouteName="Active_Product">
-//         <Tab.Screen name="Active" component={ActiveProducts_Stack} />
-//         <Tab.Screen name="History" component={HistoryProducts_Stack} />
-//       </Tab.Navigator>
-//     )
-  
-// }
-
-  
+ </Stack.Navigator>
+  )
+}
+ 
  const homeIcon = {
   headerStyle: {
     backgroundColor: headerColor, //Set Header color
@@ -328,3 +314,23 @@ headerTitleStyle: {
     />
   )
 }
+
+const saleIcon = {
+  headerStyle: {
+    backgroundColor: headerColor, //Set Header color
+},
+headerTintColor: headerTextColor, //Set Header text color
+headerTitleStyle: {
+    fontWeight: 'bold', //Set Header text style
+},
+ 
+  drawerIcon: ({ focused, size }) => (
+    <allOther.vectorIcon.Fontisto
+      name="shopify"
+      size={iconSize}
+      color={focused ? iconfocuscolor : iconunfocuscolor}
+     
+    />
+  )
+}
+

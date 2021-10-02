@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useRef} from 'react';
-import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Modal,Image,FlatList} from "react-native";
+import { View,TouchableOpacity,Text,Dimensions,StyleSheet,ScrollView,Modal,Image,FlatList, Keyboard} from "react-native";
 import  allOther from "../other/allOther"
 import {useSelector} from 'react-redux'
 import firestore from '@react-native-firebase/firestore';
@@ -210,7 +210,7 @@ import moment   from "moment";
      firestore().collection("bd").add(obj),
 
      firestore().collection("users").doc(userData.user.uid).update({tb:t}).then(
-       allOther.ToastAndroid.ToastAndroid_SB("Bid Success"),setloader(false),setdialogVisible2(false),setip(0)
+       allOther.ToastAndroid.ToastAndroid_SB("Bid Success"),setloader(false),setdialogVisible2(false),setip(0),Keyboard.dismiss()
      ).catch((e)=>console.log("user tb update error add error , ",e),setloader(false))
   
  

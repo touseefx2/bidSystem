@@ -144,7 +144,7 @@ style={{backgroundColor:"black",borderRadius:25,}}>
   
 const renderReqData=()=>{
  
-  let c="a";
+  let c=false;
 
    
   let product=null
@@ -156,7 +156,7 @@ const renderReqData=()=>{
       let data=e.data
  
       if(data.status=="pending"){
-
+         c=true;
         let cc =  data.createdAt.toDate()//bcs firbase cnvrt into obj so again parse date
          
         var time =  moment(cc).format('hh:mm a')     //10:12 am 
@@ -262,7 +262,7 @@ const renderReqData=()=>{
    
 
   if(!c){
-return <Text style={{fontSize:25,color:"silver",marginTop:"50%",alignSelf:"center"}}>Empty</Text>
+return <Text style={{fontSize:25,color:"silver",marginTop:"60%",alignSelf:"center"}}>Empty</Text>
   }else{
     return product;
   }

@@ -18,7 +18,7 @@ const windowHeight = Dimensions.get('window').height;
  
 const cardWidth=windowWidth-35;
   
-let  docfolder=`BidderProduct_Payment/Photos/`;
+  let  docfolder=`BidderProduct_Payment/Photos/`;
  
   export default  function  Request(props)  {
 
@@ -45,30 +45,9 @@ let  docfolder=`BidderProduct_Payment/Photos/`;
 
   const [hbid, sethbid] = useState("")  //total amount
 
-  // const [setAuctiontData, setsetProductData] = useState(false)
  
-//   const [mv, setmv] = useState(false)
-//   const [dv, setdv] = useState(false)
-//   const [dc, setdc] = useState(false)
-//   const [p, setp] = useState("")
-
-//   let pbr=3 //per bid rate
- 
-//   const [rb, setrb] = useState("") //rqr bid
-//   const [pb, setpb] = useState("")  //pymnt by
-//   const [ta, setta] = useState("")  //total amount
-//   const [photo, setphoto] = useState([])  //photo 
-
-//   const auctionsData = useSelector(state => state.auctionReducer)
    const userData = useSelector(state => state.userReducer)
    const productsData = useSelector(state => state.productReducer)
-//   const reqData = useSelector(state => state.rbReducer)
-//   const allBiddersData = useSelector(state => state.bidderReducer)
-
- 
-//   const [vv ,setvv]=useState(false);   // reject modal
-//   const [rid ,setrid]=useState(""); 
-//   const [fdb ,setfdb]=useState("");
  
 
 useEffect(()=>
@@ -250,7 +229,6 @@ const uploaddocumentfirebase = async () =>
   )
 
   }
-
   
 const onSend=()=>{
 
@@ -632,9 +610,7 @@ return false;
     
     })
  
- 
     return product;
-
 }
  
 const ViewDetail =()=>{
@@ -844,7 +820,7 @@ return(
  
 </View>   
 )
-     }
+    }
  
   
   const styles = StyleSheet.create({  

@@ -39,16 +39,14 @@ const Drawer  = createDrawerNavigator();
         <Drawer.Screen  name="Home" component={Home} options={homeIcon} />
          <Drawer.Screen name="Profile" component={Profile}  options={profileIcon}  />
          <Drawer.Screen name="Request" component={Request_Stack}  options={request_icon} />
+      
          <Drawer.Screen name="Auctions" component={Auction_Stack}  options={add_product_icon} />
-         {/* <Drawer.Screen name="Status" component={ProducStatus_Stack}  options={productStatus_icon} /> */}
          <Drawer.Screen name="History" component={History_Stack}  options={auctionIcon}  />
         <Drawer.Screen name="Logout" component={logout}  options={logoutIcon}  />
     </Drawer.Navigator>
  )
 
- 
-
-
+  
  const Stack = createStackNavigator();
 
   const Auction_Stack = ()=> 
@@ -246,5 +244,4 @@ headerTitleStyle: {
     />
   )
 }
-
 

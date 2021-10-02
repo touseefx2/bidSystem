@@ -15,17 +15,12 @@ import storage from '@react-native-firebase/storage';
 import RNFetchBlob from 'rn-fetch-blob'
 import moment from "moment";
 import Textarea from 'react-native-textarea';
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
- 
-const cardWidth=windowWidth-35;
- 
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
  
  
-  let  docfolder=`Vendor_Products/Photos/`;
-
+const cardWidth=wp("45%");
+ 
+ 
   export default  function  Active_Product(props)  {
 
    
@@ -42,6 +37,9 @@ const cardWidth=windowWidth-35;
   const productsData = useSelector(state => state.productReducer)
   const userData = useSelector(state => state.userReducer)
  
+  const [p,setp]=useState("");  //slectd photo uri
+  const [mv,setmv]=useState(false);    //fulll image render modal vs
+
   const [vb, setvb] = useState(false)  //all bider show modal
   const [b, setb] = useState([]) //bidders
   const [pid, setpid] = useState("") //pid
@@ -133,7 +131,46 @@ setTimeout(() => {
   },[bid])
 
 
- 
+const  render_FullImage=( )=>{
+             
+  return(
+    <Modal
+    animationType='fade'
+    visible={mv}
+    >
+
+
+<View style={{flex: 1,backgroundColor:"black"}}>
+   
+   <Image style={{position: 'absolute',
+top: 0,
+left: 0,
+bottom: 0,
+right: 0,}} resizeMode="contain"   source={{uri:p}}  />   
+
+
+
+<View style={{backgroundColor:null,width:"100%",flexDirection:"row",alignItems:"center",position:"absolute",top:5,padding:5,paddingLeft:20}}>
+
+<TouchableOpacity  
+onPress={()=>{setmv(!mv);setp("")}}
+style={{backgroundColor:"black",borderRadius:25}}>
+<allOther.vectorIcon.Entypo  name="cross" color="red" size={30} />
+</TouchableOpacity> 
+
+
+
+
+</View>
+
+    </View>
+
+
+  </Modal>
+)
+
+
+}
   
       const    renderUp=()=>{
         return(
@@ -164,12 +201,14 @@ setTimeout(() => {
    
          </View>
         )
+      
+      
       }
-  
-       
+   
       const    RenderProducts  = (active) => { 
     
-         let  cardHeight=170;
+         let  cardHeight=200;
+ 
          let c= false;
          let product  =   productsData.products.map((item,index)=>{
         
@@ -178,11 +217,12 @@ setTimeout(() => {
 
         c=true;    
         let name = item.data.name || ""
-        let catg = item.data.category || ""
-        let sba=item.data.sba|| ""
-        let noi= item.data.noi || ""
+        // let catg = item.data.category || ""
+        // let sba=item.data.sba|| ""
+        // let noi= item.data.noi || ""
         let id=item.id || ""
-        let Pid=item.data.pid
+        let photo = item.data.photo || []
+        // let Pid=item.data.pid
         name  =   allOther.strLength(name,"name")
 
         let duration = item.data.duration || ""
@@ -211,69 +251,52 @@ if(ms!=""){
         else{
             stime=ms.hours() +" H " + ': ' + ms.minutes()+" M "+": "+ms.seconds()+" S"
           }
-}
-        
-       const scale = scrollY.interpolate({
-        inputRange :[
-          -1,0,
-          cardHeight * index,
-          cardHeight * (index+2)
-        ]
-        ,  
-        outputRange:[1, 1, 1, 0]
-      })
-
-      const opacity = scrollY.interpolate({
-        inputRange :[
-          -1,0,
-          cardHeight * index,
-          cardHeight * (index+0.9)
-        ]
-        ,  
-        outputRange:[1, 1, 1, 0]
-      })
-
+} 
 
        return (
   
  
-        <Animated.View style={[styles.card,
+        <View style={[styles.card,
           {
-          opacity,
+            margin:5,
           height:cardHeight,
-          transform:[{scale}]
           }
         ]}>
 
-      
-<View style={{padding:10}}> 
+ 
+ <TouchableOpacity
+ onPress={()=>{props.navigation.navigate("View_Products",{pid:id,aid:aid,st,et})}}
+ style={{flexDirection:"row",alignItems:"center",flexShrink:1 ,height:"16%",width:"100%",paddingLeft:5,paddingTop:5,paddingRight:5}}>
+<allOther.vectorIcon.AntDesign size={20} color="#307ecc" name="rightcircle" />
+<View style={{marginLeft:10,width:"85%"}}>
+<Text numberOfLines={1} ellipsizeMode="tail" style={{color:"#307ecc",fontWeight:"bold",textTransform:"capitalize",fontSize:15}}>{name}</Text>  
+ </View>
+ </TouchableOpacity>
 
-
-
-
-{active=="no" && (
+{photo.length>0&&(
   <TouchableOpacity 
-style={{position:"absolute",right:0,marginRight:5}}
-  onPress={()=>{removeProducts(id)}}
->
-<allOther.vectorIcon.Entypo size={26} color="#de5050" style={{opacity:0.8}} name="cross" />
-</TouchableOpacity>
+  onPress={()=>{setp( photo[0].uri);setmv(true)}}
+  style={{height:"70%" ,width:"100%",padding:5}}>
+         <Image source={{uri: photo[0].uri}}   
+            style={{
+            flex:1,
+               borderWidth:0.5,
+               borderColor:"green",
+               shadowColor: "black",
+               elevation: 2,
+               borderRadius:10,
+            } } />
+ </TouchableOpacity>
+
 )}
 
-
-<TouchableOpacity style={{marginTop:10}}
- onPress={()=>{props.navigation.navigate("View_Products",{pid:id,aid:aid,st,et})}} >
-
-     
-      
- <View style={{flexDirection:"row",alignItems:"center",flexShrink:1,marginTop:10}}>
-<allOther.vectorIcon.AntDesign size={20} color="#307ecc" name="rightcircle" />
-<View style={{flexShrink:1}}>
-<Text style={{color:"#307ecc",fontWeight:"bold",textTransform:"capitalize",fontSize:15,marginLeft:10}}>{name}</Text>    
+<View style={{width:"100%" ,height:"14%",padding:5,flexDirection:"row",justifyContent:"space-between"}}>
+<Text style={{color:"black",textTransform:"capitalize",fontSize:12}}>duration :</Text>  
+<Text style={{color:"#307ecc",textTransform:"capitalize",fontSize:11,fontWeight:"bold"}}>{stime}</Text>  
 </View>
- </View>
 
- <View style={{marginLeft:30,marginTop:5}}> 
+
+ {/* <View style={{marginLeft:30,marginTop:5}}> 
 
 
  <View style={{flexDirection:"row",alignItems:"center",marginTop:5}}>
@@ -306,19 +329,9 @@ style={{position:"absolute",right:0,marginRight:5}}
 )}
 
 
- </View>
-
-       </TouchableOpacity>
-       
-     
-
-       </View>
-
-
-          
-       
-     
-    </Animated.View>  
+ </View> */}
+   
+    </View>  
       
  
              )
@@ -334,8 +347,7 @@ style={{position:"absolute",right:0,marginRight:5}}
   
 
       }
-
-  
+ 
       let active="";
 
       auctionsData.auctions.map((item,index)=>{    
@@ -351,28 +363,22 @@ return(
  <allOther.Header  st={"View All Products"} title={an} nav={props.navigation}/>
  
  {renderUp()} 
- 
+ {mv && render_FullImage()} 
   <allOther.Loader loader={loader}/>
 
+<View style={{flex:1,alignSelf:"center" }}> 
  <ScrollView ref={listViewRef}
-onScroll={Animated.event([
-  {
-    nativeEvent: {
-      contentOffset: {
-        y: scrollY
-      }
-    }
-  }
-])}
+ showsHorizontalScrollIndicator={false}
+ contentContainerStyle={{flexDirection:"row",flexWrap:"wrap",justifyContent:"space-between"}}
+ 
   scrollEventThrottle={1}
- >
-          
-
+ > 
              
-            {RenderProducts(active)}
-             
-
+  {RenderProducts(active)}
+ 
 </ScrollView>    
+</View>
+
 
 {renderDown()}    
  
@@ -398,7 +404,7 @@ onScroll={Animated.event([
      },  
      card:
      {
-      marginTop:20,marginBottom:20,alignSelf:"center", width:cardWidth, backgroundColor:"white",
+      marginTop:20,marginBottom:20,width:cardWidth, backgroundColor:"white",
       borderRadius:10,borderRadius:10,
       elevation:5,
     }

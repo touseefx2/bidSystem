@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useRef} from 'react';
-import { View,Text,StyleSheet} from "react-native";
+import { View,Text} from "react-native";
 import  allOther from "../other/allOther"
 import {useSelector,useDispatch  } from 'react-redux'
 import firestore from '@react-native-firebase/firestore';
@@ -19,16 +19,13 @@ import auth from '@react-native-firebase/auth';
  
   const dispatch = useDispatch()
   const userData = useSelector(state => state.userReducer)
-  let unsubP=null;
-  let unsubPb=null;
-  let unsubPb2=null;
-
+ 
    const GlobaldynamicheckProduct=()=>{
-    
-
+   
     const adb=firestore().collection("auctions")
     const pdb=firestore().collection("products")
-     unsubP= adb.onSnapshot((doc)=>{
+   
+     adb.get().then((doc)=>{
       
       if(doc){
       doc.forEach((e,i,a)=>{
@@ -36,8 +33,7 @@ import auth from '@react-native-firebase/auth';
         let aid=e.id;
 
         if(d.active=="no"){
-
-           
+ 
           var ed = moment(new Date(d.date),"DD/MM/YYYY");
           let cd =  compare(ed)
  
@@ -54,8 +50,7 @@ import auth from '@react-native-firebase/auth';
             var currentTime = moment(ct, 'h:mm a');
             var st =  moment(d.st, 'h:mm a');
 
-           
- 
+        
             if(currentTime.isAfter(st) || currentTime.isSame(st))
             {
               adb.doc(aid).update({
@@ -64,12 +59,12 @@ import auth from '@react-native-firebase/auth';
               
              pdb.get().then((doc)=>{
               if(doc){
-                doc.forEach((e,i,a)=>{
+                doc.forEach(async (e,i,a)=>{
                   let d=e.data()
                   let paid=d.aid
 
                   if(paid==aid){
-                    pdb.doc(e.id).update({active:"yes"})
+                   await pdb.doc(e.id).update({active:"yes"})
                   }
 
                 })
@@ -83,9 +78,7 @@ import auth from '@react-native-firebase/auth';
 
         }else if(d.active=="yes") {
 
-
-           
-
+ 
           var ed = moment( new Date(d.date),"DD/MM/YYYY");
           let cd =  compare(ed)
 
@@ -124,13 +117,11 @@ import auth from '@react-native-firebase/auth';
    
   const pdb=firestore().collection("products")
 
-  pdb.get().then((doc)=>{
+  pdb.get().then(async(doc)=>{
       
       if(doc){
-
-
+ 
       doc.forEach(async (e,iii)=>{
-
 
         let pid=e.id;
         let pd=e.data()
@@ -140,7 +131,7 @@ import auth from '@react-native-firebase/auth';
         let aid=pd.aid
         let active=pd.active
         let block=pd.block
-        let duration = pd.duration
+        let duration = pd.duration  //prdct duration
 
         if(active=="yes"&& done==false && block==false){
 
@@ -152,11 +143,11 @@ import auth from '@react-native-firebase/auth';
             st=dbb.data().st
           }
 
-          var startTime = moment(st, "hh:mm a");
+          var startTime = moment(st, "hh:mm a");  //auction start time
           let cdd=moment(new Date()).format("hh:mm a")
-          var ct = moment(cdd, "hh:mm a");
+          var ct = moment(cdd, "hh:mm a");         //curretn time
     
-          var durationn = moment.duration(ct.diff(startTime));
+          var durationn = moment.duration(ct.diff(startTime));  //dfc bt auctn start time and current time
           var minutes = parseInt(durationn.asMilliseconds());
 
           console.log("pid : ",pid)
@@ -168,11 +159,11 @@ import auth from '@react-native-firebase/auth';
           }
        
                 
-         firestore().collection("products").doc(pid).collection("bids").orderBy("createdAt","desc").get().then((d)=>{
+         firestore().collection("products").doc(pid).collection("bids").orderBy("createdAt","desc").get().then(async(d)=>{
           
           if(d.size>0){
 
-            d.forEach( (ee,ii)=>{
+            d.forEach( async (ee,ii)=>{
 
               // console.log("ii loop wala: ",ii)
 
@@ -206,7 +197,7 @@ import auth from '@react-native-firebase/auth';
    
       
       
-      // console.log("ii ladst  k andr : ",ii)
+     // console.log("ii ladst  k andr : ",ii)
       console.log("bd : ",ee.id)
       console.log("st ",stime);
       console.log("et ",etime);
@@ -216,7 +207,7 @@ import auth from '@react-native-firebase/auth';
      let c= bd.from
      let cf= bd.from
 
-      if(active=="yes"){
+      if(active  ==  "yes"){
 
          
         pdb.doc(pid).collection("bids").get().then(async (d)=>{
@@ -287,9 +278,9 @@ import auth from '@react-native-firebase/auth';
                     
                     
                 tb=tb-1
-               firestore().collection("products").doc(pid).collection("bids").add(obj)
-               firestore().collection("bd").add(obj)
-               firestore().collection("users").doc(bid).update({tb:tb})
+           await    firestore().collection("products").doc(pid).collection("bids").add(obj)
+           await     firestore().collection("bd").add(obj)
+           await    firestore().collection("users").doc(bid).update({tb:tb})
                  cas= moment(cas).add(1, 'minutes').format('LTS')
                  cas = moment(cas, "hh:mm:ss a");   
                  cf="bidder"  
@@ -327,9 +318,9 @@ import auth from '@react-native-firebase/auth';
                     
                     
                 tb=tb-1
-               firestore().collection("products").doc(pid).collection("bids").add(obj)
-               firestore().collection("bd").add(obj)
-               firestore().collection("users").doc(bid).update({tb:tb})
+                await   firestore().collection("products").doc(pid).collection("bids").add(obj)
+                await   firestore().collection("bd").add(obj)
+                await  firestore().collection("users").doc(bid).update({tb:tb})
                  cas= moment(cas).add(1, 'minutes').format('LTS')
                  cas = moment(cas, "hh:mm:ss a");
                  cf="bidder"   
@@ -359,8 +350,8 @@ import auth from '@react-native-firebase/auth';
                  abo:""
                }
        
-               firestore().collection("products").doc(pid).collection("bids").add(obj)
-               firestore().collection("bd").add(obj)
+               await    firestore().collection("products").doc(pid).collection("bids").add(obj)
+               await   firestore().collection("bd").add(obj)
                cas= moment(cas).add(1, 'minutes').format('LTS')
                cas = moment(cas, "hh:mm:ss a");     
                cf="vendor"  
@@ -383,8 +374,8 @@ import auth from '@react-native-firebase/auth';
                 abo:""
               }
       
-              firestore().collection("products").doc(pid).collection("bids").add(obj)
-              firestore().collection("bd").add(obj)
+              await     firestore().collection("products").doc(pid).collection("bids").add(obj)
+              await    firestore().collection("bd").add(obj)
               cas= moment(cas).add(1, 'minutes').format('LTS')
               cas = moment(cas, "hh:mm:ss a");     
               cf="vendor"  
@@ -412,8 +403,7 @@ import auth from '@react-native-firebase/auth';
          if(min==1)
          {
           // for (let index= 0; index < min; index++) {
-            
-         
+ 
             c = c=="bidder"?"vendor":"bidder"
     
             if(c=="bidder"){
@@ -451,9 +441,9 @@ import auth from '@react-native-firebase/auth';
                     
                     
                 tb=tb-1
-               firestore().collection("products").doc(pid).collection("bids").add(obj)
-               firestore().collection("bd").add(obj)
-               firestore().collection("users").doc(bid).update({tb:tb})
+           await   firestore().collection("products").doc(pid).collection("bids").add(obj)
+            await  firestore().collection("bd").add(obj)
+            await  firestore().collection("users").doc(bid).update({tb:tb})
                     
                      console.log("bider bid ")
                     //  return false
@@ -483,8 +473,8 @@ import auth from '@react-native-firebase/auth';
                  abo:""
                }
        
-               firestore().collection("products").doc(pid).collection("bids").add(obj)
-               firestore().collection("bd").add(obj)
+            await    firestore().collection("products").doc(pid).collection("bids").add(obj)
+            await    firestore().collection("bd").add(obj)
        
              
      
@@ -520,10 +510,7 @@ import auth from '@react-native-firebase/auth';
 
 
       }
-
-    
-
-      
+ 
 
     }
       
@@ -545,14 +532,14 @@ import auth from '@react-native-firebase/auth';
 
  
 
-  if(active=="end" && done==false && block==false){
+    if(active=="end" && done==false && block==false){
 
-    firestore().collection("products").doc(pid).collection("bids").orderBy("createdAt","desc").get().then((d)=>{
+    firestore().collection("products").doc(pid).collection("bids").orderBy("createdAt","desc").get().then(async(d)=>{
           
       if(d.size>0){
 
         let c=false;
-        d.forEach( (ee,ii)=>{
+        d.forEach( async  (ee,ii)=>{
         
 
           if(ii==0){
@@ -576,13 +563,15 @@ import auth from '@react-native-firebase/auth';
 
         if(lprice>=startingAmount)
           {
-            console.log("bd : ",bd)
+          
 
             const obj={
               createdAt:new Date(),
               aid:aid,
               vid:vid,
               pid:pid,
+              cuta:false,
+              cutv:false,
               pi:false,
               fb:"",
               done:false,
@@ -595,38 +584,48 @@ import auth from '@react-native-firebase/auth';
             
             
         
-       firestore().collection("Hb").add(obj).then(
+    await    firestore().collection("Hb").add(obj).then(
 
-        firestore().collection("products").doc(pid).update({done:true})
+      await  firestore().collection("products").doc(pid).update({done:true})
 
        )
-       c=false;
+        c=false;
        return false;
           }
                       }  
+
       if(from=="vendor"){
         c=true;
       } 
 
                  }
 
+               
+
          if(c==true){
          
+ 
+          
           if(ii==1){
             let bidid=ee.id
             let bd=ee.data()
             let bid=bd.bid
             let aid=bd.aid
             
+      
+
             let pid=bd.pid
-            let lprice= parseInt(bd.price)
+            // let lprice= parseInt(bd.price)
+            
             let startingAmount=parseInt(bd.sp)
             let ab=bd.abo
+            let lprice= parseInt(startingAmount)
             let from=bd.from
 
             if(from=="bidder"){
 
-              if(lprice>=startingAmount)
+              // if(lprice>=startingAmount)
+              if(ab==startingAmount)
                 {
                   
       
@@ -638,6 +637,8 @@ import auth from '@react-native-firebase/auth';
                     status:"",
                     dlvr:false,
                     fb:"",
+                    cuta:false,
+                    cutv:false,
                     done:false,
                     pid:pid,
                     vid:vid,
@@ -647,8 +648,8 @@ import auth from '@react-native-firebase/auth';
                   
                   
               
-             firestore().collection("Hb").add(obj).then(
-              firestore().collection("products").doc(pid).update({done:true})
+        await     firestore().collection("Hb").add(obj).then(
+        await       firestore().collection("products").doc(pid).update({done:true})
              )
               
              return false;
@@ -682,17 +683,17 @@ import auth from '@react-native-firebase/auth';
 }
 
 const Globalrm1=()=>{
-   const db2=firestore().collection("products") 
-  db2.get().then((doc)=>{
+ const db2=firestore().collection("products") 
+  db2.get().then(async(doc)=>{
 if(doc.size>0){
 
-doc.forEach((e,i)=>{
+doc.forEach(async(e,i)=>{
 let ppid=e.id;
 
-    db2.doc(ppid).collection("bids").get().then((data)=>{
+    db2.doc(ppid).collection("bids").get().then(async (data)=>{
         if(data.size>0){
 
-         data.forEach((ee,ii)=>{
+         data.forEach(async (ee,ii)=>{
 
            let bidid=ee.id
            let bd=ee.data()
@@ -717,7 +718,7 @@ let ppid=e.id;
            let c=0
            let did=""
 
-data.forEach((eee,iii)=>{
+data.forEach(async (eee,iii)=>{
 let d=eee.data()
 let bidid2=eee.id
 
@@ -751,7 +752,7 @@ if(  bid==d.bid && aid==d.aid && pid==d.pid & price==parseInt(d.price) && sp==d.
            if(c>1){
               console.log("same bid id in prdct dlt ye krne >>> ",did)
              
-               db2.doc(ppid).collection("bids").doc(did).delete();
+             await   db2.doc(ppid).collection("bids").doc(did).delete();
                return false; 
            }
 
@@ -761,18 +762,17 @@ if(  bid==d.bid && aid==d.aid && pid==d.pid & price==parseInt(d.price) && sp==d.
         }
 })
 
-
-
+ 
 })
 }
 }) 
 
-
+ 
 const db3=firestore().collection("bd")
-db3.get().then((doc)=>{
+db3.get().then(async(doc)=>{
 if(doc.size>0){
 
-  doc.forEach((ee,i)=>{
+  doc.forEach(async (ee,i)=>{
      
   let bidid=ee.id
   let bd=ee.data()
@@ -796,7 +796,7 @@ if(doc.size>0){
     let c=0
     let did=""
 
- doc.forEach((eee,iii)=>{
+ doc.forEach(async(eee,iii)=>{
  let d=eee.data()
  let bidid2=eee.id
 
@@ -826,7 +826,7 @@ var endTime = moment(time, 'hh:mm:ss a');
 
               if(c>1){
                 console.log("same bid id in bd dlt ye krne  >>> ",did)
-                db3.doc(did).delete();
+              await    db3.doc(did).delete();
                 return false; 
               }
 
@@ -836,6 +836,92 @@ var endTime = moment(time, 'hh:mm:ss a');
 
 }
 
+const globalcheckBlanace=()=>{
+  const uid=userData.user.uid
+ 
+  const dbb=firestore().collection("users").doc(uid)
+  const db=firestore().collection("Hb");
+
+  db.orderBy("createdAt","desc").get().then((doc)=>{
+
+  if(userData.user &&  ( userData.user.type=="admin" || userData.user.type=="vendor" ) )
+ {
+
+  if(doc.size>0){
+
+    if(userData.user.type=="admin"){
+let balance=parseFloat(userData.user.balance);
+let c=false;
+    doc.forEach((ee,ii)=>{
+
+      let d=ee.data();
+      
+
+      if(d.status=="deliver" && d.cuta==false){
+        c=true;
+        let p=ee.data().price;
+        let id=ee.id;
+        let price= parseFloat(p);
+          
+        let d =  parseFloat((2/100)*price)
+        balance=  balance+d 
+
+        db.doc(id).update({cuta:true})
+        return false
+      }
+   
+    })
+    console.log("blnc a : ",balance)
+    if(c){dbb.update({balance:balance})}
+   
+    }
+
+    if(userData.user.type=="vendor"){
+   
+         let balance=parseFloat(userData.user.balance);
+         let c=false;
+
+          doc.forEach((ee,ii)=>{
+     
+            let d=ee.data();
+            
+            if(d.status=="deliver" && d.cutv==false && uid==d.vid){
+              c=true;
+              let p=ee.data().price;
+
+              let id=ee.id;
+              let price= parseFloat(p);
+               
+              let d =  parseFloat((2/100)*price)
+
+              let fp=parseFloat(price-d);
+
+              balance=  balance+fp
+
+               
+              db.doc(id).update({cutv:true})
+             return false
+            }
+          
+          })
+          console.log("blnc v : ",balance)
+        
+          if(c){
+            dbb.update({balance:balance})
+          }
+          
+          }
+
+  
+     }
+  
+  
+    }   
+
+})
+ 
+ 
+}
   
   const compare=(d)=> {
     var cd = moment(new Date()).format("D/M/Y")
@@ -856,13 +942,14 @@ var endTime = moment(time, 'hh:mm:ss a');
 }
  
   useEffect(()=>{
-     
+    globalcheckBlanace();
     let  interval  = setInterval(  () =>
      {
     GlobaldynamicheckProduct();
-    Globalrm1()
+    // Globalrm1()
     },6000); 
     let  intervall  = setInterval(  () => {GlobaldynamicheckProductBids()},8000); 
+    let  intervalll  = setInterval(  () => {globalcheckBlanace()},2000); 
     const db=firestore().collection("users").doc(userData.user.uid)
    
     const usu = firestore().collection("auctions").onSnapshot(async  (d)=>{
@@ -1062,16 +1149,16 @@ return () => {
   // Anything in here is fired on component unmount.
    clearInterval(interval)
    clearInterval(intervall)
+   clearInterval(intervalll)
    unsub();
    usu();
+ 
   //  ubd();
   //  usuu();
   //  if(usuuu!=null){
   //   usuuu();
   //  }
-   if(unsubP!=null){
-    unsubP();
-   }
+    
   //  if(unsubPb!=null){
   //   unsubPb();
   //  }
@@ -1081,12 +1168,16 @@ return () => {
 }
 
   },[])
-
+ 
 return(
   <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
  
  {userData.user.type=="bidder" &&(
    <Text style={{position:"absolute",top:10,right:10,color:"black",fontSize:16}}>Total Bids : {userData.user.tb}</Text>
+ )}
+
+{(userData.user.type=="admin" || userData.user.type=="vendor" )&&(
+   <Text style={{position:"absolute",top:10,right:10,color:"black",fontSize:16}}>Balance : {userData.user.balance} Pkr</Text>
  )}
  
 
@@ -1104,7 +1195,5 @@ return(
 
 </View>   
 )
-     }
- 
-      
-  
+  }
+   

@@ -121,10 +121,11 @@ phone3:"",
 phn1MaxLength:3,
 phn2MaxLength:4,
 phn3MaxLength:3,
+phoneFields:3,
 phn1PlaceHolder:"300",
 phn2PlaceHolder:"1122",
 phn3PlaceHolder:"234",
-phoneFields:3,
+
 selectedCountryCode: '+92',
 isInternetConnected:null,
 isHidePassword: true,
@@ -174,7 +175,7 @@ async __signUp(email,password,name){
   try {
     let phone=this.Phone;
 
-        let obj={name,email:user.email,phone,type,photo,emailVerified:user.emailVerified,
+        let obj={name,email:user.email,phone,type,photo,emailVerified:user.emailVerified,balance:0,
          uid:user.uid,createdAt:new Date(),token:null,updatedAt:new Date(),block:false}
 
 firestore().collection('users').doc(user.uid).set(obj).
