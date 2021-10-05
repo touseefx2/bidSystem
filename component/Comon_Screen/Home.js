@@ -25,10 +25,10 @@ import auth from '@react-native-firebase/auth';
     const adb=firestore().collection("auctions")
     const pdb=firestore().collection("products")
    
-     adb.get().then((doc)=>{
+     adb.get().then(async (doc)=>{
       
       if(doc){
-      doc.forEach((e,i,a)=>{
+      doc.forEach(async (e,i,a)=>{
         let d=e.data()
         let aid=e.id;
 
@@ -39,7 +39,7 @@ import auth from '@react-native-firebase/auth';
  
           if(cd == "Greater")
           {
-            adb.doc(aid).update({
+         await   adb.doc(aid).update({
              active:"end"
             })
           }
@@ -53,18 +53,18 @@ import auth from '@react-native-firebase/auth';
         
             if(currentTime.isAfter(st) || currentTime.isSame(st))
             {
-              adb.doc(aid).update({
+              await       adb.doc(aid).update({
                 active:"yes"
               }) 
               
-             pdb.get().then((doc)=>{
+             pdb.get().then(async(doc)=>{
               if(doc){
                 doc.forEach(async (e,i,a)=>{
                   let d=e.data()
                   let paid=d.aid
 
                   if(paid==aid){
-                   await pdb.doc(e.id).update({active:"yes"})
+                     await pdb.doc(e.id).update({active:"yes"})
                   }
 
                 })
@@ -85,7 +85,7 @@ import auth from '@react-native-firebase/auth';
          
           if(cd == "Greater")
           {
-            adb.doc(aid).update({
+            await        adb.doc(aid).update({
              active:"end"
             })
           }
@@ -97,7 +97,7 @@ import auth from '@react-native-firebase/auth';
             var et  =  moment(d.et, 'h:mma');
             if(currentTime.isAfter(et) || currentTime.isSame(et))
             {
-              adb.doc(aid).update({
+              await          adb.doc(aid).update({
                 active:"end"
               })      
             }
