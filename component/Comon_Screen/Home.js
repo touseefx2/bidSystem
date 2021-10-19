@@ -19,6 +19,10 @@ import auth from '@react-native-firebase/auth';
  
   const dispatch = useDispatch()
   const userData = useSelector(state => state.userReducer)
+
+  let interval=null;
+  let intervall=null;
+  let intervalll=null;
  
    const GlobaldynamicheckProduct=()=>{
    
@@ -942,15 +946,19 @@ let c=false;
 }
  
   useEffect(()=>{
-    globalcheckBlanace();
-    let  interval  = setInterval(  () =>
-     {
-    GlobaldynamicheckProduct();
-    // Globalrm1()
-    },6000); 
-    let  intervall  = setInterval(  () => {GlobaldynamicheckProductBids()},8000); 
-    let  intervalll  = setInterval(  () => {globalcheckBlanace()},2000); 
-    const db=firestore().collection("users").doc(userData.user.uid)
+
+    if(userData.user.type=="admin"){
+      globalcheckBlanace();
+       interval  = setInterval(  () =>
+       {
+      GlobaldynamicheckProduct();
+      // Globalrm1()
+      },6000); 
+        intervall  = setInterval(  () => {GlobaldynamicheckProductBids()},8000); 
+        intervalll  = setInterval(  () => {globalcheckBlanace()},2000); 
+    }
+
+ 
    
     const usu = firestore().collection("auctions").onSnapshot(async  (d)=>{
       
@@ -1046,7 +1054,9 @@ let c=false;
     
       
    })
-   
+  
+  const db=firestore().collection("users").doc(userData.user.uid)
+
      const unsub= db.onSnapshot(async  (doc)=>{
       
         try {
