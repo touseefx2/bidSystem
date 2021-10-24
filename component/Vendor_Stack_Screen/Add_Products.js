@@ -42,6 +42,9 @@ const cardWidth=wp("45%");
   const [category, setcategory] = useState("")
   const [noi, setnoi] = useState("")
   const [sba, setsba] = useState("")
+
+  const [c, setc] = useState(false)
+
   const [inc, setinc] = useState("")
   const [description, setdescription] = useState("")
   const [startingAmount, setstartingAmount] = useState("")
@@ -518,8 +521,11 @@ const removeProducts=  (id)=>{
       
     if(resp){
       clearfields()
+      setc(!c);
       allOther.ToastAndroid.ToastAndroid_SB("Product Add Successful")
-     } 
+    
+      
+    } 
      
     
      

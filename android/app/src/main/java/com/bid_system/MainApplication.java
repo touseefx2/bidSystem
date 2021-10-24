@@ -11,7 +11,6 @@ import com.imagepicker.ImagePickerPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.imagepicker.ImagePickerPackage;
-import com.airbnb.android.react.lottie.LottiePackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;

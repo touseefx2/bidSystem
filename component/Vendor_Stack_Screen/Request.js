@@ -445,7 +445,7 @@ const renderProductData=()=>{
       let pid=""
       let category=""
 
-      console.log("pi : ",pi)
+      // console.log("pi : ",pi)
 
  productsData.products.map((item,index)=>{
 

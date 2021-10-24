@@ -20,10 +20,7 @@ import auth from '@react-native-firebase/auth';
   const dispatch = useDispatch()
   const userData = useSelector(state => state.userReducer)
 
-  let interval=null;
-  let intervall=null;
-  let intervalll=null;
- 
+   
    const GlobaldynamicheckProduct=()=>{
    
     const adb=firestore().collection("auctions")
@@ -840,79 +837,90 @@ var endTime = moment(time, 'hh:mm:ss a');
 
 }
 
-const globalcheckBlanace=()=>{
+const globalcheckBlanace=async ()=>{
   const uid=userData.user.uid
- 
   const dbb=firestore().collection("users").doc(uid)
   const db=firestore().collection("Hb");
+ 
 
-  db.orderBy("createdAt","desc").get().then((doc)=>{
+  db.get().then(async (doc)=>{
 
   if(userData.user &&  ( userData.user.type=="admin" || userData.user.type=="vendor" ) )
  {
 
   if(doc.size>0){
-
+ 
     if(userData.user.type=="admin"){
-let balance=parseFloat(userData.user.balance);
-let c=false;
-    doc.forEach((ee,ii)=>{
+      let ud= await firestore().collection("users").doc(uid).get() 
+      let balance=0;
+      if (ud.exists) {
+       balance=ud.data().balance
+      }
+    
+     let c=false;
+    doc.forEach(async (ee,ii)=>{
 
       let d=ee.data();
-      
-
+    
       if(d.status=="deliver" && d.cuta==false){
         c=true;
         let p=ee.data().price;
         let id=ee.id;
         let price= parseFloat(p);
-          
+        // console.log("a prdct price : ",price)
         let d =  parseFloat((2/100)*price)
         balance=  balance+d 
 
-        db.doc(id).update({cuta:true})
-        return false
+       await    db.doc(id).update({cuta:true})
+        // return false
       }
    
     })
-    console.log("blnc a : ",balance)
-    if(c){dbb.update({balance:balance})}
+    // console.log("blnc a : ",balance)
+    if(c==true){ await dbb.update({balance:balance})}
    
     }
 
     if(userData.user.type=="vendor"){
    
-         let balance=parseFloat(userData.user.balance);
+      let ud= await firestore().collection("users").doc(uid).get() 
+      let balance=0;
+      if (ud.exists) {
+       balance=ud.data().balance
+      }
+    
          let c=false;
-
-          doc.forEach((ee,ii)=>{
-     
+         
+         doc.forEach(async (ee,ii)=>{
+       
             let d=ee.data();
             
             if(d.status=="deliver" && d.cutv==false && uid==d.vid){
               c=true;
-              let p=ee.data().price;
+              let p=d.price;
 
               let id=ee.id;
               let price= parseFloat(p);
+
+              console.log("v prdct price : ",price)
                
-              let d =  parseFloat((2/100)*price)
+              let dd =  parseFloat((2/100)*price)
 
-              let fp=parseFloat(price-d);
+              let fp=parseFloat(price-dd);
 
-              balance=  balance+fp
+              balance = balance+fp
 
+              console.log("blnc  after add : ",balance)
                
-              db.doc(id).update({cutv:true})
-             return false
+               await   db.doc(id).update({cutv:true})
+            //  return false
             }
           
           })
+         
           console.log("blnc v : ",balance)
         
-          if(c){
-            dbb.update({balance:balance})
-          }
+          if(c==true){ await dbb.update({balance:balance})}
           
           }
 
@@ -947,18 +955,17 @@ let c=false;
  
   useEffect(()=>{
 
-    if(userData.user.type=="admin"){
-      globalcheckBlanace();
-       interval  = setInterval(  () =>
+    // if(userData.user.type=="admin"){
+    
+      const interval  = setInterval(  () =>
        {
       GlobaldynamicheckProduct();
       // Globalrm1()
       },6000); 
-        intervall  = setInterval(  () => {GlobaldynamicheckProductBids()},8000); 
-        intervalll  = setInterval(  () => {globalcheckBlanace()},2000); 
-    }
+      const  intervall  = setInterval(  () => {GlobaldynamicheckProductBids()},8000); 
+      const  intervalll  = setInterval(  () => {globalcheckBlanace()},4000); 
+    // }
 
- 
    
     const usu = firestore().collection("auctions").onSnapshot(async  (d)=>{
       
@@ -1067,6 +1074,7 @@ let c=false;
           if(doc.exists){
             id=doc.id;
            data = doc.data()
+       
            }  
 
            if(data.block==true){
@@ -1163,18 +1171,7 @@ return () => {
    unsub();
    usu();
  
-  //  ubd();
-  //  usuu();
-  //  if(usuuu!=null){
-  //   usuuu();
-  //  }
-    
-  //  if(unsubPb!=null){
-  //   unsubPb();
-  //  }
-  //  if(unsubPb2!=null){
-  //   unsubPb2();
-  //  }
+  
 }
 
   },[])
