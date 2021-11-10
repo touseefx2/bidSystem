@@ -683,159 +683,159 @@ import auth from '@react-native-firebase/auth';
 
 }
 
-const Globalrm1=()=>{
- const db2=firestore().collection("products") 
-  db2.get().then(async(doc)=>{
-if(doc.size>0){
+// const Globalrm1=()=>{
+//  const db2=firestore().collection("products") 
+//   db2.get().then(async(doc)=>{
+// if(doc.size>0){
 
-doc.forEach(async(e,i)=>{
-let ppid=e.id;
+// doc.forEach(async(e,i)=>{
+// let ppid=e.id;
 
-    db2.doc(ppid).collection("bids").get().then(async (data)=>{
-        if(data.size>0){
+//     db2.doc(ppid).collection("bids").get().then(async (data)=>{
+//         if(data.size>0){
 
-         data.forEach(async (ee,ii)=>{
+//          data.forEach(async (ee,ii)=>{
 
-           let bidid=ee.id
-           let bd=ee.data()
+//            let bidid=ee.id
+//            let bd=ee.data()
 
-           let bid=bd.bid
-           let aid=bd.aid
-           let pid=bd.pid
-           let price=parseInt(bd.price)
-           let sp=bd.sp
-           let abo=bd.abo
-           let from=bd.from
-           let createdAt=bd.createdAt.toDate()
-           var time =  moment(createdAt).format('hh:mm:ss a')     //10:12 am 
+//            let bid=bd.bid
+//            let aid=bd.aid
+//            let pid=bd.pid
+//            let price=parseInt(bd.price)
+//            let sp=bd.sp
+//            let abo=bd.abo
+//            let from=bd.from
+//            let createdAt=bd.createdAt.toDate()
+//            var time =  moment(createdAt).format('hh:mm:ss a')     //10:12 am 
 
-           var  t =  moment(createdAt).format('hh:mm a')   
-           var date =  moment(createdAt).format("D MMMM Y");   //9 july 2021
-           let   cc= date + " at  "+t
+//            var  t =  moment(createdAt).format('hh:mm a')   
+//            var date =  moment(createdAt).format("D MMMM Y");   //9 july 2021
+//            let   cc= date + " at  "+t
           
-           var beginningTime = moment(time, 'hh:mm:ss a');
+//            var beginningTime = moment(time, 'hh:mm:ss a');
      
            
-           let c=0
-           let did=""
+//            let c=0
+//            let did=""
 
-data.forEach(async (eee,iii)=>{
-let d=eee.data()
-let bidid2=eee.id
+// data.forEach(async (eee,iii)=>{
+// let d=eee.data()
+// let bidid2=eee.id
 
-let createdAt=d.createdAt.toDate()
-var time =  moment(createdAt).format('hh:mm:ss a')     //10:12 am 
-var  t =  moment(createdAt).format('hh:mm a')  
-var date =  moment(createdAt).format("D MMMM Y");   //9 july 2021
-let   ccc= date + " at  "+t
-var endTime = moment(time, 'hh:mm:ss a');
+// let createdAt=d.createdAt.toDate()
+// var time =  moment(createdAt).format('hh:mm:ss a')     //10:12 am 
+// var  t =  moment(createdAt).format('hh:mm a')  
+// var date =  moment(createdAt).format("D MMMM Y");   //9 july 2021
+// let   ccc= date + " at  "+t
+// var endTime = moment(time, 'hh:mm:ss a');
 
-if(  bid==d.bid && aid==d.aid && pid==d.pid & price==parseInt(d.price) && sp==d.sp && abo==d.abo && from==d.from && cc==ccc    )   
-            {
-              c++;
-              if(beginningTime.isAfter(endTime)){
-                // console.log("b a e : ","yes")
-                did=bidid
-              }else if(beginningTime.isBefore(endTime)){
-                // console.log("b b e : ","yes")
-                did=bidid2
-              }
-              else if(beginningTime.isSame(endTime)){
-                // console.log("b s e : ","yes")
-                did=bidid2
-              } 
-            } 
+// if(  bid==d.bid && aid==d.aid && pid==d.pid & price==parseInt(d.price) && sp==d.sp && abo==d.abo && from==d.from && cc==ccc    )   
+//             {
+//               c++;
+//               if(beginningTime.isAfter(endTime)){
+//                 // console.log("b a e : ","yes")
+//                 did=bidid
+//               }else if(beginningTime.isBefore(endTime)){
+//                 // console.log("b b e : ","yes")
+//                 did=bidid2
+//               }
+//               else if(beginningTime.isSame(endTime)){
+//                 // console.log("b s e : ","yes")
+//                 did=bidid2
+//               } 
+//             } 
 
-           })
+//            })
 
 
 
-           if(c>1){
-              console.log("same bid id in prdct dlt ye krne >>> ",did)
+//            if(c>1){
+//               console.log("same bid id in prdct dlt ye krne >>> ",did)
              
-             await   db2.doc(ppid).collection("bids").doc(did).delete();
-               return false; 
-           }
+//              await   db2.doc(ppid).collection("bids").doc(did).delete();
+//                return false; 
+//            }
 
 
-         })
+//          })
 
-        }
-})
-
- 
-})
-}
-}) 
+//         }
+// })
 
  
-const db3=firestore().collection("bd")
-db3.get().then(async(doc)=>{
-if(doc.size>0){
+// })
+// }
+// }) 
 
-  doc.forEach(async (ee,i)=>{
+ 
+// const db3=firestore().collection("bd")
+// db3.get().then(async(doc)=>{
+// if(doc.size>0){
+
+//   doc.forEach(async (ee,i)=>{
      
-  let bidid=ee.id
-  let bd=ee.data()
+//   let bidid=ee.id
+//   let bd=ee.data()
 
 
-  let bid=bd.bid
-  let aid=bd.aid
-  let pid=bd.pid
-  let price= parseInt(bd.price)
-  let sp=bd.sp
-  let abo=bd.abo
-  let from=bd.from
-  let createdAt=bd.createdAt.toDate()
-  var time =  moment(createdAt).format('hh:mm:ss a')     //10:12 am 
-  var  t =  moment(createdAt).format('hh:mm a')  
-  var date =  moment(createdAt).format("D MMMM Y");   //9 july 2021
-  let   cc= date + " at  "+t 
-  var beginningTime = moment(time, 'hh:mm:ss a');
+//   let bid=bd.bid
+//   let aid=bd.aid
+//   let pid=bd.pid
+//   let price= parseInt(bd.price)
+//   let sp=bd.sp
+//   let abo=bd.abo
+//   let from=bd.from
+//   let createdAt=bd.createdAt.toDate()
+//   var time =  moment(createdAt).format('hh:mm:ss a')     //10:12 am 
+//   var  t =  moment(createdAt).format('hh:mm a')  
+//   var date =  moment(createdAt).format("D MMMM Y");   //9 july 2021
+//   let   cc= date + " at  "+t 
+//   var beginningTime = moment(time, 'hh:mm:ss a');
 
 
-    let c=0
-    let did=""
+//     let c=0
+//     let did=""
 
- doc.forEach(async(eee,iii)=>{
- let d=eee.data()
- let bidid2=eee.id
+//  doc.forEach(async(eee,iii)=>{
+//  let d=eee.data()
+//  let bidid2=eee.id
 
- let createdAt=d.createdAt.toDate()
-var time =  moment(createdAt).format('hh:mm:ss a')     //10:12 am 
-var  t =  moment(createdAt).format('hh:mm a')  
-var date =  moment(createdAt).format("D MMMM Y");   //9 july 2021
-let   ccc= date + " at  "+t 
-var endTime = moment(time, 'hh:mm:ss a');
+//  let createdAt=d.createdAt.toDate()
+// var time =  moment(createdAt).format('hh:mm:ss a')     //10:12 am 
+// var  t =  moment(createdAt).format('hh:mm a')  
+// var date =  moment(createdAt).format("D MMMM Y");   //9 july 2021
+// let   ccc= date + " at  "+t 
+// var endTime = moment(time, 'hh:mm:ss a');
 
- if( bid==d.bid && aid==d.aid && pid==d.pid & price==parseInt(d.price) && sp==d.sp && abo==d.abo && from==d.from && cc==ccc     )   
-               {
-                 c++;
-                 if(beginningTime.isAfter(endTime)){
-                  did=bidid
-                }else if(beginningTime.isBefore(endTime)){
-                  did=bidid2
-                } else if(beginningTime.isSame(endTime)){
-                  did=bidid2
-                } 
-               } 
+//  if( bid==d.bid && aid==d.aid && pid==d.pid & price==parseInt(d.price) && sp==d.sp && abo==d.abo && from==d.from && cc==ccc     )   
+//                {
+//                  c++;
+//                  if(beginningTime.isAfter(endTime)){
+//                   did=bidid
+//                 }else if(beginningTime.isBefore(endTime)){
+//                   did=bidid2
+//                 } else if(beginningTime.isSame(endTime)){
+//                   did=bidid2
+//                 } 
+//                } 
 
-              })
+//               })
 
 
-              // console.log("c :",c)
+//               // console.log("c :",c)
 
-              if(c>1){
-                console.log("same bid id in bd dlt ye krne  >>> ",did)
-              await    db3.doc(did).delete();
-                return false; 
-              }
+//               if(c>1){
+//                 console.log("same bid id in bd dlt ye krne  >>> ",did)
+//               await    db3.doc(did).delete();
+//                 return false; 
+//               }
 
-  })
-}
-  }) 
+//   })
+// }
+//   }) 
 
-}
+// }
 
 const globalcheckBlanace=async ()=>{
   const uid=userData.user.uid
@@ -997,7 +997,7 @@ const globalcheckBlanace=async ()=>{
     let i=0;
     let arr=[]
     
-      firestore().collection("products").orderBy('createdAt', 'asc').get().then(async  (d)=>{
+      firestore().collection("products").orderBy('createdAt', "desc").get().then(async  (d)=>{
     
            if(d){
             d.docs.map((data)=>{
